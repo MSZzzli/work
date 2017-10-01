@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>简单轮播图</title>
+		<script src="jQuery-3.1.0/jquery-3.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			/* 一张图片的视口 */
+			div.banner{
+				width: 400px;
+				height: 200px;
+				margin: 10px auto;
+				background-color: red;
+				overflow: hidden;
+				position: relative;
+			}
+			
+			/* 承载n+1张图片的载体 */
+			div.image{
+				width: 2800px;
+				height: 200px;
+				font-size: 0;
+				background-color: yellow;
+				overflow: hidden;
+				position: relative;
+				left: -400px;
+			}
+			
+			/* 每张图片 */
+			div.image img{
+				width: 400px;
+				height: 200px;
+			}
+			
+			/* banner 区域里面的 indicator */
+			.banner .indicator{
+				z-index: 10;
+				position: absolute;
+				left: 10px;
+				bottom: 15px;
+			}
+			
+			/* banner 区域里面的 page */
+			.banner span{
+				color: white;
+				cursor: pointer;
+				background-color: #444;
+				padding: 5px 10px;
+				border: 1px solid #444;
+			}
+			.banner span:hover , .banner .indicator span.cur{
+				border-color: #FFB400;
+			}
+			.banner .page{
+				z-index: 10;
+				position: absolute;
+				right: 10px;
+				bottom: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="banner">
+			<div class="image">
+				<!-- 最后一张 -->
+				<a class="banner_img_a" href="#" style="display: inline;">
+			        <img src="http://img.zhuangbeiku.com/e62451fecc8fc737fd9542ecc2049f9e" alt="">
+			    </a>
+			    <!-- 第一张 -->
+				<a class="banner_img_a" href="#" style="display: inline;">
+			        <img src="http://img.zhuangbeiku.com/4d5699cbc30af79ae833fb8ff7e95583" alt="">
+			    </a>
+			    <a class="banner_img_a" href="#" style="display: inline;">
+			        <img src="http://img.zhuangbeiku.com/2200fd8829fdfba3ebdef19b6b1b36d9" alt="">
+			    </a>
+			    <a class="banner_img_a" href="#" style="display: inline;">
+			        <img src="http://img.zhuangbeiku.com/878c2a8f4cac3af805cd29d7ef66852e" alt="">
+			    </a>
+			    <a class="banner_img_a" href="#" style="display: inline;">
+			        <img src="http://img.zhuangbeiku.com/3730068b95bed418240b4c264f34d313" alt="">
+			    </a>
+			    <!-- 最后一张 -->
+			    <a class="banner_img_a" href="#" style="display: inline;">
+			        <img src="http://img.zhuangbeiku.com/e62451fecc8fc737fd9542ecc2049f9e" alt="">
+			    </a>
+			     <!-- 第一张 -->
+			    <a class="banner_img_a" href="#" style="display: inline;">
+			        <img src="http://img.zhuangbeiku.com/4d5699cbc30af79ae833fb8ff7e95583" alt="">
+			    </a>
+			</div>
+			<div class="indicator">
+				<span class="pause cur">1</span>
+				<span class="pause">2</span>
+				<span class="pause">3</span>
+				<span class="pause">4</span>
+				<span class="pause">5</span>
+			</div>
+			<div class="page">
+				<span class="pause prev">&lt;</span>
+				<span class="pause next">&gt;</span>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	// 轮播的载体
+	var $div_img = $(".banner .image");
+	// 轮播到第几张图片
+	var index = 1;
+	
+	// 自动轮播
+	var timer = setInterval(changeImage,3000);
+	function changeImage(){
+		// index 递增
+		index ++;
+		// 自定义动画
+		$div_img.finish().animate({
+			left: -400*index
+		},250,function(){
+			// 每次动画结束的回调函数
+			if (index >= 6) {
+				index = 1;
+				$(this).css("left",-400);
+			}
+		});
+	}
+	
+	// 点击上一张下一张
+	$("span.pause").hover(function(){
+		// 停止执行
+		clearInterval(timer);
+	},function(){
+		// 继续执行
+		timer = setInterval(changeImage,3000);
+	});
+	$(".page .next").click(function(){
+		changeImage();
+	});
+	$(".page .prev").click(function(){
+		// index 递减
+		index --;
+		// 自定义动画
+		$div_img.finish().animate({
+			left: -400*index
+		},250,function(){
+			// 每次动画结束的回调函数
+			if (index <= 0) {
+				index = 5;
+				$(this).css("left",-2000);
+			}
+		});
+	});
+	
+	
+	// 页面指示器
+	$(".indicator span").mouseenter(function(){
+		var last = index;
+		// 切换图片
+		index = $(this).index() + 1;
+		
+		// 第一种写法
+		// $div_img.css("left",-400*index);
+		
+		// 第二种写法
+		// $div_img.animate({
+		// 	 left: -400*index
+		// },100);
+		
+		// 第三种写法（）
+		console.log(last);
+		$(".banner").append("<img class='clone' src='" + $div_img.find("img").eq(last).attr("src") + "' style='width:400px;height:200px;position:absolute;top:0;left:0;' />");
+		$(".clone").fadeOut(1000,function(){
+			$(".clone").remove();
+		});
+		$div_img.css("left",-400*index);
+	});
+</script>

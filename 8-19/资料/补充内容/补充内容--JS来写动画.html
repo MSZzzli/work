@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #box {
+            width:100px;
+            height:100px;
+            background:red;
+            border:1px solid #ccc;
+            color:white;
+            text-align:center;
+            line-height:100px;
+            position:absolute;
+            top:0;
+            left:0;
+        }
+    </style>
+</head>
+<body>
+<div id="box">盒子</div>
+
+</body>
+</html>
+<script>
+    // 请求动画帧
+    // 解释的非常不错和到位：http://www.zhangxinxu.com/wordpress/2013/09/css3-animation-requestanimationframe-tween-动画算法/
+    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+    var start = null;
+    var d = document.getElementById('box');
+    function step(timestamp) {
+        if (start === null) start = timestamp;
+        //console.log('start = ' + start);
+        //console.log('timestamp = ' + timestamp);
+        var progress = timestamp - start;
+        d.style.left = Math.min(timestamp/10, 200) + "px";
+        if (progress < 5000) {
+            requestAnimationFrame(step);
+        }
+    }
+    requestAnimationFrame(step);
+
+</script>

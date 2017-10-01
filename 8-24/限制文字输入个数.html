@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>限制文字输入个数</title>
+	</head>
+	<body>
+		<span>和大家分享点什么吧？！</span>
+		<br />
+		<span id="limit">还可以输入<strong>140</strong>个字</span>
+		<br />
+		<textarea id="weibo" rows="3" cols="30"></textarea>
+	</body>
+</html>
+<script src="jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	// 一个汉字或者一个全角符号占一个 ；一个字母或者一个半角符号占半个（140个可以理解成280个半角）
+	var total = 280;
+	// 给 textarea 添加 input 事件(这里用 keyup 事件也可以)
+	$("#weibo").on("input",function(){
+		// console.log(arguments);
+		// 获取输入框内容
+		var content = $(this).val();
+		// 遍历 content 里面每个字符，全角+2；半角+1
+		var currentCharNum = 0;
+		for (var i = 0; i < content.length; i++) {
+			// 根据 ASCII 码值来判断是不是汉字（是半角还是全角）
+			if (content.charCodeAt(i) > 255) {
+				currentCharNum += 2;
+			}else{
+				currentCharNum += 1;
+			}
+		}
+		
+		// 还能输入多少个
+		var result = Math.floor((total - currentCharNum) / 2);
+		// 判断字数是否达到上限
+		if (result >= 0) {
+			$("#limit").html("还可以输入<strong>" + result + "</strong>个字");
+		} else{
+			$("#limit").text("温馨提示：文字个数已达上限，请重新调整");
+		}
+	});
+	
+	// 绑定的事件手动调用一次
+	$("#weibo").trigger("input");
+</script>
+

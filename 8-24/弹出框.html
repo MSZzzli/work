@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>弹出框</title>
+		<!-- 内置标签样式清除 -->
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<style type="text/css">
+			/* 大的内容视图 */
+			#content{
+				width: 1170px;
+				height: 1500px;
+				background-color: cyan;
+				margin: 0 auto;
+			}
+			
+			/* 触发器 */
+			div.btn a{
+				display: block;
+				width: 100px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				background-color: red;
+				color: white;
+				border: 1px solid #aaa;
+				margin: 0 auto;
+			}
+			
+			/* 挡板 */
+			#separate{
+				width: 100%;
+				height: 100%;
+				/* 其实这里写 fixed 较简单 */
+				position: absolute;
+				top: 0;
+				left: 0;
+				background-color: black;
+				opacity: 0.5;
+				z-index: 99999;
+				display: none;
+			}
+			
+			/* 模态框 */
+			#login{
+				width: 500px;
+				height: 300px;
+				/* 其实这里写 fixed 较简单 */
+				position: absolute;
+				top: calc(50% - 150px);
+				left: calc(50% - 250px);
+				background-color: white;
+				z-index: 100000;
+				display: none;
+			}
+			#login h2{
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				background-color: #eee;
+				font-size: 20px;
+				overflow: hidden;
+			}
+			#login h2 span{
+				float: right;
+				background-color: red;
+				padding: 0 15px;
+				font-size: 25px;
+			}
+			
+			#login form{
+				width: 500px;
+				height: 250px;
+			}
+			#login ul{
+				padding: 25px 100px;
+			}
+			#login li{
+				line-height: 50px;
+			}
+			#login li input{
+				width: 250px;
+				height: 35px;
+				border: 1px solid #bbb;
+			}
+			#login li input[type="submit"]{
+				background-color: gold;
+				margin-left: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 大的内容视图 -->
+		<div id="content"></div>
+		
+		<!-- 触发器 -->
+		<div class="btn">
+			<a href="javascript:;">点击我</a>
+		</div>
+		
+		<!-- 挡板 -->
+		<div id="separate"></div>
+		
+		<!-- 模态框 -->
+		<div id="login">
+			<h2>
+				用户登录
+				<span><a href="javascript:;">X</a></span>
+			</h2>
+			<form action="" method="post">
+				<ul>
+					<li>
+						<label>用户：<input type="text" name="username" /></label>
+					</li>
+					<li>
+						<label>密码：<input type="password" name="psw" /></label>
+					</li>
+					<li>
+						<label>邮箱：<input type="email" name="email" /></label>
+					</li>
+					<li>
+						<input type="submit" value="登录" />
+					</li>
+				</ul>
+			</form>
+		</div>
+	</body>
+</html>
+<script src="jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	// 点击触发器弹出模态框
+	$(".btn a").click(function(){
+		$("#separate").fadeIn(1000);
+		$("#login").slideDown(1000);
+		// 禁止用户滚动（禁用滚动条）
+		document.body.style.overflow = "hidden";
+		// document.documentElement.style.overflow = "hidden";
+	});
+	
+	// 把 #separate 的大小设置的和 document 一样大
+	function setSeparateWH(){
+		// 在 scroll 事件里面不停刷新调用
+		// var w = $(window).width() +　$(document).scrollLeft();
+		// var h = $(window).height() +　$(document).scrollTop();
+		// 没什么逻辑，用法简单
+		var w = $(document).width();
+		var h = $(document).height();
+		$("#separate").width(w).height(h);
+	}
+	setSeparateWH();
+	
+	// 把 #login 的top left 调整到始终保持在屏幕正中间
+	function setLoginCenter(){
+		var left = ($(window).width() - 500) / 2 +　$(document).scrollLeft();
+		var top = ($(window).height() - 300) / 2 +　$(document).scrollTop();
+		$("#login").css({
+			top,
+			left
+		});
+	}
+	setLoginCenter();
+	
+	// 当页面发生滚动时重新计算
+	$(document).scroll(function(){
+		setSeparateWH();
+		setLoginCenter();
+	})
+	
+	// 当浏览器大小发生改变时重新计算
+	$(window).resize(function(){
+		setSeparateWH();
+		setLoginCenter();
+	});
+	
+	
+	$("#login h2 span").click(function(){
+		$("#separate").fadeOut(1000);
+		$("#login").slideUp(1000);
+	})
+	
+	// 移动
+	$("#login h2").mousedown(function(){
+		console.log("按下了");
+		$(document).mousemove(function(){
+			console.log("移动了");
+		});
+	});
+	$("#login h2").mouseup(function(){
+		$(document).off("mousemove");
+	});
+</script>

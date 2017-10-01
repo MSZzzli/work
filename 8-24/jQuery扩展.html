@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQuery自定义方法</title>
+	</head>
+	<body>
+		<div id="container">div</div>
+		<p>p</p>
+		<div>div</div>
+	</body>
+</html>
+<script src="jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	// 判断一个数是不是素数（只能被1和本身整除）
+	function isSuShu(num){
+		var flag = true;
+		for (var i = 2; i < Math.floor(num / 2); i++) {
+			if (num % i == 0) {
+				flag = false;
+				break;
+			}
+		}
+		return flag;
+	}
+	console.log(isSuShu(1333));
+	
+	/*
+	 * 自定义 jQuery API（给 jQuery 自定义方法 ）
+	 * 有两种方法来扩展 extend API：jQuery.extend()  jQuery.fn.extend()
+	 * 
+	 * jQuery.extend(): 比如：jQuery.noConflict(); jQuery.Callbacks(); ……
+	 * jQuery.fn.extend(): 比如：$("selector").css(); $("selector").append(); ……
+	 */ 
+	
+	// jQuery.extend() 或者 $.extend()
+	// 判断当前所有标签中是否含有 div 标签
+	// console.log($("html").has("div")[0] ? true : false);
+	// console.log($("*").is("div"));
+	$.isHaveDiv = function(){
+		var find = false;
+		$("*").each(function(index,ele){
+			if ($(ele).is("div")) {
+				find = true;
+				return;
+			}
+		});
+		return find;
+	}
+	
+	
+	
+	// jQuery.fn.extend() 或者 $.fn.extend()
+	// 给调用的标签添加一定的样式
+	$.fn.commonCss = function(){
+		$(this).css({
+			backgroundColor: "#555",
+			border: "1px solid red",
+			borderRadius: 5
+			// ……
+		});
+	};
+	
+</script>
+
+<script type="text/javascript">
+	// 使用
+	if ($.isHaveDiv()) {
+		console.log("做找到的要做的事");
+	}else{
+		console.log("做找不到的要做的事");
+	}
+	
+	$("div").commonCss();
+	$("p").commonCss();
+</script>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>百度输入法</title>
+		<style type="text/css">
+			html,body,ul,li{
+				margin: 0;
+				padding: 0;
+				font-size: 13px;
+			}
+			
+			.container{
+				width: 70px;
+				margin: 10px auto;
+			}
+			
+			button{
+				/* http://www.w3school.com.cn/cssref/pr_class_cursor.asp */
+				cursor: pointer;
+			}
+			
+			ul{
+				list-style: none;
+				/* solid dotted dashed double groove */
+				border: 1px solid black;
+				margin-top: 5px;
+				cursor: pointer;
+			}
+			
+			ul li{
+				color: #00c;
+				text-align: center;
+				line-height: 25px;
+			}
+			
+			ul li:last-child{
+				border-top: 1px solid black;
+			}
+			
+			ul li:hover{
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<button type="button">输入法</button>
+			<ul style="display: none;">
+				<li>手写</li>
+				<li>拼音</li>
+				<li class="close">关闭</li>
+			</ul>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	/*
+	 * 伪代码
+	 * 1.点击button，把ul显示/隐藏出来
+	 * 2.点击li关闭，实现隐藏
+	 */
+	
+	var btn = document.querySelector("button");
+	var ul = document.querySelector("ul");
+	var close = document.querySelector(".close");
+	var lis = document.querySelectorAll("li");
+	
+	// 1.
+	btn.onclick = function(){
+		ul.style.display = ul.style.display == "none" ? "block" :　"none";
+	}
+	
+	// 2.
+	close.onclick = function(){
+		ul.style.display = "none";
+	}
+	
+	// 3.输出选中什么输入法
+	var input_method = ["手写","拼音"];
+	lis.forEach(function(value,index){
+		// 限制只给前两个绑定点击事件
+		if (index < 2) {
+			value.onclick = function(){
+				console.log(input_method[index]);
+			}
+		}
+	});
+</script>

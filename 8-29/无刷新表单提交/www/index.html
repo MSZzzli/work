@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>无刷新表单提交</title>
+		<style type="text/css">
+			form{
+				padding: 10px;
+			}
+			input{
+				display: block;
+				width: 200px;
+				height: 30px;
+				margin: 10px auto;
+			}
+			iframe{
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 表单提交默认会跳转到一个新的页面显示请求的结果，怎么才能在当前页面显示结果：
+			1.在当前页面新建 iframe，把 新的页面 在当前的iframe显示
+			2.不表单提交，自己写网络请求
+		-->
+		<form action="/login" method="post" target="result">
+			<input type="tel" name="phone" placeholder="请输入手机号码" required />
+			<input type="password" name="password" placeholder="请输入密码" required />
+			<input type="submit" value="登录"/>
+		</form>
+		
+		<!-- 新建一个 iframe，用来显示提交返回的数据（结果） -->
+		<iframe frameborder="1" id="result" name="result"></iframe>
+	</body>
+</html>
+
+<script type="text/javascript">
+	window.onload = function(){
+		// 获取 iframe 里面 DOM 内容
+		var iframe = document.querySelector("#result");
+		// 此时拿不到数据，这个方法一上来就执行了（我们还没发送网络请求呢）
+		// var result = iframe.contentWindow.document.body.innerHTML;
+		// console.log(result);
+		iframe.onload = function(){
+			// iframe 加载完之后才有数据
+			var result = iframe.contentWindow.document.body.innerHTML;
+			console.log(result);
+			alert(result);
+		}
+	}
+</script>

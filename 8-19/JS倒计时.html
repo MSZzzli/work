@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JS倒计时</title>
+		<style type="text/css">
+			html,body{
+				color: white;
+				font-size: 13px;
+			}
+			
+			#container{
+				width: 300px;
+				background-color: black;
+				text-align: center;
+				margin: 10px auto;
+				padding: 20px 0;
+			}
+			
+			#container span{
+				background-color: #888;
+				border: 1px solid blue;
+				margin: 5px;
+				padding: 5px;
+			}
+			
+			#container input{
+				border: none;
+				display: block;
+				width: 100px;
+				height: 30px;
+				margin: 20px auto 0px;
+				font-size: 18px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<span>02</span>分钟<span>00</span>秒
+			<input type="button" value="开始倒计时" />
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	// 获取 span、button
+	var spans = document.querySelectorAll("span");
+	var btn = document.querySelector("input");
+	// 表示当前是继续/暂停倒计时
+	var isContinue = false;
+	// 保存当前开启的计时器 Interval
+	var interval = null;
+	
+	// 给button添加绑定事件
+	btn.onclick = function(){
+		// 每次点击置反
+		isContinue = !isContinue;
+		if (isContinue) {
+			// 正在倒计状态
+			this.value = "暂停倒计时";
+			// 处理倒计时逻辑
+			// 为什么一上来就要手动调用一次？？因为setInterval有延时
+			// updateTime();
+			interval = setInterval(updateTime,1000);
+		} else{
+			// 正在暂停状态
+			this.value = "继续倒计时";
+			// 处理暂停逻辑
+			clearInterval(interval);
+		}
+	}
+	
+	function updateTime(){
+		// 获取总的时间（s），并让时间减一
+		var totalSeconds = spans[0].innerHTML*60 + spans[1].innerHTML*1;
+		totalSeconds --;
+		
+		// 重新获取分钟和秒数
+		var minutes = Math.floor(totalSeconds / 60);
+		var seconds = totalSeconds % 60;
+		
+		// 如果时间小于10，在前面加0
+		// minutes = minutes < 10 ? "0" + minutes : minutes;
+		// seconds = seconds < 10 ? "0" + seconds : seconds;
+		
+		// 把时间显示上去
+		spans[0].innerHTML = minutes.toString().replace(/^(\d)$/,"0$1");
+		spans[1].innerHTML = seconds.toString().replace(/^(\d)$/,"0$1");
+	
+		// 判断倒计时是否结束
+		if (totalSeconds <= 0) {
+			// 关闭计时器
+			clearInterval(interval);
+			btn.value = "倒计时结束";
+			btn.disabled = "disabled";
+			alert("倒计时结束");
+		}
+	}
+</script>

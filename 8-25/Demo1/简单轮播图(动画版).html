@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>简单轮播图</title>
+		<script src="jQuery-3.1.0/jquery-3.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			/*处理整个区域*/
+			.banner{
+				width: 880px;
+				height: 240px;
+				position: relative;
+				overflow: hidden;
+			}
+			.banner .banner_img_a{
+				position: absolute;				
+			}
+			.banner img{
+				width: 880px;
+				height: 240px;
+			}
+			/*处理指示器*/
+			.banner .indicator{
+				position: absolute;
+				left: 10px;
+				bottom: 10px;
+			}
+			.banner .indicator span{
+				line-height: 24px;
+				cursor: pointer;
+				background-color: rgba(0,0,0,0.7);
+				margin-right: 2px;
+				color: white;
+				text-align: center;
+				padding: 0px 5px;
+			}
+			.banner .indicator span.cur{
+				border: 2px solid orange;
+			}
+			.banner .page{
+				position: absolute;
+				right: 10px;
+				bottom: 10px;
+			}
+			.banner .page span{
+				line-height: 20px;
+				background-color: rgba(0,0,0,0.7);
+				padding: 0px 6px;
+				cursor: pointer;
+				color: white;
+				box-sizing: border-box;
+				display: inline-block;
+				width: 24px;
+				height: 24px;
+			}
+			.banner .page span:hover{
+				border: 2px solid orange;
+				box-sizing: border-box;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="banner">
+		    <a class="banner_img_a" href="#" style="display: inline;">
+		        <img src="http://img.zhuangbeiku.com/4d5699cbc30af79ae833fb8ff7e95583" alt="">
+		    </a>
+		    <a class="banner_img_a" href="#" style="display: none;">
+		        <img src="http://img.zhuangbeiku.com/2200fd8829fdfba3ebdef19b6b1b36d9" alt="">
+		    </a>
+		    <a class="banner_img_a" href="#" style="display: none;">
+		        <img src="http://img.zhuangbeiku.com/878c2a8f4cac3af805cd29d7ef66852e" alt="">
+		    </a>
+		    <a class="banner_img_a" href="#" style="display: none;">
+		        <img src="http://img.zhuangbeiku.com/3730068b95bed418240b4c264f34d313" alt="">
+		    </a>
+		    <a class="banner_img_a" href="#" style="left:0px; display: inline;">
+		        <img src="http://img.zhuangbeiku.com/e62451fecc8fc737fd9542ecc2049f9e" alt="">
+		    </a>
+		    <div class="indicator">
+		        <span class="cur">1</span>
+		
+		        <span class="">2</span>
+		
+		        <span class="">3</span>
+		
+		        <span class="">4</span>
+		
+		        <span class="">5</span>
+		    </div>
+		    <div class="page">
+		        <span class="prev">&lt;</span>
+		        <span class="next">&gt;</span>
+		    </div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	//当前轮播到第几张了
+	var index = 0;
+	var last = 4;
+	//上一张的index是多少？
+	function getIndexPrev(){
+		return  index <= 0 ? $(".banner .banner_img_a").length-1:index-1;
+	}
+	//下一张的index是多少？
+	function getIndexNext(){
+		return index >= $(".banner .banner_img_a").length-1 ? 0:index+1;
+	}
+	//显示图片
+	function showPrevImage(){
+		index = getIndexPrev();
+		$(".banner .banner_img_a").eq(last).css({
+			left: 0,
+		}).finish().show().animate({
+			left: 880,
+		},500,function(){
+			$(this).hide().css({
+				left: -880,
+			});
+		});
+		$(".banner .banner_img_a").eq(index).css({
+			left: -880,
+		}).finish().show().animate({
+			left: 0,
+		},500);
+		$(".banner .indicator span").removeClass("cur");
+		$(".banner .indicator span").eq(index).addClass("cur");
+		last = index;
+	}
+	function showNextImage(){
+		index = getIndexNext();
+		$(".banner .banner_img_a").eq(last).css({
+			left: 0,
+		}).finish().show().animate({
+			left: -880,
+		},500,function(){
+			$(this).hide().css({
+				left: 880,
+			});
+		});
+		$(".banner .banner_img_a").eq(index).css({
+			left: 880,
+		}).finish().show().animate({
+			left: 0,
+		},500);
+		$(".banner .indicator span").removeClass("cur");
+		$(".banner .indicator span").eq(index).addClass("cur");
+		last = index;
+	}
+	//定时器轮播
+	var timer = setInterval(showNextImage,3000);
+	//鼠标放到指示器时的效果
+	 $('.banner .indicator span').hover(function(){
+            window.clearInterval(timer);
+            index = $('.banner .indicator span').index(this) - 1;
+            showNextImage();
+       },function(){
+            timer = window.setInterval(showNextImage,3000);
+    	}) ;
+
+      $('.banner .page span').hover(function(){
+           window.clearInterval(timer);
+      },function(){
+           timer = window.setInterval(showNextImage,3000);
+       }) ;
+       
+       //改变上一张下一张
+       $('.banner .page .prev').click(function(){
+            showPrevImage();
+        });
+        $('.banner .page .next').click(function(){            
+			showNextImage();
+        });
+</script>

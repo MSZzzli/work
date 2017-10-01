@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>跑马灯</title>
+		<style type="text/css">
+			body,div{
+				margin: 0;
+				padding: 0;
+			}
+			
+			.container{
+				width: 800px;
+				margin: 20px auto;
+				padding: 20px;
+				background-color: #666;
+			}
+			
+			marquee{
+				font-size: 40px;
+			}
+			
+			#scroll{
+				height: 70px;
+				font-size: 50px;
+				overflow: hidden;
+				color: red;
+				padding-top: 30px;
+			}
+			#clock span{
+				margin: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<!-- 第一种方法：标签实现 -->
+			<!-- direction：滚屏方向，down/left（default）/right/up -->
+			<!-- behavior：行为，滚动方式，alternate 往返滚动   scroll（default） 循环滚动  slide 滚动一次，停留在最后的位置 -->
+			<!-- loop：循环次数，  正数代表相应次数 负数和0代表无数次  默认无数次 -->
+			<!-- scrollamount：控制滚动速度 默认值6 -->
+			<!-- scrolldelay：每次卡顿的时间间隔 单位毫秒 -->
+			<marquee direction="left" behavior="scroll" loop="0" scrollamount="10" scrolldelay="100">
+				中北大学欢迎新生入校
+			</marquee>
+			
+			<!-- 第二种方法：JS实现 -->
+			<div id="scroll">
+				
+			</div>
+			
+			<!-- 时钟 -->
+			<div id="clock">
+				<span>00</span>点<span>00</span>分<span>00</span>秒<br />
+				<span>00</span>年<span>00</span>月<span>00</span>日<span>00</span>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	// 第二种方法：通过字符串截取再拼接的方式实现
+	var scroll = document.getElementById("scroll");
+	var info = "我们就像表面上的针，不停的转动，它一边转动，时间在匆匆流逝，却无能为力！！";
+	scroll.innerText = info;
+	setInterval(function(){
+		var first = info.slice(0,1);
+		info = info.slice(1) +　first;
+		scroll.innerText = info;
+	},300);
+	
+	
+	// 时钟
+	var spans = document.querySelectorAll("#clock span");
+	var weekStr = "日一二三四五六";
+	setInterval(getTime,1000);
+	getTime(); // 一上来就先显示一次
+	// 获取时间
+	function getTime(){
+		var time = new Date();
+		var timeList = [time.getHours(),time.getMinutes(),time.getSeconds(),
+		time.getFullYear(),time.getMonth(),time.getDate(),"周"+weekStr.charAt(time.getDay())];
+		for (var i = 0; i < spans.length; i++) {
+			spans[i].innerText = formatTime(timeList[i]);
+		}
+	}	
+	
+	// 格式化时间
+	function formatTime(t){
+		return t.toString().replace(/^(\d)$/,"0$1");
+	}
+</script>

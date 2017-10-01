@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>全选与全不选</title>
+		<style type="text/css">
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
+			body,dl,dt,dd{
+				margin: 0;
+				padding: 0;
+				font-size: 13px;
+			}
+			
+			dl{
+				width: 120px;
+				margin: 10px auto;
+				border: 1px solid #555;
+				border-radius: 5px;
+				padding: 10px 5px;
+				background-color: #FAFAFA;
+			}
+			
+			dt{
+				border-bottom: 1px solid #555;
+				padding-bottom: 10px;
+			}
+			
+			dt label{
+				padding: 0 10px 0 5px;
+			}
+			
+			dt a{
+				text-decoration: none;
+			}
+			
+			dt a:hover{
+				color: red;
+			}
+			
+			dd div{
+				margin-top: 10px;
+			}
+			
+			dd label{
+				padding-left: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 定义列表 -->
+		<dl>
+			<!-- 定义标题 -->
+			<dt>
+				<input type="checkbox" id="checkall" />
+				<label for="checkall">全选</label>
+				<a href="javascript:;">反选</a>
+			</dt>
+			<!-- 定义内容 -->
+			<dd>
+				<div>
+					<input type="checkbox" id="option1" /><label for="option1">选项(一)</label>
+				</div>
+				<div>
+					<input type="checkbox" id="option2" /><label for="option2">选项(二)</label>
+				</div>
+				<div>
+					<input type="checkbox" id="option3" /><label for="option3">选项(三)</label>
+				</div>
+				<div>
+					<input type="checkbox" id="option4" /><label for="option4">选项(四)</label>
+				</div>
+				<div>
+					<input type="checkbox" id="option5" /><label for="option5">选项(五)</label>
+				</div>
+				<div>
+					<input type="checkbox" id="option6" /><label for="option6">选项(六)</label>
+				</div>
+				<div>
+					<input type="checkbox" id="option7" /><label for="option7">选项(七)</label>
+				</div>
+				<div>
+					<input type="checkbox" id="option8" /><label for="option8">选项(八)</label>
+				</div>
+				<div>
+					<input type="checkbox" id="option9" /><label for="option9">选项(九)</label>
+				</div>
+				<div>
+					<input type="checkbox" id="option10" /><label for="option10">选项(十)</label>
+				</div>
+			</dd>
+		</dl>
+		
+		<center>
+			<p>1、切换全选/全不选文字；2、根据选中个数更新全选框状态</p>
+		</center>
+	</body>
+</html>
+
+<script type="text/javascript">
+	
+	// console.log(Math.random());
+	
+	/*
+	 * 伪代码：把伪代码正常解析成正确代码即可
+	 * 
+	 * 点击下面十个多选项
+	 * 1.给十个 input 添加点击事件
+	 * 2.在点击事件里面记录一下当前选中个数
+	 * 3.判断当前这个点完了是否完成了全选
+	 * 	A.如果全选了：把最上面那个全选 input 选中，label 换成 全不选
+	 *  B.如果不够：把最上面那个全选 input 取消选中，label 换成 全选
+	 * 
+	 * 点击全选按钮
+	 * 1.给全选按钮添加点击事件
+	 * 2.下面十个选中input都要选中/全不选中
+	 * 3.切换 label 状态
+	 * 
+	 * 点击反选按钮
+	 * 1.给反选按钮添加点击事件
+	 * 2.下面十个选中input切换相反状态
+	 * 3.判断当前这个点完了是否完成了全选
+	 * 	A.如果全选了：把最上面那个全选 input 选中，label 换成 全不选
+	 *  B.如果不够：把最上面那个全选 input 取消选中，label 换成 全选
+	 */
+	
+	// 找到所有的input标签
+	var inputs = document.querySelectorAll("input");
+	// 反选的a标签
+	var oA = document.querySelector("a");
+	// 显示全选/全不选的label标签
+	var oLabel = document.querySelector("label");
+	// 记录当前选中的个数
+	var count = 0;
+	
+	// 检测 count 的值，够不够全选
+	function isCheckedAll(){
+		// 根据 count == 10 改变 第一个 input 的选中状态
+		inputs[0].checked = count == inputs.length - 1;
+		// 根据是否全部选中改变 Label 的值
+		oLabel.innerHTML = count == inputs.length - 1 ? "全不选" : "全选";
+	}
+	
+	for (var i = 1; i < inputs.length; i++) {
+		// 刷新页面记录当前已经选中多少个
+		// if (inputs[i].checked) {count ++;}
+		inputs[i].checked && count ++;
+		// 判断够不够全选
+		isCheckedAll();
+		
+		// 给十个 input 添加点击事件
+		inputs[i].onclick = function(){
+			// 如果是选中状态那么增加,如果不是选中状态那么减少
+			this.checked ? count ++ : count --;
+			// 判断够不够全选
+			isCheckedAll();
+		}
+	}
+	
+	// 点击第一个全选按钮
+	inputs[0].onclick = function(){
+		// 让下面十个 input 的 checked 值和 第一个 input 的 checked 保持一致
+		for (var i = 1; i < inputs.length; i++) {
+			inputs[i].checked = this.checked;
+		}
+		// 根据是否全部选中改变 count 的值
+		count = this.checked ? inputs.length - 1 : 0;
+		// 根据是否全部选中改变 Label 的值
+		oLabel.innerHTML = this.checked ? "全不选" : "全选";
+	}
+	
+	// 点击反选按钮
+	oA.onclick = function(){
+		// 取反
+		for (var i = 1; i < inputs.length; i++) {
+			inputs[i].checked = !inputs[i].checked;
+		}
+		// 更新 count
+		count = inputs.length - 1 - count;
+		// 判断够不够全选
+		isCheckedAll();
+	}
+	
+	
+	/*
+	// & 与运算（两边表达式都会执行）
+	// && 短路与匀速（且运算）（只有前面是ture的时候，后面表达式才会执行）
+	var a = 10;
+	var b = false;
+	// b & a++; //a = 11
+	b && a++; // a = 10
+	console.log(a);
+	*/
+</script>

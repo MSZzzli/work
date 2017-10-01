@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>带缩略图的滚动图片切换</title>
+		<style type="text/css">
+			html,body,ul,li{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				font-size: 13px;
+			}
+			
+			/* 整体内容样式 */
+			.zoombox{
+				width: 686px;
+				height: 396px;
+				margin: 20px auto;
+			}
+			
+			/* 最上面的大图片 684*394 */
+			.zoompic{
+				border: 1px solid #aaa;
+				width: 684px;
+				height: 394px;
+				background: url(images/loading.gif) no-repeat center;
+			}
+			
+			/* 下面的缩略图 115*74 */
+			.sliderbox{
+				margin-top: 5px;
+				height: 76px;
+				overflow: hidden;
+			}
+			/* 箭头整体设置 */
+			.arrow-btn{
+				width: 38px;
+				height: 76px;
+				background: url(images/arrow-btn.png) no-repeat;
+				cursor: pointer;
+			}
+			/* 左箭头 */
+			#btn-left{
+				float: left;
+			}
+			/* 代表左按钮不能点击 */
+			#btn-left.disabled{
+				background-position: 0 100%;
+				cursor: default;
+			}
+			/* 右键头 */
+			#btn-right{
+				float: right;
+				background-position: 100% 0%;
+			}
+			/* 代表右按钮不能点击 */
+			#btn-right.disabled{
+				background-position: 100% 100%;
+				cursor: default;
+			}
+			/* 中间的小缩略图 */
+			.slider{
+				float: left;
+				width: 606px;
+				height: 76px;
+				padding: 0 2px;
+				position: relative;
+				display: inline;
+				overflow: hidden;
+			}
+			.slider ul{
+				position: absolute;
+			}
+			.slider li{
+				float: left;
+				margin: 0 2px;
+				height: 74px;
+				border: 1px solid white;
+			}
+			/* 鼠标移到 li 上的样式 */
+			.slider li.current{
+				border-color:blue;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="zoombox">
+			<div class="zoompic">
+				<img src="images/3427.jpg" width="684" height="394" alt="美女配奥迪A4L墙纸" />
+			</div>
+			<div class="sliderbox">
+				<div id="btn-left" class="arrow-btn disabled"></div>
+				<div class="slider" id="thumbnail">
+					<ul>
+						<li class="current">
+							<a href="images/3427.jpg" target="_blank"><img src="images/14fd.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸01" /></a>
+						</li>
+						<li>
+							<a href="images/52347.jpg" target="_blank"><img src="images/41a.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸02" /></a>
+						</li>
+						<li>
+							<a href="images/23463.jpg" target="_blank"><img src="images/234fa.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸03" /></a>
+						</li>
+						<li>
+							<a href="images/3247.jpg" target="_blank"><img src="images/412saf.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸04" /></a>
+						</li>
+						<li>
+							<a href="images/26547.jpg" target="_blank"><img src="images/41356a.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸05" /></a>
+						</li>
+						<li>
+							<a href="images/2153.jpg" target="_blank"><img src="images/432sadf.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸06" /></a>
+						</li>
+						<li>
+							<a href="images/3427.jpg" target="_blank"><img src="images/14fd.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸01" /></a>
+						</li>
+						<li>
+							<a href="images/2153.jpg" target="_blank"><img src="images/432sadf.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸06" /></a>
+						</li>
+						<li>
+							<a href="images/3427.jpg" target="_blank"><img src="images/14fd.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸01" /></a>
+						</li>
+					</ul>
+				</div>
+				<div id="btn-right" class="arrow-btn"></div>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	// 点击小图，切换大图
+	$("#thumbnail a").click(function(e){
+		// 切换图片
+		$(".zoompic img").fadeOut("fast").attr({
+			src: $(this).attr("href"),
+			title: $(this).find("img").attr("alt")
+		}).fadeIn("fast");
+		// 把上一张的 current 样式移出
+		$("#thumbnail li.current").removeClass("current");
+		// 给当前这张添加 current 样式
+		$(this).parent().addClass("current");
+		// 组织默认事件和事件的冒泡
+		return false;
+	});
+	
+	// 控制缩略图左右移动
+	// 表示点击的次数
+	var clickCount = 0;
+	// 总的图片个数
+	var imgCount = $(".slider li img").length;
+	// 设置 ul 的宽度，让 li 能排列成一行
+	$(".slider ul").width($(".slider li").outerWidth(true)*imgCount);
+	
+	// 如果刚开始图片不大于五张，那么上一张，下一张都是不能点击的
+	if (imgCount <= 5) {
+		$("#btn-right").addClass("disabled");
+	}
+	
+	// 点击下一张
+	$("#btn-right").click(function(){
+		// 如果图片小于等于五张 或者 点击到最后一张了
+		if (imgCount <= 5 ||　clickCount >= imgCount - 5) {
+			alert("已经是最后一张了");
+			return;
+		}
+		clickCount ++;
+		$(".slider ul").animate({
+			left: "-=" + $(".slider ul li").outerWidth(true)
+		},"fast");
+		
+		// 检测状态
+		checkState()
+	});
+	
+	// 点击上一张
+	$("#btn-left").click(function(){
+		// 如果图片小于等于五张 或者 点击到最后一张了
+		if (imgCount <= 5 ||　clickCount <= 0) {
+			alert("已经是第一张了");
+			return;
+		}
+		clickCount --;
+		$(".slider ul").animate({
+			left: "+=" + $(".slider ul li").outerWidth(true)
+		},"fast");
+		
+		// 检测状态
+		checkState()
+	});
+	
+	// 检测每次点击完毕所处状态
+	function checkState(){
+		// 到最后一张
+		if (clickCount >= imgCount - 5) {
+			$("#btn-right").addClass("disabled");
+		}
+		
+		// 中间状态
+		if (clickCount > 0 && clickCount < imgCount - 5) {
+			$("#btn-left").removeClass("disabled");
+			$("#btn-right").removeClass("disabled");
+		}
+		
+		// 到第一张
+		if (clickCount <= 0) {
+			$("#btn-left").addClass("disabled");
+		}
+	}
+</script>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>选择器</title>
+		  <style>
+		  	div.animate div { background:yellow; border:1px solid #AAA; width:80px; height:80px; margin:0 5px; float:left; }
+			div.colored { background:green !important; }
+		  </style>
+	</head>
+	<body>
+		<div class="myClass" style="width: 100px; height: 50px;">
+			class 选择器
+		</div>
+		<div class="myClass" style="width: 100px; height: 50px;">
+			class 选择器
+		</div>
+		<div id="box">
+			id 选择器
+			<span class="info">
+				显示信息1
+				<span>
+					没有class的span
+				</span>
+			</span>
+			<span>
+				没有class的span
+			</span>
+		</div>
+		<span class="info">
+				显示信息2
+		</span>
+		
+		
+		<div class="animate">
+			<button id="run">Run</button>
+			<div></div>
+			<div id="mover"></div>
+			<div></div>
+		</div>
+	</body>
+	<script src="jQuery/jquery-3.2.1.js"></script>
+</html>
+<script type="text/javascript">
+	// jquery 里面只暴露了一个全局变量 jQuery（优先抢占了一个符号 $）
+	// jQuery == $
+	console.log(jQuery);
+	console.log($);
+	console.log(jQuery == $);
+	
+	// 基本 * 查找文档中的每一个元素
+	console.log(jQuery("*").length);
+	
+	// 基本 .class 根据 class 选择相应标签元素
+	console.log($(".myClass"));
+	
+	// 基本 .id 根据 id 选择相应标签元素
+	console.log($("#box"));
+	
+	// 基本 element 根据 标签 选择相应标签元素
+	console.log($("div"));
+	
+	// 我们可以使用 $.noConflict()把 $的控制权交给其他库。
+	// 出让控制权之后意味着不能在使用 $了
+	// $.noConflict();
+	// var $ = "helloword";
+	
+	// 基本 selector1, selectorN, ...根据 样式选择器 选择相应标签元素
+	console.log(jQuery("div#box span.info"));
+	console.log($);
+	
+	// 层级 parent > child 选择所有指定“parent”元素中指定的"child"的直接子元素
+	console.log($("div#box > span"));
+	
+	// 层级 prev + next 选择所有紧接在 “prev” 元素后的 “next” 元素（只要满足情况都选）
+	// + 表示后面的兄弟
+	console.log($("div.myClass + div"));
+	
+	// 层级 prev ~ siblings 匹配 “prev” 元素之后的所有 兄弟元素。具有相同的父元素，并匹配过滤“siblings”选择器。
+	// ～  表示后面所有的兄弟们
+	console.log($("div.myClass ~ div"));
+	
+	// 基本筛选 :animated 选择所有正在执行动画效果的元素.
+    $("#run").click(function() {
+    	$("div:animated").toggleClass("colored");
+    });
+
+    function animateIt() {
+    	$("#mover").slideToggle("slow", animateIt);
+    }
+    animateIt();
+    
+    // 基本筛选 :eq() $("div:eq(1)") 找到所有匹配到的标签元素的第n个（从 0 开始）
+    // 基本筛选 :even() 找到所有匹配到的标签元素索引为偶数的元素
+    // 基本筛选 :odd() 找到所有匹配到的标签元素索引为奇数的元素
+    // 基本筛选 :first() 找到所有匹配到的标签元素第一个元素
+    // 基本筛选 :last() 找到所有匹配到的标签元素最后一个元素
+    // 基本筛选 :gt() 找到所有匹配到的标签元素索引值大于 n 的元素
+    // 基本筛选 :lt() 找到所有匹配到的标签元素索引值小于 n 的元素
+    console.log($("div:gt(2)"));
+    
+    // 属性 [name|="a"] 选择指定属性值等于给定字符串或以该字符串为前缀
+    // 属性 [name*="value"] 选择指定属性值等于给定字符串或包含给定的字符串
+    // 属性 [name~="value"] 选择指定属性用空格分隔的值中包含一个给定值的元素。
+    // 属性 [name$="value"] 选择指定属性值等于给定字符串或以该字符串为结尾的属性的元素
+    // 属性 [name^="value"] 选择指定属性值等于给定字符串或以该字符串为开头的属性的元素
+	
+	// 子元素筛选（自己下去看）
+	
+	// 表单 :button 一个和$(":button")等价的选择器，使用有效的CSS是$("button, input[type='button']")。
+	// 表单 :input  选择所有 input, textarea, select 和 button 元素.(表单元素)
+</script>
+
+
+
+
+
+
+
