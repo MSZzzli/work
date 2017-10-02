@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>添加新的学生</title>
+	</head>
+	<body>
+		<form action="/create-student" method="post">
+			<label>姓名</label>
+			<input type="text" name="name" required />
+			
+			<br />
+			
+			<label>年龄</label>
+			<input type="number" name="age" required />
+			
+			<br />
+			
+			<select name="classInfo">
+				{{ each data as cla index }}
+					<!-- 在 art-template 模板引擎中，把 mongodb 中的主键 _id 改为 id 了 -->
+					<option value="{{cla.id}}">{{cla.subject}}-{{cla.session}}</option>
+				{{ /each }}
+			</select>
+			
+			<br />
+			
+			<input type="submit" value="添加"/>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>mongoose模块</title>
+	</head>
+	<body>
+		<p>**********************注册**********************</p>
+		<form action="/register" id="reqister" method="post">
+			<label for="username">用 &nbsp;户&nbsp; 名：</label>
+			<input type="text" name="username" id="username" required="required"/>
+			<br />
+			<!-- 密码和确认密码一致自己判断 -->
+			<label for="psw">密 &nbsp;&#x3000;&nbsp; 码：</label>
+			<input type="password" name="psw" id="psw" required="required"/>
+			<br />
+			<label for="repsw">确认密码：</label>
+			<input type="password" name="repsw" id="repsw" required="required"/>
+			<br />
+			<input type="submit" value="注册"/>
+		</form>
+		
+		<p>**********************登陆**********************</p>
+		<form action="/login" id="login" method="post">
+			<label for="username">用 &nbsp;户&nbsp; 名：</label>
+			<input type="text" name="username" id="username" required="required"/>
+			<br />
+			<label for="psw">密 &nbsp;&#x3000;&nbsp; 码：</label>
+			<input type="password" name="psw" id="psw" required="required"/>
+			<br />
+			<input type="submit" value="登陆"/>
+		</form>
+		
+		<p>**********************上传头像**********************</p>
+		<form action="/upload"  id="upload" method="post" enctype="multipart/form-data">
+			<img src="uploads/user.png" alt="头像" />
+			<input type="file" name="photo" autocomplete="off" 
+			accept="image/gif,image/jpeg,image/png"   />
+			<input type="submit" value="上传" />
+		</form>
+		<script type="text/javascript">
+			// 判断是否登录
+			var username = window.decodeURIComponent(document.cookie.split("=")[1]);
+			if (username) {
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function(){
+					if (xhr.readyState == 4) {
+						console.log(xhr.responseText);
+						var obj = JSON.parse(xhr.responseText);
+						document.querySelector("#upload img").src = obj.headerUrl;
+					}
+				}
+				xhr.open("GET","/info");
+				xhr.send();
+			} 
+		</script>
+		
+		<p>**********************修改密码**********************</p>
+		<form action="/update" id="update" method="get">
+			<label for="username">修改人：</label>
+			<input type="text" name="username" id="username" required="required"/>
+			<br />
+			<label for="psw">旧密码：</label>
+			<input type="password" name="psw" id="psw" required="required"/>
+			<br />
+			<label for="newpsw">新密码：</label>
+			<input type="password" name="newpsw" id="newpsw" required="required"/>
+			<br />
+			<input type="submit" value="确认修改"/>
+		</form>
+		
+		<p>**********************删除账号**********************</p>
+		<form action="/remove" id="remove" method="get">
+			<label for="username">删除人：</label>
+			<input type="text" name="username" id="username" required="required"/>
+			<br />
+			<label for="psw">密&#3000;码：</label>
+			<input type="password" name="psw" id="psw" required="required"/>
+			<br />
+			<input type="submit" value="确认删除"/>
+		</form>
+	</body>
+</html>
