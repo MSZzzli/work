@@ -1,0 +1,81 @@
+首先先下载node.js
+下载完之后将node命令安装在全局的path路径中
+创建一个node目录
+创建一个app.js文件,写一些简单的命令之后
+用命令行工具或者直接在webstrom中运行 node app.js
+打开浏览器输入http://127.0.0.1:8888即可在浏览器中查看结果
+
+
+npm直接附带在node的安装中,npm -v 检查下npm是否正常
+npm install express 安装express模块
+
+npm ls 查看所安装的模块
+npm uninstall 卸载模块
+
+npm init 生成package.json文件
+其实在生成的时候也可以自定义某些自己的模块 (暂时忽略)
+以后在安装模块，一定要记得在安装的时候加--save就可以直接导入到json中
+如果以后想用package.json里面的模块，直接npm install就可以了
+
+如果想要支持post提交，必须再安装一个模块
+npm install body-parser --save
+
+*************************************************************************************************************************
+安装express 命令行工具(如果说没有权限，用管理员身份安装)
+npm install express-generator -g
+
+然后使用命令行工具初始化一个项目
+ express -e blog
+ cd blog && npm install
+
+最后
+set DEBUG=myapp & npm start
+完成对于项目的一个调试
+
+参考资料ps:
+查看express命令选项
+$ express -h  
+ 
+  Usage: express [options] [dir]  
+ 
+  Options:  
+ 
+    -h, --help          查看帮助信息  
+    -V, --version       查看版本  
+    -e, --ejs           增加ejs模板引擎 (默认模板引擎是jade)  
+        --hbs           增加 handlebars 引擎支持  
+    -H, --hogan         增加 hogan.js引擎支持  
+    -c, --css <engine>  增加 stylesheet 引擎支持(less|stylus|compass) (默认使用css)  
+    -f, --force         如果没有该目录则创建 
+
+*********************************************************
+下载解压mongodb,并创建一个blog文件夹作为我们的数据库
+进入bin目录执行一个命令
+mongod --dbpath ../blog/ 或者
+mongod.exe --dbpath ../blog/
+设置blog文件夹作为我们的存储目录并启动mongodb
+
+***********************************************************
+在package.json中添加一行
+"mongodb": "1.4.15"
+然后运行npm install 更新依赖的模块即可
+
+********************************************************
+为了让node.js支持会话，这里要安装两个插件
+"express-session": "1.9.1",
+"connect-mongo": "0.4.1"
+******************************************************
+每次修改代码的时候总是要重新启动，这里有个插件可以直接重启
+npm install -g supervisor
+
+supervisor app.js
+
+******************************************************
+安装flash
+插件flash 是一个在 session 中用于存储信息的特定区域。信息写入 flash ，下一次显示完毕后即被清除。典型的应用是结合重定向的功能，
+确保信息是提供给下一个被渲染的页面。
+"connect-flash": "0.1.1"
+
+**********************************************************
+还得安装下crypto加密插件
+npm install crypto

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>首页</title>
+	</head>
+	<body>
+		<!-- 注意：在高版本的 art-template 里面，注释需要这样写 -->
+		
+		<h2>{{title}}</h2>
+		{{if list.length > 0}}
+			<ul>
+				{{each list book index}}
+					<li>
+						第{{index+1}}本：《{{book.name}}》,
+						原价：<del style="color: red;">{{book.price}}</del>元，
+						现价：{{book.currentPrice}}元。
+					</li>
+				{{/each}}
+			</ul>
+		{{else}}
+			<p>今天没有打折书籍</p>
+		{{/if}}
+		
+		<!-- 新语法对比 -->
+		
+		<!-- 取变量值：<%= 属性 %> -->
+		<h2><%= title %></h2>
+		<!-- 表示关键字：<% 关键字 %> -->
+		<% if(list.length > 0){ %>
+			<ul>
+				<!-- for遍历 -->
+				<% for(var i=0; i<list.length; i++){ %>
+					<% var book = list[i]; %>
+					<li>
+						第<%= i+1 %>本：《<%= book.name %>》,
+						原价：<del style="color: red;"><%= book.price %></del>元，
+						现价：<%= book.currentPrice %>元。
+					</li>
+				<% } %>
+				
+				<!-- forEach遍历 -->
+				<% list.forEach(function(book,i){ %>
+					<li>
+						第<%= i+1 %>本：《<%= book.name %>》,
+						原价：<del style="color: red;"><%= book.price %></del>元，
+						现价：<%= book.currentPrice %>元。
+					</li>
+				<% }) %>
+			</ul>
+		<% }else{ %>
+			<p>今天没有打折书籍</p>
+		<% } %>
+	</body>
+</html>
+

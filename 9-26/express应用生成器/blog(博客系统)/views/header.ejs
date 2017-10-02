@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="CH">
+<head>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="stylesheets/style.css"/>
+	<title><%= title %></title>	
+</head>
+<body>
+	<header>
+		<h1><%= title %></h1>
+	</header>
+	
+	<nav>
+		<span><a href="/" title="首页">home</a></span>
+		<!-- 如果没有登录用户，那么导航条显示 首页 登录 注册 -->
+		<!-- 如果有登录用户，那么导航条显示 首页 发表 登出 -->
+		<% if(user){ %>
+			<span><a href="/post" title="发表">post</a></span>
+			<span><a href="/logout" title="登出">logout</a></span>
+		<% }else{ %>
+			<span><a href="/login" title="登陆">login</a></span>
+			<span><a href="/register" title="注册">register</a></span>
+		<% } %>
+	</nav>
+	
+	<article>
+		<% if(success){ %>
+			<div><%= success %></div>
+		<% } %>
+		<% if(error){ %>
+			<div><%= error %></div>
+		<% } %>

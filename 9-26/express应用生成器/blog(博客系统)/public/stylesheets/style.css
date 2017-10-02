@@ -1,0 +1,46 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	width: 600px;
+	margin: 2em auto;
+	padding: 0 2em;
+	font-size: 14px;
+}
+
+header{
+	padding: 10px 0;
+	border-bottom: 1px solid #ccc;
+}
+
+nav{
+	float: left;
+	font-size: 18px;
+	text-transform: uppercase;
+	width: 100px;
+	text-align: right;
+	margin-left: -100px;
+}
+nav a{
+	display: block;
+	text-decoration: none;
+	padding: 10px 10px;
+	color: black;
+}
+nav a:hover{
+	background-color: red;
+	color: #aaa;
+	transition: color 0.2s linear; 
+}
+
+article{
+	font-size: 16px;
+	padding: 5px 10px;
+}
+article div{
+	color: yellow;
+}
+
+

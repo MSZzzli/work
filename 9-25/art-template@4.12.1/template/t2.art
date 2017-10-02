@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>首页</title>
+	</head>
+	<body>
+		<h2>{{title}}</h2>
+		{{if list.length > 0}}
+			<ul>
+				{{each list book index}}
+					<li>
+						第{{index+1}}本：《{{book.name}}》,
+						原价：<del style="color: red;">{{book.price}}</del>元，
+						现价：{{book.currentPrice}}元。
+					</li>
+				{{/each}}
+			</ul>
+		{{else}}
+			<p>今天没有打折书籍</p>
+		{{/if}}
+	</body>
+</html>
