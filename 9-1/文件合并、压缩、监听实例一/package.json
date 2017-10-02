@@ -1,0 +1,19 @@
+{
+  "name": "zy-clock",
+  "version": "1.0.0",
+  "description": "文件合并与压缩",
+  "main": "gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zm",
+  "license": "ISC",
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^3.0.1",
+    "grunt-contrib-watch": "^1.0.0"
+  },
+  "srcFiles": ["src/Control.js","src/second.js","src/minute.js","src/hour.js",
+  						"src/dot.js","src/diamond.js","src/Clock.js"]
+}

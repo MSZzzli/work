@@ -1,0 +1,19 @@
+{
+  "name": "zbt-gulp",
+  "version": "1.1.0",
+  "description": "Gulp版找不同",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "常伟",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-concat": "^2.6.0",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-zip": "^3.2.0"
+  }
+}
