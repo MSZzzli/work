@@ -1,0 +1,18 @@
+{
+  "name": "nodejs-mongodb",
+  "version": "1.0.0",
+  "description": "mongodb数据库的使用",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mongodb数据库"
+  ],
+  "author": "zm",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.5",
+    "mongoose": "^4.11.13"
+  }
+}
