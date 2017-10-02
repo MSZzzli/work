@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>模态框</title>
+		<!-- https://daneden.github.io/animate.css/ -->
+		<link rel="stylesheet" type="text/css" href="animate.css"/>
+		<style type="text/css">
+			html,body{
+				width: 100%;
+				height: 100%;
+				/*overflow: hidden;*/
+			}
+			
+			body,h2{
+				margin: 0;
+				font-size: 13px;
+			}
+			
+			/* 按钮 */
+			button{
+				margin: 10px;
+			}
+			
+			/* 蒙版 */
+			div.separate{
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: black;
+				opacity: 0.4;
+				display: none;
+			}
+			
+			/* 模态框 */
+			div.modal{
+				/* 一般模态框不占用文档流，一般设置 absolute 或者 fixed*/
+				width: 400px;
+				height: 200px;
+				/*position: absolute;*/
+				position: fixed;
+				top: calc(50% - 100px);
+				left: calc(50% - 200px);
+				background-color: #fff;
+				border: 5px solid #f90;
+				display: none;
+			}
+			
+			h2{
+				text-align: right;
+				background-color: #FECB00;
+				border-bottom: 5px solid #FF9900;
+				padding: 5px;
+			}
+	
+			h2 span{
+				color: #FF9900;
+				background-color: white;
+				border: 1px solid #FF9900;
+				padding: 1px 5px;
+				cursor: pointer;
+			}
+			
+			/* 关键帧动画 */ 
+			@keyframes fade{
+				from{
+					opacity: 0;
+					height: 0;
+				}
+				to{
+					opacity: 1;
+					height: 200px;
+				}
+			}
+			.fade{
+				animation: fade 0.8s;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 触发按钮 -->
+		<center>
+			<button type="button">弹出</button>
+		</center>
+	
+		<!-- 蒙版：起遮挡，隔离的作用 -->
+		<div class="separate"></div>
+		
+		<!-- 弹出层 -->
+		<div class="modal animated">
+			<h2>
+				<span class="close">X</span>
+			</h2>
+		</div>
+		
+		<!-- 正常的内容布局 -->
+		<p>这是接下来要实现的页面内容</p>
+	</body>
+</html>
+<script type="text/javascript">
+	/*
+	 * 伪代码
+	 * 1.找标签元素 button div.separate div.modal span.close
+	 * 2.给按钮绑定事件弹出模态框
+	 * 3.点击关闭按钮或者蒙版关闭模态框
+	 */
+	
+	var btn = document.getElementsByTagName("button")[0];
+	var separate = document.getElementsByClassName("separate")[0];
+	var modal = document.getElementsByClassName("modal")[0];
+	var close = document.getElementsByClassName("close")[0];
+	
+	// 弹出模态框
+	btn.onclick = function(){
+		separate.style.display = "block";
+		modal.style.display = "block";
+		
+		// 增加动画类
+		// fade fadeIn fadeOut shake bounce fadeInLeft……
+		modal.classList.add("shake");
+	}
+	
+	// 关闭模态框
+	function hiddenModal(){
+		separate.style.display = "none";
+		modal.style.display = "none";
+		
+		// 移出动画类
+		modal.classList.remove("shake");
+	}
+	close.onclick = hiddenModal;
+	separate.onclick = hiddenModal;
+</script>

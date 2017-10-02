@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>星级评分</title>
+		<style>
+			html,body,ul,li{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				font-size: 12px;
+				color: #666;
+			}
+			
+			#star{
+				width: 600px;
+				margin: 10px auto;
+				position: relative;
+			}
+			
+			#star span{
+				line-height: 25px;
+				float: left;
+				margin-right: 10px;
+			}
+			#star li{
+				width: 25px;
+				height: 25px;
+				background: url(images/star.png) no-repeat;
+				float: left;
+				cursor: pointer;
+			}
+			#star li.active{
+				background-position-y: -28px;
+			}
+			
+			#star em{
+				color: #FF6600;
+			}
+			#star p{
+				width: 160px;
+				height: 60px;
+				position: absolute;
+				top: 20px;
+				left: 10px;
+			}
+			#star p em{
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="star">
+			<span>点击星星进行评分</span>
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<!--<span><em><strong>1</strong>分</em>（差得太离谱，与卖家描述的严重不符，非常不满）</span>-->
+			<span></span>
+			<!--<p><em><strong>1</strong>分 很不满意</em>差得太离谱，与卖家描述的严重不符，非常不满</p>-->
+			<p></p>
+		</div>
+	</body>
+</html>
+<script src="jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	// 星级评分的描述 
+	var msg = [
+				"很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
+				"不满意|部分有破损，与卖家描述的不符，不满意",
+				"一般|质量一般，没有卖家描述的那么好",
+				"满意|质量不错，与卖家描述的基本一致，还是挺满意的",
+				"非常满意|质量非常好，与卖家描述的完全一致，非常满意"
+			  ];
+	
+	// 最终决定多少颗星星，取决于点击事件
+	var clickIndex = -1;
+	
+	// 鼠标移入 鼠标点击 鼠标移出
+	$("#star li").on({
+		mouseenter: function(){
+			// 决定显示几颗星星
+			var index = $(this).index();
+			showStar(index);
+			// 移动p标签
+			var htmlStr = "<em><strong>"+(index+1)+"</strong>分 "+msg[index].split("|")[0]
+						+ "</em>"+msg[index].split("|")[1];
+			var left = 108 + $(this).outerWidth(true)*index;			
+			$("#star p").html(htmlStr).css("left",left);
+		},
+		click: function(){
+			// 显示对应内容span
+			var index = $(this).index();
+			var htmlStr = "<em><strong>"+(index+1)+"</strong>分</em>（"
+						+msg[index].split("|")[1]+"）";
+			$("#star span").last().html(htmlStr);
+			
+			// 清除 p 标签
+			$("#star p").empty();
+			
+			// 记录点击的值
+			clickIndex = index;
+		},
+		mouseleave: function(){
+			showStar(clickIndex);
+			// 清除 p 标签
+			$("#star p").empty();
+		}
+	});
+	
+	// 封装一个方法，专门处理显示几颗星星
+	function showStar(num){
+		for (var i = 0; i < $("#star li").length; i++) {
+			if (i <= num) {
+				$("#star li").eq(i).addClass("active");
+				
+			} else{
+				$("#star li").eq(i).removeClass("active");
+			}
+		}
+	}
+</script>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>数组内置属性和方法</title>
+	</head>
+	<body>
+		<div>1</div>
+		<div>2</div>
+	</body>
+</html>
+<script type="text/javascript">
+	console.log(Array);
+	
+	// 通过字面量的方式创建一个数组
+	var list1 = [1,14,6,9,7,3];
+	// 通过 new 构造函数的方式创建一个数组
+	var list2 = new Array(1,2,3,4,5,6);
+	
+	console.log(list1);
+	console.log(list2);
+	
+	/*
+	// 将数组转换为字符串
+	console.log(list1.toString());
+	
+	// 将数组转换为字符串并且指定分割样式
+	console.log(list1.join("|"));
+	console.log(list1.join("-"));
+	
+	// 向数组尾部增加一个或多个元素（返回数组的长度）
+	console.log(list1.length);
+	console.log(list1.push(5,55));
+	console.log(list1);
+	
+	// 删除数组尾部一个元素（返回当前删除的元素）
+	console.log(list1.pop());
+	console.log(list1);
+	
+	// 向数组前面增加一个或多个元素（返回数组的长度）
+	console.log(list1.unshift(5));
+	console.log(list1);
+	
+	// 删除数组前面一个元素（返回当前删除的元素）
+	console.log(list1.shift());
+	console.log(list1);
+	
+	
+	// 颠倒数组元素(不会产生新的数组)
+	var list = list1.reverse();
+	console.log(list);
+	// 模仿
+	var list = [1,2,3,4,5,6,7];
+	for (var i = 0; i < parseInt(list.length / 2); i++) {
+		// 通过中间变量 temp 交换两个变量的值
+		var temp = list[i];
+		list[i] = list[list.length - 1 - i];
+		list[list.length - 1 - i] = temp;
+	}
+	console.log(list);
+
+	// 不通过中间变量，交换两个变量的值
+	var a = 5;
+	var b = 8;
+	a = a + b; 
+	b = a - b; 
+	a = a - b;
+	
+	// 数组排序：不会产生新的数组
+	// 如果没有给 sort() 传递参数，那么它按照字母（字母编码），从第一位开始比较
+	list1.sort();
+	console.log(list1);
+	
+	// 排序
+	function sortNumber(a,b){
+		// 从小到大
+		// return a - b;
+		// 从大到小
+		return b - a;
+	}
+	list1.sort(sortNumber);
+	console.log(list1);
+	*/
+	
+	// splice()：用新的元素置换旧的数组元素，达到修改数组的目的
+	// 返回值是一个新的数组：包含被删掉的元素
+	// 一个参数
+	// 从第几位开始删除，一直删到最后
+	// console.log(list1.splice(3));
+	// 两个参数
+	// 参数一：从第几位开始删除，参数二：删除多少个
+	// console.log(list1.splice(1,3));
+	// console.log(list1);
+	// 三个参数
+	// 参数一：从第几位开始删除，参数二：删除多少个，参数三：在删除位置添加新的元素，……
+	list1.splice(1,3,100,200,300);
+	console.log(list1);
+	
+	
+	// 数组拼接：concat() 注意：会产生一个新的数组
+	// 有时候我们这样写：var temp = list.concat();目的：产生一个跟 list 一模一样的新数组
+	var list = ["a","b","c"];
+	console.log(list1.concat(list));
+	console.log(list1);
+	
+	
+	// Array.from() 将一个类数组对象，转化为真正的数组对象
+	var divs = document.getElementsByTagName("div");
+	console.log(divs);
+	divs = Array.from(divs);
+	console.log(divs);
+	
+	// 数组遍历（快速遍历）
+	list1.forEach(function(value,index,obj){
+		// 遍历到的每个元素的值
+		console.log(value);
+		// 遍历到元素的索引值
+		console.log(index);
+		// 就是这个数组list1本身
+		console.log(obj);
+	});
+	
+	// 查询
+	var result = list1.find(function(val,index,obj){
+		return val == 200;
+	});
+	console.log(result);
+	
+	// 查找元素索引
+	// 如果能找到 返回 对应的索引
+	// 如果找不到 返回 -1
+	result = list1.indexOf(200);
+	console.log(result);
+</script>

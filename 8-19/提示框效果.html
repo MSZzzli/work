@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>提示框效果</title>
+		<style type="text/css">
+			html,body,ul,li,h2{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				font-size: 13px;
+			}
+			
+			#outer{
+				width: 700px;
+				border: 1px solid black;
+				margin: 10px auto;
+				padding: 5px;
+				overflow: hidden;
+			}
+			
+			#outer h2{
+				text-align: center;
+				line-height: 100px;
+			}
+			
+			#outer ul{
+				list-style: none;
+				/*overflow: hidden;*/
+			}
+			
+			#outer ul li{
+				float: left;
+				width: 128px;
+				height: 128px;
+				background-color: #F0F0F0;
+				margin: 6px;
+				border: 1px solid black;
+				box-sizing: border-box;
+				text-align: center;
+				/* 可以让子标签相对自己来定位（absolute fixed 等都可以） */
+				position: relative;
+			}
+			
+			#outer li a{
+				color: #555;
+			}
+			
+			#outer li strong{
+				margin-top: 40px;
+				display: block;
+			}
+			
+			#outer li img{
+				display: none;
+				width: 145px;
+				height: 145px;
+				border: 2px solid #888;
+				position: absolute;
+				top: -10px;
+				left: -10px;
+				cursor: crosshair;
+			}
+			
+			#outer img.current{
+				animation: fade 1s;
+			}
+			
+			@keyframes fade{
+				from{
+					opacity: 0;
+					transform: scale(0) rotate(0);
+				}
+				to{
+					opacity: 1;
+					transform: scale(1) rotate(360deg);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="outer">
+		    <h2>名车车标展示-鼠标移过显示车标</h2>
+		    <ul>
+		        <li>
+		            <a href="javascript:;" title="BMW 宝马汽车"><strong>BMW</strong>宝马汽车</a>
+		            <img src="img/1.jpg" alt="BMW 宝马汽车" />
+		        </li>
+		        <li>
+		            <a href="javascript:;" title="Alfa Romeo 阿尔法-罗米欧"><strong>Alfa Romeo</strong> 阿尔法-罗米欧</a>
+		            <img src="img/2.jpg" alt="Alfa Romeo 阿尔法-罗米欧" />
+		        </li>
+		        <li>
+		            <a href="javascript:;" title="Skoda 斯柯达"><strong>Skoda</strong> 斯柯达</a>
+		            <img src="img/3.jpg" alt="Skoda 斯柯达" />
+		        </li>
+		        <li>
+		            <a href="javascript:;" title="Volkswagen 大众汽车"><strong>Volkswagen</strong> 大众汽车</a>
+		            <img src="img/4.jpg" alt="Volkswagen 大众汽车" />
+		        </li>
+		        <li>
+		            <a href="javascript:;" title="Saab 萨布牌轿"><strong>Saab</strong> 萨布牌轿车</a>
+		            <img src="img/5.jpg" alt="Saab 萨布牌轿" />
+		        </li>
+		        <li>
+		            <a href="javascript:;" title="Lamborghini 兰博基尼"><strong>Lamborghini</strong> 兰博基尼</a>
+		            <img src="img/6.jpg" alt="Lamborghini 兰博基尼" />
+		        </li>
+		        <li>
+		            <a href="javascript:;" title="Porsche 保时捷"><strong>Porsche</strong> 保时捷</a>
+		            <img src="img/7.jpg" alt="Porsche 保时捷" />
+		        </li>
+		        <li>
+		            <a href="javascript:;" title="Peugeot 标致"><strong>Peugeot</strong> 标致</a>
+		            <img src="img/8.jpg" alt="Peugeot 标致" />
+		        </li>
+		        <li>
+		            <a href="javascript:;" title="Mercedes1 梅赛德斯 奔驰"><strong>Mercedes1</strong> 梅赛德斯 奔驰</a>
+		            <img src="img/9.jpg" alt="Mercedes1 梅赛德斯 奔驰" />
+		        </li>
+		        <li>
+		            <a href="javascript:;" title="Buick 别克汽车"><strong>Buick</strong> 别克汽车</a>
+		            <img src="img/10.jpg" alt="Buick 别克汽车" />
+		        </li>
+		    </ul>
+		</div>
+	</body>
+</html>
+
+<script type="text/javascript">
+	var lis = document.querySelectorAll("#outer li");
+	var imgs = document.querySelectorAll("#outer img");
+	
+	lis.forEach(function(li,i){
+		li.onmouseover = function(){
+			imgs[i].style.display = "block";
+			imgs[i].className = "current";
+		}
+		
+		li.onmouseout = function(){
+			imgs[i].style.display = "none";
+			imgs[i].className = "";
+		}
+	});
+</script>

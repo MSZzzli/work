@@ -1,0 +1,200 @@
+1.请列举出至少2个JS脚本语言的优点：
+a.JS是解释型语言,无需编译，直接执行。
+b.JS是一种轻量级的编程语言。
+c.相对编译型语言易学易用，类型松散，灵活易用。
+d.相对编译型语言开发速度快。
+e.脚本语言开发程序一般容易部署，因为不需要编译和打包的过程。
+
+2.JS中2、"2"、Boolean(2)、new Boolean(2)、Number(2)、new Number(2)分别是什么类型的值：
+答：2是数字类型或number;
+"2"是字符串类型或string;
+Boolean(2)是布尔类型或boolean;
+new Boolean(2)是对象类型或object;
+Number(2)是数字类型或number;
+new Boolean(2)是对象类型或object;
+
+3.document.querySelector("div")和document.querySelectorAll("div.text-error")的区别是什么？
+答：前者取文档中的第一个div元素,后者取文档中类型为text-error的所有的div元素。
+
+4.请列举出JS语言中常用的取元素的方法：
+document.getElementById()
+document.getElementsByClassName()
+document.getElementsByTagName()
+document.querySelector()
+document.querySelectorAll()
+
+5.请列举出JS语言中输出数据的几种方式：
+答：document.write()、document.writeln()、alert()、console.log()、利用元素的相关属性如innerHTML,innerText等；
+
+6.使用三元运算符改写以下代码，要求：输出的结果一致即可：
+
+var score = 61;
+var result;
+
+if (score > 60) {
+	result = '及格';
+}
+else {
+	result = '不及格';
+}
+
+alert(result);
+
+答：第一种：
+var score = 61;
+var result = score > 60 ? "及格" : "不及格";
+alert(result);
+第二种：
+var score = 61;
+alert(score > 60 ? "及格" : "不及格");
+
+7.以下两个语句的在功能上的区别是什么：
+div.addEventListener("click", function(){ alert("hello"); });	
+div.addEventListener("click", function(){ alert("hello"); }, true);
+
+答：前者在冒泡阶段执行；后者在捕获（挖洞）阶段执行(默认值 false)
+
+8.以下3个语句的作用分别是什么（ev是事件对象）：
+ev.prventDefault()
+ev.stopPropergation()
+ev.stopImmediatePropagation()
+
+答：第一个用来阻止标签的默认行为，如a标签的跳转行为，form表单的提交行为；
+第二个用来阻止事件的传播，但不会影响同级别的其它事件的执行，在捕获和冒泡两个阶段都能阻止；
+第三个也用来阻止事件的传播，会把同级别的其它事件也阻止传播，在捕获和冒泡两个阶段都能阻止；
+
+9.setTimeout与setInterval的功能有什么区别？
+答：setInterval在执行完一次代码之后，经过第二个参数的时间间隔后，它还会自动重复执行代码，而setTimeout只执行一次；
+
+
+
+10.以下代码的弹出的值分别是什么？
+alert("1" +  23)
+alert("1" -  23)
+
+答：123和-22
+
+11.回答以下代码，alert的值分别是多少？
+<script>  
+var a = 10;  
+function test() {  
+    a = 100;  
+    alert(a);  
+    var a;  
+    alert(a);  
+}  
+test();  
+</script>  
+正确答案是：100， 100 
+-------------------------------
+<script>  
+var a = 100;    
+function test(){    
+    alert(a);    
+    a = 10; 
+    alert(a);    
+}    
+test();   
+</script>
+正确答案是： 100， 10
+
+12.
+JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。
+它是基于JavaScript的一个子集。数据格式简单, 易于读写, 占用带宽小
+{'age':'12', 'name':'back'}
+
+13.写出一下运算结果
+alert( typeof(null) )  		// object
+alert( typeof(undefined) )  	// undefined
+alert( typeof(NaN) )  		// number
+alert( NaN == undefined )  	// false
+alert( NaN == NaN )  		// false
+var str = "123abc";
+alert( typeof(str++) ) 	 类型转换用得是 Number(‘123abc’) == NaN	// number
+var str = "123abc";
+alert( typeof(str) ) 		// string 
+
+14.写出程序运行的结果？
+for(var i=0, j=0; i<10, j<6; i++, j++){
+	k = i + j; 
+}
+console.log(k);
+
+答：10
+
+15.以下哪个在JS中会报错:
+(1)var a = ();
+(2)var b = [];
+(3)var c = {};
+(4)var d = 2abc; 
+
+答：1，4
+
+16.写一个函数，返回三个值中的最大值（不要求算法，结果正确即可）：
+
+答：
+function maxValue(a, b, c){
+	var result = a;
+	if( b > a){
+		result = b;
+	}
+	if( c > b){
+		result = c;
+	}
+	return result ;
+}
+
+17.用循环语句写一个函数，返回1-100以内的奇数和（for和while都行，结果必须正确）：
+
+答：其中一个参数答案
+function evenTotal(){
+    var result = 0;
+    for(var i = 1; i <= 100; i++){
+	if (i % 2 == 1){
+		result += i;
+	}
+    }
+    return result;
+}
+
+
+18.用纯JS在body中生成一个div元素，要求：div元素带有一个id="container",高度宽度值100px,背景颜色红色，鼠标移动div元素上时背景颜色变蓝色，鼠标移走时恢复原来的红色
+<script>
+	var div = document.createElement("div");
+        div.id = "container";
+        div.style.width = "100px";
+        div.style.height = "100px";
+        div.style.backgroundColor = "red";
+        div.addEventListener("mouseover",function(){
+            div.style.backgroundColor = "blue";
+        })
+        div.onmouseout = function(e){
+            e.target.style.backgroundColor = "red";
+        }
+        document.body.appendChild(div);
+</script>
+
+
+19.用基于对象的Javascript来介绍一下自己。（没答案哦亲，自己试试吧）
+
+答：
+var person = new Object();
+person.name = "张三";
+person.age = 21;
+person.address = "河南郑州";
+person.grilFirendCount = "100个";
+person.sex = "中性/男性/女性";
+person.skill = function(){
+	alert("我在学习HTML5技术");
+}
+20.查找课件《添加删除对象属性2》
+
+
+
+
+
+
+
+
+
+

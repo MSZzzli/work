@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>history对象</title>
+	</head>
+	<body>
+		<h1>页面3</h1>
+		<button type="button" onclick="goIndex()">回到首页</button>
+		
+		<button type="button" onclick="progress(25)">进度25%</button>
+		<button type="button" onclick="progress(50)">进度50%</button>
+		<button type="button" onclick="progress(75)">进度75%</button>
+		<button type="button" onclick="progress(100)">进度100%</button>
+		
+		<div>
+			<!-- 进度条 -->
+			<progress style="width: 600px;" value="0" max="100"></progress>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	// 历史状态数组个数
+	// console.log(history.length);
+	function goIndex(){
+		// history.go(-2);
+		history.go(1-history.length);
+	}
+	
+	var pro = document.querySelector("progress")
+	// 人为改变历史状态
+	function progress(val){
+		// 人为增加一个历史状态（这个历史状态可以反映在历史记录）
+		history.pushState(val,"进度"+val,"#"+val);
+		
+		// 改变进度条
+		pro.value = val;
+		
+		// 改变页面标题
+		document.title = "进度"+val;
+	}
+	
+	// 当点击浏览器回退按钮时自动调用下面的方法
+	window.onpopstate = function(event){
+		console.log("后退了");
+		console.log(event);
+		
+		// 改变进度条
+		pro.value = event.state;
+		
+		// 改变页面标题
+		document.title = "进度"+event.state;
+	}
+</script>

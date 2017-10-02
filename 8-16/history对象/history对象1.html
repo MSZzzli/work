@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>history对象</title>
+	</head>
+	<body>
+		<h1>页面1</h1>
+		<button type="button" onclick="goForward()">前进 &gt;</button>
+		<a href="history对象2.html">跳转页面2</a>
+	</body>
+</html>
+<script type="text/javascript">
+	console.log(history);
+	function goForward(){
+		// 前进:只能前进到曾经跳转过的页面
+		// history（对象）:History 
+		history.forward();
+		// go(n):+n 表示前进几个页面 ； -n 后退几个页面
+		// history.go(1);
+	} 
+</script>

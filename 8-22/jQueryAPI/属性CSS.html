@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>属性 / CSS</title>
+		<style type="text/css">
+			@keyframes fade{
+				from{
+					background-color: blue;
+				}
+				to{
+					background-color: red;
+				}
+			}
+			.fade{
+				/* backwards 保持动画开始的状态
+				   forwards 保持动画结束的状态
+				   both 开始保持开始状态 结束保持结束状态 */
+				animation: fade 1s 1s both;
+			}
+			
+			
+			/* h5 新特性，图片与图片之间默认有间距，消除的方法 */
+			#imgs{			
+				/* font-size: 0; */
+				/* overflow: hidden; */
+			}
+			#imgs img{
+				/* float: left; */
+				/* vertical-align: middle; */
+				/* display: block; */
+			}
+		</style>
+	</head>
+	<body>
+		<div title="标题1" style="width: 100px;height: 30px;font-size: 20px;border: 5px solid red;padding: 10px;margin: 20px;">第一个div</div>
+		<div title="标题2"></div>
+		<input type="text" name="" id="" value="" />
+		<input type="checkbox"  name="" id="" value="" />
+		
+		<div id="pos" style="position: relative;background-color: yellow;" data-index="123">
+			<div>
+				<span id="span" style="position: relative;top: 20px; left: 20px;">faskfeasklfjaklsfjdfjfj</span>
+			</div>
+		</div>
+		
+		<div id="scroll" style="width: 100px; height: 100px; overflow: scroll;">
+			滚动条垂直位置和滚动区隐藏区域的顶部高度像素值是相同的。如果滚动条是在最顶部，或者这个元素没有可滚动的，那么这个数字是0。
+			滚动条垂直位置和滚动区隐藏区域的顶部高度像素值是相同的。如果滚动条是在最顶部，或者这个元素没有可滚动的，那么这个数字是0。
+			滚动条垂直位置和滚动区隐藏区域的顶部高度像素值是相同的。如果滚动条是在最顶部，或者这个元素没有可滚动的，那么这个数字是0。
+			滚动条垂直位置和滚动区隐藏区域的顶部高度像素值是相同的。如果滚动条是在最顶部，或者这个元素没有可滚动的，那么这个数字是0。
+		</div>
+		
+		<!-- 场景、例子 -->
+		<div id="imgs">
+			<img src="" alt="" />
+			<img src="" alt="" />
+			<img src="" alt="" />
+		</div>
+		
+	</body>
+	<script src="jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+</html>
+<script type="text/javascript">
+	// 属性
+	// 属性 .attr()
+	// console.log($("div").attr("title"));
+	// $("div").attr("title","标题");
+	// $("div").attr("class","title");
+	// 同时设置多个属性
+	/*
+	$("div").attr({
+		title: "标题",
+		name: "name",
+		"class": "list"
+	});*/
+	// 通过使用一个函数来设置属性，你可以根据其他的元素的属性计算它的值。
+	/*
+	$("div").attr("id",function(index){
+		// return "list" + (index + 1);
+		var info = $(this).attr("title");
+		return info;
+	});*/
+	
+	
+	// 属性 .prop()
+	// console.log($("div").prop("title"));
+	// $("div").prop("title","标题");
+	// $("div").prop("class","title");
+	/*
+	$("div").prop({
+		title: "标题",
+		"class": "list"
+	});
+	*/
+	// 通过使用一个函数来设置属性，你可以根据其他的元素的属性计算它的值。
+	/*
+	$("div").prop("id",function(index){
+		// return "list" + (index + 1);
+		var info = $(this).attr("title");
+		return info;
+	});*/
+	
+	
+	// 属性 .attr() 和  属性 .prop()
+	/*
+	elem.checked 	true (Boolean) 将随着复选框状态的改变而改变
+	$(elem).prop("checked") 	true (Boolean) 将随着复选框状态的改变而改变
+	elem.getAttribute("checked") 	"checked" (String) 复选框的初始状态;不会改变
+	$(elem).attr("checked") (1.6) 	"checked" (String) 复选框的初始状态;不会改变
+	$(elem).attr("checked") (1.6.1+) 	"checked" (String) 将随着复选框状态的改变而改变
+	$(elem).attr("checked") (pre-1.6) 	true (Boolean) 将随着复选框状态的改变而改变 
+	*/
+	
+	window.onclick = function(){
+		// 将随着复选框状态的改变而改变
+		// console.log(document.querySelector("input[type='checkbox']").checked);
+		// document.querySelector("input[type='checkbox']").checked = true;
+		
+		// 将随着复选框状态的改变而改变
+		// console.log($("input[type='checkbox']").prop("checked"));
+		// $("input[type='checkbox']").prop("checked",true);
+		
+		// 复选框的初始状态;不会改变
+		// console.log($("input[type='checkbox']").attr("checked"));
+		// $("input[type='checkbox']").attr("checked","checked");
+		
+		// console.log($("input[type='text']").val());
+		
+		
+		// $("p").removeClass("myClass noClass").addClass("yourClass");
+		// $("div:first").addClass("fade");
+		// setTimeout(function(){
+		// 	$("div:first").removeClass("fade");
+		// },2000);
+	}
+	
+	// .attr() 为匹配的元素集合中的每个元素中移除一个属性（attribute）。
+	// .prop() 为集合中匹配的元素删除一个属性（property）。
+	
+	// .val() 获取匹配的元素集合中第一个元素的当前值或设置匹配的元素集合中每个元素的值。(只能用到表单元素上)
+	// 例子见上
+	
+	// 回顾
+	$("#imgs img").attr({
+		id: function(index){
+			return "img" +　(index +　1);
+		},
+		src: function(index){
+			return "images/" + (index +　1) +".jpg";
+		},
+		title: function(){
+			// return this.id;
+			return $(this).attr("id");
+		},
+		style: "width:100px"
+	});
+	
+	// $("input[type='text']").val("abc");
+	$("input[type='text']").on("input",function(){
+		console.log($(this).val());
+		$(this).val(function(i,v){
+			// console.log(arguments);
+			return v.toUpperCase();
+		});
+	});
+	
+	$("div:first").removeAttr("title");
+	$("div:eq(1)").removeAttr("title");
+	
+	
+	// CSS
+	// .addClass( className ) 为每个匹配的元素添加指定的样式类名
+	$("div:first").addClass("title colored").removeClass("title").attr("title","标题").css("background-color","black");
+	$("div:first").addClass(function(index,currentClass){
+		return "list" + index;
+	});
+	
+	// .hasClass() 确定任何一个匹配元素是否有被分配给定的（样式）类。
+	console.log($("div:first").hasClass("colored"));
+	
+	// .toggleClass() 为匹配的元素集合中的每个元素上添加或删除一个或多个样式类（class）,取决于这个样式类（class）是否存在或state参数的值。
+	// （愚人码头注：如果存在（不存在）就删除（添加）一个类。）
+	var count = 0;
+	$("div:first").on("click",function(){
+		// $(this).toggleClass("fade");
+		
+		// state类型: Boolean 一个布尔值（不止是真值/假值），用于判断样式是否应该被添加true或移除false。
+		// $(this).toggleClass("fade",false);
+		
+		count ++;
+		$(this).toggleClass(function(index,currentClass){
+			return "fade";
+		},count % 3 == 0);
+	});
+	
+	// .css() 获取匹配元素集合中的第一个元素的样式属性的计算值  或  设置每个匹配元素的一个或多个CSS属性
+	// 获取
+	console.log($("div:first").css("background-color"));
+	console.log($("div:first").css(["width","height","fontSize"]));
+	// 设置
+	$("div:last").css("background-color","yellow");
+	$("div:last").css("font-size",function(index,currentStyle){
+		// console.log(arguments);
+		return "20px";
+	});
+	$("div:last").css({
+		width: 200,
+		height: 400,
+		backgroundColor: "blue"
+	});
+	$("div:last").css({
+		width: function(){
+			// 经过一系列复杂的运算
+			return 220;
+		},
+		height: function(){
+			// 经过一系列复杂的运算
+			return 330;
+		},
+		backgroundColor: "blue !important",
+	});
+	
+	
+	// 尺寸 
+	// .height() 获取匹配元素集合中的第一个元素的当前计算高度值。设置每一个匹配元素的高度值。
+	$("div:first").height(40);
+	console.log($("div:first").height());
+	
+	console.log($("div:first").innerHeight());
+	
+	console.log($("div:first").outerHeight());
+	
+	console.log($("div:first").outerHeight(true));
+	
+	// 位置
+	// .offset() 在匹配的元素集合中，获取的第一个元素的当前坐标，或设置每一个元素的坐标，坐标相对于文档
+	console.log($("#imgs").offset());
+//	$("#imgs").offset({
+//		top: 200,
+//		left: 80
+//	});
+	$("#imgs").offset(function(i,v){
+		return {top: 200,left: 80}
+	});
+	
+	// .offsetParent() 取得离指定元素最近的含有定位信息的祖先元素。含有定位信息的元素指的是，CSS 的 position 属性是 relative, absolute, 或 fixed 的元素。
+	console.log($("#span").offsetParent());
+	
+	// .postion() 获取匹配元素中第一个元素的当前坐标，相对于offset parent的坐标。( 译者注：offset parent指离该元素最近的而且被定位过的祖先元素 )
+	console.log($("#span").position());
+	
+	// .scrollLeft() .scrollTop()
+	$(document).on("scroll",function(){
+		console.log($(document).scrollTop());
+	});
+	
+	$("#scroll").on("scroll",function(){
+		console.log($(this).scrollTop());
+	});
+	
+	// 数据
+	// .data() 在匹配元素上存储任意相关数据 或 返回匹配的元素集合中的第一个元素的给定名称的数据存储的值。
+	$("#pos").data("name","张三");
+	console.log($("#pos").data("name"));
+	$("#pos").data({
+		name: "李四",
+		age: 19
+	});
+	console.log($("#pos").data("name"));
+	console.log($("#pos").data("age"));
+	console.log($("#pos").data("index"));
+	// 把所有绑定的值都移出
+	// $("#pos").removeData();
+	// .removeData() 在元素上移除绑定的数据
+	$("#pos").removeData("name");
+	console.log($("#pos").data("name"));
+	$("#pos").removeData("index");
+	console.log($("#pos").data("index"));
+	
+	// 确定任何一个元素是否有与之相关的jQuery数据。
+	console.log($.hasData($("#pos")[0]));
+	
+	// 原生标签对象转化原生标签对象 $(selector)[0]
+	// 原生标签对象转化原生标签对象 $(element)
+</script>

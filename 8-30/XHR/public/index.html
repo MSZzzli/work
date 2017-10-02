@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>xhr请求</title>
+	</head>
+	<body>
+		<!-- 发送表单请求 -->
+		<form action="/comment" method="post">
+			<input type="text" name="comment" placeholder="请输入您的评价" />
+			<input type="submit" value="提交"/>
+		</form>
+		
+		<br />
+		<br />
+		
+		<!-- 发送 XHR 请求 -->
+		<!--
+			XHR 请求：XMLHttpRequest (xml:可扩展的标记语言 extended mark-up language)
+			1. 创建一个 XHR 对象
+			2. 设置 onreadystatechange 回调函数
+				2.1. 当 readystate == 4 的时候表示请求成功，服务器返回数据
+				2.2. 获取状态码 xhr.status
+				2.3. 获取状态信息 xhr.statusText
+				2.4. 获取响应数据 xhr.response，x.responseText，x.responseXML
+			3. 发送请求 get/post，xhr.open("method",url);
+			4. 设置请求数据 xhr.send(数据)(只适合post请求);
+			5. 可以设置下请求头（post），xhr.setRequestHeader("键","值")
+		-->
+		<input type="text" id="comment" placeholder="我是 XHR 请求" />
+		<button type="button">发送</button>
+		
+		<br />
+		<br />
+		
+		<!-- 假设一个表单有很多输入框，并且我们还不用表单提交 -->
+		<form id="register">
+			<input type="text" name="username" /><br />
+			<input type="password" name="password" /><br />
+			<input type="email" name="email" /><br />
+			<input type="submit" value="注册"/>
+		</form>
+	</body>
+	<!-- 发送 get 请求 -->
+	<!--<script src="get.js" type="text/javascript" charset="utf-8"></script>-->
+	<!-- 发送 post 请求 -->
+	<script src="post.js" type="text/javascript" charset="utf-8"></script>
+	<!-- 使用 FormData 获取数据 -->
+	<script src="FormData.js" type="text/javascript" charset="utf-8"></script>
+</html>
+
+

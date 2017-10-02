@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>点击加号上传图片</title>
+		<style type="text/css">
+			body{
+				font-size: 13px;
+			}
+			#choose input{
+				display: none;
+			}
+			img{
+				width: 100px;
+				height: auto;
+			}
+			#upload input{
+				padding: 10px 20px;
+				border: none;
+				background-color: orange;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<form action="/index" method="post" enctype="multipart/form-data">
+			<!-- 处理选择图片这一块 -->
+			<div id="choose">
+				<img src="img/add.png"/>
+				<!-- autocomplete：自动完成 刷新页面是否自动填充上一次的值。两个取值 on/off -->
+				<!-- accept="image/*" 接受所有格式的图片，Chrome和Safari等Webkit浏览器下却出现了响应滞慢的问题
+					accept=”image/*”属性会对每一个文件都遍历一次所有的”image/*”文件类型，当文件较多时，文件的检验时间较长，这可能是Webkit的底层实现的bug。-->
+				<!-- multiple="multiple" 支持同时选中多个文件 -->
+				<input type="file" name="photo" accept="image/gif,image/jpeg,image/png"  autocomplete="off" />
+				<img src="img/add.png"/>
+				<input type="file" name="photo" accept="image/gif,image/jpeg,image/png" autocomplete="off" />
+				<img src="img/add.png"/>
+				<input type="file" name="photo" accept="image/gif,image/jpeg,image/png" autocomplete="off" />
+			</div>
+			<!-- 处理添加和上传 -->
+			<div id="upload">
+				<input type="button" value="添加" />
+				<input type="submit" value="上传" />
+			</div>
+		</form>
+	</body>
+</html>
+<script type="text/javascript">
+	// 只允许添加 9 个 加号
+	var addCount = 3;
+	
+	// 专门给 img 和 input 绑定事件
+	function addEvent() 
+	{
+		// 找到所有的 img
+		var imgs = document.getElementsByTagName("img");
+		// 添加点击事件
+		for(var i = 0; i < imgs.length; i++) 
+		{
+			imgs[i].onclick = function() 
+			{
+				// 看似点了 img 实则触发它紧邻的下一个 input 的点击事件
+				this.nextElementSibling.click();
+			}
+		} 
+		
+		// 找到所有的 type = file 的 input 框
+		var inputs = document.getElementById("choose").getElementsByTagName("input");
+		// 添加 input 值发生变化时触发的方法
+		for(var i = 0; i < inputs.length; i++) 
+		{
+			inputs[i].onchange = function() 
+			{
+				// this.files:当前 type=file 的 input 框所选中的文件列表([File,File……])
+				var oFile = this.files[0];
+				if(oFile.type.startsWith("image")) 
+				{
+					// URL.createObjectURL(oFile):根据一个文件对象创建一个临时的 url
+					this.previousElementSibling.src = URL.createObjectURL(oFile);
+				} else 
+				{
+					alert("请选择图片好吗？");
+				}
+			}
+		}
+	} 
+	addEvent();
+	
+	// 给添加按钮添加点击事件
+	var oChoose = document.getElementById("choose");
+	var oAdd = document.querySelector('#upload input[type="button"]');
+	oAdd.onclick = function() 
+	{
+		if (addCount >= 9) {
+			// 直接跳出方法
+			return;
+		}
+		// 创建 img
+		var img = document.createElement("img");
+		img.src = "img/add.png";
+		oChoose.appendChild(img);
+		// 创建 input
+		var input = document.createElement("input");
+		input.type = "file";
+		input.name = "photo";
+		input.accept = "image/gif,image/jpeg,image/png";
+		input.autocomplete = "off";
+		oChoose.appendChild(input);
+		
+		addCount ++;
+		// 添加事件
+		addEvent();
+	}
+	
+	
+	
+	// return、break、continue 三者的区别
+	test();
+	function test(){
+		for (var i = 0; i < 10; i++) 
+		{
+			for (var j = 0; j < 10; j++) 
+			{
+				console.log(j);
+				if (j > 4) {
+					// return:碰到 return 直接跳出整个方法体。（不管有没有for循环或者for循环多少次）
+					// return;
+					// break：跳出（中止）当前for循环。（如果有外层for循环，外层继续执行。或者for下面还有代码也会继续执行）
+					// break;
+					// continue：跳过当前这一次循环，接着继续执行下一次循环。（比如说当前这一次 j = 5，跳过这一次，执行 j = 6）
+					// continue;
+				}
+				console.log(j);
+			}
+		}	
+	}
+</script>
