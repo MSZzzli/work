@@ -1,0 +1,18 @@
+一、
+	1.做文件（css和js）的合并、压缩、监听需要下载和导入的模块：
+	npm install grunt --save || npm install -g grunt || npm install -g grunt-cli
+	
+	2.做文件合并：grunt-contrib-concat
+	npm install grunt-contrib-concat --save
+	
+	3.做文件压缩：grunt-contrib-uglify
+	npm install grunt-contrib-uglify --save
+	
+	4.做文件监听：grunt-contrib-watch
+	npm install grunt-contrib-watch --save
+	
+	5.做CSS的合并与压缩，需要安装模块：
+	npm install grunt-contrib-cssmin --save
+	
+二、
+	需要生成一个 js 文件来做合并压缩和监听，这个文件名一定要命名为：gruntfile.js

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>简易JS日历</title>
+		<style type="text/css">
+			html,body{
+				width: 100%;
+				height: 100%;
+				-moz-user-select: none;
+			}
+			body,ul,li,h2,p{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			
+			#calendar{
+				width: 300px;
+				background-color: #EAEAEA;
+				margin: 10px auto;
+				padding: 10px;
+				overflow: hidden;
+			}
+			
+			#calendar .month{
+				overflow: hidden;
+				clear: both;
+			}
+			
+			#calendar .month li{
+				float: left;
+				width: 60px;
+				height: 60px;
+				color: white;
+				background-color: #424242;
+				text-align: center;
+				line-height: 30px;
+				margin: 7px;
+				box-sizing: border-box;
+				border: 1px solid #424242;
+			}
+			
+			#calendar li.current{
+				background-color: #FFFFFF;
+				color: #FF6E99;
+			}
+			
+			#calendar div.info{
+				color: #555;
+				font-size: 15px;
+				margin: 10px;
+				padding: 10px;
+				background-color: #F1F1F1;
+				border: 1px solid white;
+			}
+			
+			#calendar div.info h2{
+				font-size: 15px;
+				font-weight: normal;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="calendar">
+			<!-- 日历 -->
+			<!--ul>(li>h2{$}+span)*12^+div>(h2+p)-->
+			
+			<!-- 月份 -->
+			<ul class="month">
+				<li>
+					<h2>1</h2>
+					<span>JAN</span>
+				</li>
+				<li>
+					<h2>2</h2>
+					<span>FER</span>
+				</li>
+				<li>
+					<h2>3</h2>
+					<span>MAR</span>
+				</li>
+				<li>
+					<h2>4</h2>
+					<span>APR</span>
+				</li>
+				<li>
+					<h2>5</h2>
+					<span>MAY</span>
+				</li>
+				<li>
+					<h2>6</h2>
+					<span>JUN</span>
+				</li>
+				<li>
+					<h2>7</h2>
+					<span>JUL</span>
+				</li>
+				<li>
+					<h2>8</h2>
+					<span>AUG</span>
+				</li>
+				<li>
+					<h2>9</h2>
+					<span>SEP</span>
+				</li>
+				<li>
+					<h2>10</h2>
+					<span>OCT</span>
+				</li>
+				<li>
+					<h2>11</h2>
+					<span>NOV</span>
+				</li>
+				<li>
+					<h2>12</h2>
+					<span>DEC</span>
+				</li>
+			</ul>
+			
+			<!-- 月份的详细信息 -->
+			<div class="info">
+				<h2>发到手机费</h2>
+				<p>框架立即发生的</p>
+			</div>
+		</div>
+	</body>
+</html>
+
+<script type="text/javascript">
+	// console.log(Math.floor(Math.random()*50) + 1);
+	
+	// 获取定位元素
+	var lis = document.querySelectorAll("#calendar .month li");
+	var oH2 = document.querySelector("#calendar .info h2");
+	var oP = document.querySelector("#calendar .info p");
+	// 保存上一个月份的索引
+	var lastIndex = new Date().getMonth();
+	// 数据
+	var oArray = [
+                "元旦：1月1日至3日放假三天。",
+                "春节：2月2日至8日放假7天。",
+                "妇女节：3月8日妇女节，与我无关。",
+                "清明节：4月3日至5日放假3天",
+                "劳动节：4月30日至5月2日放假3天。",
+                "端午节：6月4日至6日放假3天。",
+                "小暑：7月7日小暑。不放假。",
+                "七夕节：8月6日七夕节。不放假。",
+                "中秋节：9月10日至12日放假3天。",
+                "国庆节：10月1日至7日放假7天。",
+                "立冬：11月8日立冬。不放假。",
+                "艾滋病日:12月1日<br />废除奴隶制国际日:12月2日。"
+            ];
+	
+	// 处理当前月份的数据和显示
+	changeCalendar();
+	function changeCalendar(){
+		lis[lastIndex].className = "current";
+		oH2.innerHTML = lastIndex + 1 + "月节日";
+		oP.innerHTML = oArray[lastIndex];
+	}
+	
+	// 简单版
+	/*
+	// 遍历每个月份li
+	lis.forEach(function(li,index){
+		// 给每个li添加鼠标移入事件
+		li.onmouseover = function(){
+			// 先把上一个样式清掉
+			lis[lastIndex].className = "";
+			// 把 lastIndex 置为当前鼠标移入到的 li 的索引
+			lastIndex = index;
+			changeCalendar();
+		}
+	});
+	*/
+	
+	// 复杂版1
+	/*
+	// 遍历每个月份li
+	for (var i = 0; i < lis.length; i++) {
+		var li = lis[i];
+		// 自运行的匿名函数(闭包)
+		(function(a){
+			// 给每个li添加鼠标移入事件
+			li.onmouseover = function(){
+				// 先把上一个样式清掉
+				lis[lastIndex].className = "";
+				// 把 lastIndex 置为当前鼠标移入到的 li 的索引
+				lastIndex = a;
+				changeCalendar();
+			}
+		})(i)
+	}
+	*/ 
+	
+	// 复杂版2
+	// js特点：动态的给对象添加属性和方法
+	// 遍历每个月份li
+	for (var i = 0; i < lis.length; i++) {
+		var li = lis[i];
+		// 给每个li添加一个index的属性
+		li.index = i;
+		// 给每个li添加鼠标移入事件
+		li.onmouseover = function(){
+			// 先把上一个样式清掉
+				lis[lastIndex].className = "";
+				// 把 lastIndex 置为当前鼠标移入到的 li 的索引
+				lastIndex = this.index;
+				changeCalendar();	
+		}
+	}
+</script>

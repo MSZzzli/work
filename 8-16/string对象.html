@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>string内置属性和方法</title>
+	</head>
+	<body>
+		
+	</body>
+</html>
+<script type="text/javascript">
+	console.log(String);
+	
+	// 字面量方法创建字符串（常量）
+	var str1 = "我是创建的第一个字符串";
+	// 通过 New构造函数 的方法来创建字符串对象
+	var str2 = new String("我是创建的第二个字符串");
+	
+	// 字符串长度
+	console.log(str1.length);
+	console.log(str2.length);
+	
+	// for 循环遍历字符串
+	for (var i = 0; i < str1.length; i++) {
+		// 以方法的形式获取
+		// var everyWord = str1.charAt(i);
+		// 以数组的形式取
+		var everyWord = str1[i];
+		console.log(everyWord);
+	}
+	
+	// 返回指定位置的字符串
+	console.log(str1.charAt(5));
+	console.log(str1[5]);
+	
+	// 返回指定位置字符串的 unicode 编码
+	console.log(str1.charCodeAt(1));
+	
+	// 拼接字符串
+	console.log(str1 +　str2);
+	console.log(str1.concat(str2));
+	
+	// 三个字符串截取方法：slice()  substr()  substring()
+	// 一个参数的情况：三个方法用法一样，都是从 start 开始，截取到最后
+	var str = str1.slice(3);
+	str = str1.substr(3);
+	str = str1.substring(3);
+	// 两个参数的情况（闭开区间 [)）：slice和substring用法一样都是从 start 索引开始，截取到 end 索引
+	// substr 从 start 索引开始，一共截取多少位。
+	str = str1.slice(3,4);
+	str = str1.substr(3,4);
+	str = str1.substring(3,4);
+	// 出现负数的情况：slice和substr一样，都是从倒数第几位一直截取到最后
+	// substring只要写负数或者null都会被当作 0 来使用
+	str = str1.slice(-3);
+	str = str1.substr(-3);
+	str = str1.substring(null);
+	console.log(str);
+	
+	// 获取某个字符的索引
+	var testString = "你的我的大家的";
+	console.log(testString.indexOf("的"));
+	console.log(testString.lastIndexOf("的"));
+	
+	// 转换大小写
+	var testString = "AbCdEf";
+	console.log(testString.toUpperCase());
+	console.log(testString.toLowerCase());
+	
+	// 字符串拆分
+	var testString = "success|200|zhangsan|123456";
+	var lists = testString.split("|");
+	console.log(lists);
+	
+	// 字符串重复
+	var testString = "*";
+	console.log(testString.repeat(50));
+	
+	// 判断字符串以什么开头
+	var testString = "判断字符串以什么开头";
+	console.log(testString.startsWith("判断是"));
+	
+	// 清除字符串两端的空格（注意不能清除中间的）
+	var testString = "  判断  字符  串以什  么开头  ";
+	console.log(testString);
+	// trimLeft() 去除做空格  trimRight() 去除有空格
+	console.log(testString.trim());
+	
+</script>

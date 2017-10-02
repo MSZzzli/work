@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQueryUI</title>
+		<link rel="stylesheet" type="text/css" href="libs/jqueryUI/jquery-ui.css"/>
+		<style type="text/css">
+			body{
+				height: 1500px;
+			}
+			/* 日期选择器 */
+			#ui-datepicker-div{
+				background-color: #eee;
+				background-image: none !important;
+			}
+			#ui-datepicker-div tr{
+				color: black;
+				background-color: #eee;
+			}
+			#ui-datepicker-div td a.ui-state-default{
+				background-color: red !important;
+				background-image: none !important;
+				text-align: center;
+			}
+			
+			/* 菜单 */
+			#menu.ui-menu{
+				width: 150px;
+			}
+			li,ul,a{
+				width: 100px;
+				background-image: none !important;
+				background-color: #ccc !important;
+				border: none !important;
+			}
+			
+			/* 进度条 */
+			#progress{
+				height: 20px;
+				width: 50%;
+				margin: 20px auto;
+				position: relative;
+			}
+			#progress .progress-label{
+				position: absolute;
+				text-align: center;
+				width: 100%;
+				height: 100%;
+				font-size: 13px;
+			}
+			
+			/* 滑块 */
+			#red, #green, #blue {
+			    float: left;
+			    clear: left;
+			    width: 300px;
+			    margin: 15px;
+			}
+			#swatch {
+			    width: 120px;
+			    height: 100px;
+			    margin-top: 18px;
+			    margin-left: 350px;
+			    background-image: none;
+			}
+			#red .ui-slider-range { background: #ef2929; }
+  			#red .ui-slider-handle { border-color: #ef2929; }
+  			#green .ui-slider-range { background: #8ae234; }
+  			#green .ui-slider-handle { border-color: #8ae234; }
+  			#blue .ui-slider-range { background: #729fcf; }
+  			#blue .ui-slider-handle { border-color: #729fcf; }
+		</style>
+	</head>
+	<body>
+		<!-- 缩放 -->
+		<div id="container" style="border: 1px solid black; width: 200px; height: 200px;">
+			可缩放（resizeable）
+		</div>
+		
+		<!-- 拖动 -->
+		<div id="drag" style="width: 100px;height: 100px;background-color: red;">
+			可拖拽（dragable）
+		</div>
+		
+		<!-- 折叠面板 -->
+		<div id="collapse">
+			<p>面板1</p>
+			<div>
+				这是第一个面板<br />
+				这是第一个面板<br />
+				这是第一个面板<br />
+				这是第一个面板<br />
+			</div>
+			<p>面板2</p>
+			<div>
+				这是第二个面板<br />
+				这是第二个面板<br />
+				这是第二个面板<br />
+			</div>
+			<p>面板3</p>
+			<div>
+				这是第三个面板<br />
+				这是第三个面板<br />
+				这是第三个面板<br />
+				这是第三个面板<br />
+				这是第三个面板<br />
+			</div>
+		</div>
+		
+		<!-- 自动完成 -->
+		<input type="text" id="autocomplete" />
+		
+		<!-- 日期选择器 -->
+		<input id="date-picker" />
+		
+		<!-- 对话框 -->
+		<button id="open">打开对话框</button>
+		<div id="dialog" title="在这里设置标题">
+			<p>这里是对话框内容，在这里还可以添加其他元素标签</p>
+			<form action="" method="post">
+				<input type="text" />
+				<br />
+				<input type="submit" value="提交"/>
+			</form>
+		</div>
+		
+		<!--  菜单（Menu） -->
+		<!-- jQueryUI字体图标库：http://www.runoob.com/jqueryui/api-icons.html -->
+		<ul id="menu">
+			<li>
+				<a href="javascript:;">
+					<span class="ui-icon ui-icon-carat-2-n-s"></span>
+					山西省
+				</a>
+				<ul>
+					<li>
+						太原
+						<ul>
+							<li>尖草坪</li>
+							<li>迎泽区</li>
+							<li>万柏林区</li>
+						</ul>
+					</li>
+					<li>大同</li>
+					<li>朔州</li>
+				</ul>
+			</li>
+			<li>
+				<a href="javascript:;">
+					<span class="ui-icon ui-icon-cart" style="background-color: black !important;"></span>
+					河南省
+				</a>
+				<ul>
+					<li>
+						郑州
+						<ul>
+							<li>经济开发区</li>
+							<li>二七区</li>
+							<li>中原区</li>
+						</ul>
+					</li>
+					<li>南阳</li>
+					<li>平顶山</li>
+				</ul>
+			</li>
+			<li>
+				<a href="javascript:;">山东省</a>
+				<ul>
+					<li>济南</li>
+					<li>青岛</li>
+					<li>日照</li>
+				</ul>
+			</li>
+			<!-- 其他列表…… -->
+		</ul>
+		
+		<!-- 进度条（Progressbar） -->
+		<div id="progress">
+			<div class="progress-label">加载...</div>
+		</div>
+		
+		<!-- 滑块（Slider） -->
+		<div id="red"></div>
+		<div id="green"></div>
+		<div id="blue"></div>
+		<div id="swatch" class="ui-widget-content ui-corner-all"></div>
+	</body>
+</html>
+<script src="libs/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="libs/jqueryUI/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	// 缩放
+	$('#container').resizable();
+	// 拖拽
+	$("#drag").draggable({
+		// 默认值true，拖到边界时整个页面是否跟着拖拽的物体发生滚动（看滚动条）
+		scroll: false,
+		start: function(event,object){
+			console.log("拖拽开始");
+			$(this).text("拖拽开始");
+		},
+		drag: function(event,object){
+			console.log("拖拽中");
+			$(this).text("拖拽中");
+		},
+		stop: function(){
+			console.log("拖拽结束");
+			$(this).text("可拖拽（dragable）");
+		}
+	});
+	
+	// 放置
+	$("#container").droppable({
+		// 放进去的时候
+		drop: function(event,ui){
+			$(this).css("background-color","lightgrey");
+		},
+		// 拖拽到容器上面时触发该 css 样式
+		// hoverClass: "ui-state-hover"
+		hoverClass: "ui-state-highlight"
+	});
+	
+	// 折叠面板 accordion（手风琴）
+	$("#collapse").accordion({
+		// false：默认值，一定会有一个处于打开状态
+		// true：可以都关闭
+		collapsible: true,
+		// 根据内容高度自适应
+		heightStyle: "content"
+	});
+	
+	// 自动完成（Autocomplete）
+	$("#autocomplete").autocomplete({
+		// 来源
+		source: ["www.baidu.com","www.sina.com","www.tencent.com"]
+	});
+	
+	// 日期选择器（Datepicker）
+	$.datepicker.regional["zh-TW"] = {
+		closeText: "关闭",
+		prevText: "&#x3c;上月",
+		nextText: '下月&#x3e',
+		currentText: '今天',
+		monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+		monthNamesShort: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+		dayNames: ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
+		dayNamesShort: ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
+		dayNamesMin: ["日","一","二","三","四","五","六"],
+		weekHeader: "周",
+		dateFormat: 'yy/MM/dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: true,
+		yearSuffix: "年"
+	}
+	// 显示月份 & 年份菜单
+	$("#date-picker").datepicker({
+		 changeMonth: true,
+		 changeYear: true,
+		 onSelect: function(){
+		 	var selectDate = $(this).datepicker("getDate");
+		 	console.log(selectDate.getFullYear());
+		 	console.log(selectDate.getMonth()+1);
+		 	console.log(selectDate.getDate());
+		 }
+	});
+	// 动画
+	// 反弹特效 bounce   百叶窗特效 blind   淡入 fade   滑下 slideDown   剪辑特效 clip
+	// 降落特效 drop    折叠特效 fold   滑动特效 slide
+	$("#date-picker").datepicker("option","showAnim","fold");
+	// 格式化日期
+	$("#date-picker").datepicker("option","dateFormat","yy-mm-dd");
+	// 自定义配置（regional）
+	$("#date-picker").datepicker("option",$.datepicker.regional["zh-TW"]);
+	
+	// 对话框
+	// 设置或者配置对话框
+	$("#dialog").dialog({
+		// 自动打开
+		autoOpen: false,
+		// 打开动画
+		show: {
+			effect: "size",
+			duration: 1000
+		},
+		// 关闭动画
+		hide: {
+			effect: "explode",
+			duration: 1000
+		},
+		// 设置高度
+		height: 200,
+		// 模态框（多一个灰色的挡板：不能操作后面的内容）
+		modal: true,
+		// 可拖拉进行缩放
+		resizable: true,
+		// 自定义按钮
+		buttons: {
+			"confirm": function(){
+				console.log("点击了确认了");
+				$("#dialog").dialog("close");
+			},
+			cancel: function(){
+				console.log("点击了取消了");
+				$("#dialog").dialog("close");
+			}
+		}
+	});
+	$("#open").click(function(){
+		// 手动打开对话框
+		$("#dialog").dialog("open");
+	});
+	
+	//  菜单（Menu）
+	$("#menu").menu();
+	
+	// 进度条（Progressbar）
+	$("#progress").progressbar({
+		value: false,
+		change: function(){
+			$(".progress-label").text($(this).progressbar("value") +　"%");
+		},
+		complete: function(){
+			$(".progress-label").text("完成");
+		}
+	});
+	// 每0.5s改变一次 progress 的值
+	var timer = setInterval(function(){
+		var val = $("#progress").progressbar("value");
+		val = val ? val : 0;
+		$("#progress").progressbar("value",val + 1);
+		if(val + 1 >= 100){
+			clearInterval(timer);
+		}
+	},100);
+	
+	// 滑块（Slider）
+	$("#red,#green,#blue").slider({
+		orientation: "horizontal",
+		range: "min",
+      	max: 255,
+      	value: 127,
+      	slide: function(){
+      		var red = $("#red").slider("value");
+      		var green = $("#green").slider("value");
+      		var blue = $("#blue").slider("value");
+      		// 混合
+      		var hex = [
+			      red.toString( 16 ),
+			      green.toString( 16 ),
+			      blue.toString( 16 )
+			    ];
+			$.each( hex, function( nr, val ) {
+		      	if ( val.length === 1 ) {
+		        	hex[ nr ] = "0" + val;
+		      	}    
+      		});
+      		console.log(hex.join( "" ).toUpperCase());
+			$("#swatch").css("background-color","#" +　hex.join( "" ).toUpperCase());
+		}	
+	});
+</script>

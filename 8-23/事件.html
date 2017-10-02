@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>事件</title>
+		<style type="text/css">
+			html,body{
+				height: 1000px;
+			}
+			div.resize{
+				width: 200px;
+				height: 50px;
+				border: 1px solid #333;
+				/* 让一个标签大小可以重置 */
+				resize:both;
+				overflow:scroll;
+			}
+			.action{
+				color: red;
+			}
+			#alert{
+				width: 100px;
+				height: 200px;
+				background-color: #555;
+				text-align: center;
+				display: none;
+				position: fixed;
+				top: calc(50% - 50px);
+				left: calc(50% - 100px);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="resize">
+			我是大小可以变化的哦
+			我是大小可以变化的哦
+			我是大小可以变化的哦
+		</div>
+		<div class="bar">
+			我是 bar
+		</div>
+		<ul class="list">
+			<li>1</li>
+			<li>2</li>
+		</ul>
+		<input type="" name="" id="" value="" />
+		
+		<div id="alert">
+			<ul>
+				<li>刷新</li>
+				<li>后退</li>
+				<li>前进</li>
+				<li>删除</li>
+				<li>修改</li>
+			</ul>
+		</div>
+	</body>
+	<script src="jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+</html>
+<script type="text/javascript">
+	// 暂停 Ready 的执行
+	$.holdReady(true);
+	var count = 123;
+	// 比如：我这里要做很复杂的操作来计算count（比如这个需要耗时2s）
+	// 再比如：在这里需要发送一个网络请求，在 Ready 里面使用这个请求结果
+	setTimeout(function(){
+		count = 456;
+		// 开始 Ready 的执行
+		$.holdReady(false);
+	},1000);
+</script>
+<script type="text/javascript">
+	$(function(){
+		// 浏览器事件
+		// .resize() 为 JavaScript 的 "resize" 事件绑定一个处理函数，或者触发元素上的该事件。
+		$(window).resize(function(e){
+			// this == e.target
+			console.log($(this).width());
+		});
+		// .scroll() 为 JavaScript 的 "scroll" 事件绑定一个处理函数，或者触发元素上的该事件。
+		$(document).scroll(function(){
+			console.log($(this).scrollTop());
+		});
+		$("div.resize").scroll(function(){
+			console.log($(this).scrollTop());
+		});
+		
+		// 文档加载
+		// .ready() 当DOM准备就绪时，指定一个函数来执行。
+		// $(document).ready(function(){}); == $(function(){});
+		// .holdReady() 暂停或恢复.ready() 事件的执行。
+		console.log(count); // 要使用上面计算后的结果
+		
+		// 事件绑定
+		// .bind() 为一个元素绑定一个事件处理程序。
+		// 可以绑定的事件有： blur（失去焦点）, focus（获取焦点）, focusin（获取焦点）, focusout（失去焦点）, load, resize, scroll, unload,  
+		// click,dblclick, mousedown, mouseup, mousemove, mouseover, mouseout, 
+		// mouseleave, change（失去光标）, select, submit, keydown, keypress, keyup, error,mouseenter 
+		/*
+		$("div.resize").bind("click",function(){
+			alert("点击了div");
+		});
+		*/
+		/*
+		$("div.resize").bind("mouseenter mouseleave",function(){
+			$(this).toggleClass("action");
+		});
+		*/
+		/*
+		$("div.resize").bind({
+			click: function(){
+				console.log("点击了");
+			},
+			dblclick: function(){
+				alert("双击了");
+			},
+			mouseenter: function(){
+				$(this).addClass("action");
+			},
+			mouseleave: function(){
+				$(this).removeClass("action");
+			}
+		});
+		*/
+		// 从一个处理函数返回false等效于调用事件对象中的.preventDefault()和.stopPropagation()。
+		/*var message = 'Spoon!';
+		$('.resize').bind('click',{message}, function(e) {
+		  	// console.log(message); 
+		  	console.log(e.data.message);
+		});
+		message = 'Not in the face!';
+		$('.bar').bind('click',{message}, function(e) {
+		   	// console.log(message);
+		   	console.log(e.data.message);
+		});*/
+		
+		// .off() 移除一个事件处理函数。
+		/*$('.resize').bind('click', function(e) {
+			alert(123);
+		});
+		$('.bar').bind('click',function(e) {
+		   	$('.resize').off('click');
+		});*/
+		
+		// .delegate() 为所有匹配选择器（selector参数）的元素绑定一个或多个事件处理函数，基于一个指定的根元素的子集，
+		// 匹配的元素包括那些目前已经匹配到的元素，也包括那些今后可能匹配到的元素。
+		/*
+		$(document.body).delegate("div.bar","click",function(){
+			$("ul.list").append("<li>3</li>");
+		});
+		function clickLi(e){
+			alert($(this).text());
+		}
+		$("ul.list").delegate("li","click",clickLi);
+		*/
+		// 关闭绑定事件
+		// $("ul.list").undelegate("li","click",clickLi);
+		
+		
+		// .on() 在选定的元素上绑定一个或多个事件处理函数。
+		// .on() == .bind() +　.delegate()
+		
+		// 普通事件（取代了bind）
+		// $("li").on("click",function(){
+		//	 alert($(this).text());
+		// });
+		
+		// 代理事件（取代了delegate）
+		// .off() 关闭on代理事件 
+		// var foo = function () {}  $("body").on("click", "p", foo);  $("body").off("click", "p", foo); 
+		// $("ul.list").on("click","li",function(){
+		// 	alert($(this).text());
+		// });
+		
+		
+		// .one() 为元素的事件添加处理函数。处理函数在每个元素上每种事件类型最多执行一次。
+		// .one()和.on()是相同的， 不同之处在于，对于给定的元素和事件类型，处理程序在第一次触发事件后会被立即解除绑定
+		// 一个li可以点击一次（因为是一个普通事件）
+		// $("ul.list li").one( "click", function() {
+		// 	 alert( "This will be displayed only once." );
+		// });
+		// 只有一个（任意一个）li可以点击一次（因为是一个代理事件）
+		// $("ul.list").one( "click","li", function() {
+		// 	 alert( "This will be displayed only once." );
+		// });
+		
+		// .trigger() 根据绑定到匹配元素的给定的事件类型执行所有的处理程序和行为
+		// $("div.bar").on("click",function(e,a,n){
+		// 	 console.log(arguments);
+		// });
+		// 还可以传递参数
+		// $("div.bar").trigger("click",["18","张三"]);
+		
+		// 快捷方法
+		// 表单事件
+		/*
+		// .blur() 为 "blur" 事件绑定一个处理函数，或者触发元素上的 "blur" 事件
+		$("input").blur(function(){
+			console.log("失去焦点");
+		});
+		$("div.bar").click(function(){
+			console.log("点击了bar");
+			// $("input").blur(); == $("input").trigger("blur");
+		});
+		// keypress keydown 调很多次  而 keyup 只调用一次
+		$(document).keyup(function(){
+			console.log("keyup");
+		});
+		*/
+		
+		// 鼠标事件
+		// .contextmenu() 为 JavaScript 的"contextmenu" 事件绑定一个处理器，或者触发元素上的 "contextmenu" 事件。 
+		$(document).contextmenu(function(event){
+			// 事件对象 event
+			// 在事件冒泡过程中的当前DOM元素。
+			// console.log(event.currentTarget);
+			// console.log(event.target);
+			// 当前正在执行的处理程序绑定时，一个可选的数据对象传递给一个事件方法
+			// $(".bar").contextmenu({a:10},function(event){})
+			// console.log(event.data);
+			// event.preventDefault();
+			// console.log(event.isDefaultPrevented());
+			// timeStamp 这次点击事件发生的时间(这个属性返回事件触发时距离1970年1月1日的毫秒数。)
+			console.log(event.timeStamp);
+			// 鼠标相对于文档的左边/右边缘的位置
+			// console.log("x = " + event.pageX +　"；y = " +　event.pageY);
+			$("#alert").css({
+				display: "block",
+				top: event.pageY,
+				left: event.pageX
+			});
+		});
+		$(document).click(function(event){
+			$("#alert").css("display","none");
+		});
+		
+		
+		// .hover() 分别当鼠标指针进入和离开元素时被执行。
+		// $("div.resize").hover(function(){
+		//	 $(this).toggleClass("action")
+		// })
+		
+		$("div.resize").hover(function(){
+			console.log("移入");
+		},function(){
+			alert("移出");
+		})
+	});
+</script>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>效果</title>
+		<style type="text/css">
+			p{
+				background-color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<button class="btn">按钮</button>
+		<p class="paragraph">这是一段文字</p>
+		<p class="paragraph">这是一段文字</p>
+		<p class="paragraph">这是一段文字</p>
+		<p class="paragraph">这是一段文字</p>
+		<p class="paragraph">这是一段文字</p>
+		<div>
+			正常文档流
+		</div>
+		
+		
+		<div id="clickme">
+			click me
+		</div>
+		<img src="big_5.jpg" style="width: 100px;height: 150px;position: relative;left: 20px;border: 2px solid red;" />
+		
+	</body>
+</html>
+<script src="jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	// 效果
+	
+	// 基础
+	// .hide() 隐藏 / .show() 显示 / .toggle() 如果显示，那么隐藏；如果隐藏，那么就显示；
+	// duration (默认: 400)   fast 200   slow 600
+	/*
+	$(".btn").click(function(){
+		$(".paragraph").hide(function(){
+			alert("动画执行完毕");
+		});
+	});*/
+	/*
+	var isShow = true;
+	$(".btn").click(function(){
+		if (isShow) {
+			$(".paragraph").hide("linear",function(){
+				alert("动画执行完毕");
+			});
+		} else{
+			$(".paragraph").show("linear",function(){
+				alert("动画执行完毕");
+			});
+		}
+		isShow = !isShow;
+	});
+	*/
+	/*
+	$(".btn").click(function(){
+		$(".paragraph").toggle(1000);
+	});
+	*/
+	
+	
+	// 渐变
+	// .fadeIn()  通过淡入的方式显示匹配元素。
+	// .fadeOut() 通过淡出的方式隐藏匹配元素。
+	// .fadeTo()  调整匹配元素的透明度。
+	// .fadeToggle() 通过匹配的元素的不透明度动画，来显示或隐藏它们。
+	/*
+	$(".btn").click(function(){
+		// $(".paragraph").fadeOut(1000);
+		// $(".paragraph").fadeTo(2000,0.5,function(){
+		//	 console.log("半透明动画完成");
+		// });
+		$(".paragraph").first().fadeToggle(1000,function(){
+			console.log("1111111");
+			console.log($(this));
+			if ($(this).next().is("p")) {
+				$(this).next().fadeToggle(1000,arguments.callee);
+			}
+		});
+	});
+	*/
+	
+	// 滑动
+	// .slideDown() 用滑动动画显示一个匹配元素。
+	// .slideUp()  用滑动动画隐藏一个匹配元素。
+	// .slideToggle() 用滑动动画显示或隐藏一个匹配元素。
+	// $(".btn").click(function(){
+		// $(".paragraph").slideUp("slow",function(){
+			// 动画执行完毕
+		// });
+		
+		// .finish() 和 .stop()
+		// .finish() 停止当前正在运行的动画，删除所有排队的动画，并完成匹配元素所有的动画。
+		// 在执行当前动画的时候（未完成），下次动画就要执行，那么它会在瞬间先把当前动画达到最终状态，然后开始下次动画。
+		// .stop() 停止匹配元素当前正在运行的动画。
+		// 在执行当前动画的时候（未完成），下次动画就要执行，那么它会停在当前动画状态直接开始下一次动画
+		// .finish()方法和.stop(true, true)很相似，.stop(true, true)将清除队列，并且目前的动画跳转到其最终值。
+		// 但是，不同的是，.finish() 会导致所有排队的动画的CSS属性跳转到他们的最终值。
+		// $(".paragraph").stop().slideToggle("slow");
+	// });
+	
+	// 自定义
+	// .animate()  根据一组 CSS 属性，执行自定义动画。
+	$("#clickme").click(function(){
+		// 从底部缓缓滚动到顶部
+		// $("html,body").animate({
+		//	 scrollTop: 0
+		// },1000);
+		
+		/*
+		$("img").animate({
+			opacity: "-=0.2",
+			borderWidth: "+=1",
+			height: "-=10",
+			width: "toggle"
+		},1000,function(){
+			alert("此次动画完成了");
+		});
+		*/
+		
+		/*
+		$("img").animate({
+			opacity: "-=0.2",
+			borderWidth: "+=1",
+			height: "-=10",
+			width: "toggle",
+			left: "+=50"
+		},{
+			duration: 1000,
+			start: function(){
+				// console.log(arguments); // 动画对象
+				console.log("此次动画开始了");
+			},
+			step: function(){
+				// now: 每一步动画属性的数字值
+				// fx: jQuery.fx 原型对象的一个引用，其中包含了多项属性，比如elem 表示前正在执行动画的元素，start和end分别为动画属性的第一个和最后一个的值，prop为进行中的动画属性。
+				console.log(arguments);
+				console.log("step");
+			},
+			complete:　function(){
+				console.log("此次动画完成了");
+			}
+		})
+		*/
+		
+		
+	  	$('img').animate({
+				width: ['toggle', 'swing'],
+				height: ['toggle', 'swing'],
+				opacity: 'toggle'
+			}, 5000, 'linear', function() {
+		    $(this).after('<div>Animation complete.</div>');
+		});
+		
+	});
+</script>

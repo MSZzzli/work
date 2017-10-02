@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>鼠标经过改变透明度</title>
+		<style type="text/css">
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
+			
+			body,ul,li{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			
+			ul{
+				width: 700px;
+				margin: 0 auto;
+				border: 1px solid #333;
+				/*background-color: red;*/
+				overflow: hidden;
+				padding: 5px;
+			}
+			
+			li{
+				float: left;
+				width: 128px;
+				height: 128px;
+				border: 1px solid #666;
+				margin: 5px;
+			}
+			
+			li img{
+				opacity: 0.3;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- emmet编程 -->
+		<!-- ul>(li>img[src="img/$.jpg" alt="车标图"])*10 -->
+		<ul>
+			<li><img src="img/1.jpg" alt="车标图" /></li>
+			<li><img src="img/2.jpg" alt="车标图" /></li>
+			<li><img src="img/3.jpg" alt="车标图" /></li>
+			<li><img src="img/4.jpg" alt="车标图" /></li>
+			<li><img src="img/5.jpg" alt="车标图" /></li>
+			<li><img src="img/6.jpg" alt="车标图" /></li>
+			<li><img src="img/7.jpg" alt="车标图" /></li>
+			<li><img src="img/8.jpg" alt="车标图" /></li>
+			<li><img src="img/9.jpg" alt="车标图" /></li>
+			<li><img src="img/10.jpg" alt="车标图" /></li>
+		</ul>
+	</body>
+</html>
+<script type="text/javascript">
+	var images = document.querySelectorAll("img");
+	images.forEach(function(img,index){
+		// mouseenter事件和mouseover的不同之处是事件的冒泡的方式。
+		// mouseenter 事件只会在绑定它的元素上被调用，而不会在后代节点上被触发
+		
+		// onmouseenter 鼠标移入
+		// onmouseleave 鼠标移开
+		
+		// onmouseover 鼠标移到上面
+		// onmouseout 鼠标离开
+		
+		img.onmouseover = function(){
+			console.log("移入了");
+			// img.style.opacity = 1;
+			// this:触发该事件的标签元素本身（这里你可以理解为 this == img）
+			// console.log(this);
+			this.style.opacity = 1;
+		}
+		img.onmouseout = function(){
+			console.log("移出了");
+			// img.style.opacity = 0.3;
+			this.style.opacity = 0.3;
+		}
+	})
+</script>

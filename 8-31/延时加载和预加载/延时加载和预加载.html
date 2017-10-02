@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>延时加载和预加载</title>
+		<script src="jQuery-3.1.0/jquery-3.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{
+				margin: 0px;
+				padding: 0px;
+				border: none;
+			}
+			/*延时加载*/
+			#photo{
+				width: 900px;
+				margin: 0 auto;
+				background-color: white;
+				padding-top: 10px;
+			}
+			#photo dl{
+				width: 225px;
+				height: 270px;
+				float: left;
+				margin: 5px 0px 15px 0px;
+			}
+			#photo dl dt{
+				width: 200px;
+				height: 250px;
+				margin: 0px auto;
+			}
+			#photo dl dt img{
+				cursor: pointer;
+				display: block;
+			}
+			#photo dl dd{
+				height: 35px;
+				line-height: 35px;
+				text-align: center;
+			}
+			
+			/*加载大图*/
+			#photo_big{
+				width: 620px;
+				height: 510px;
+				border: 1px solid #ccc;
+				background-color: white;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				z-index: 1000;
+				display: none;
+			}
+			#photo_big h2{
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				font-size: 14px;
+				/*文字间距*/
+				letter-spacing: 2px;
+				color: #666;
+				background-image: url(images/login_header.png);
+				border-bottom: 1px solid #ccc;
+				cursor: move;				
+			}
+			#photo_big h2 img{
+				float: right;
+				position: absolute;
+				top: 13px;
+				right: 10px;
+				cursor: pointer;
+			}
+			#photo_big .big{
+				width: 100%;
+				height: 460px;
+				padding-top: 10px;
+				background-color: #333;
+			}
+			#photo_big .big img{
+				display: block;
+				margin: 0 auto;
+				position: relative;
+				top: 190px;
+			}
+			#photo_big .big strong{
+				display: block;
+				width: 100px;
+				height: 100px;
+				line-height: 100px;
+				text-align: center;
+				background-color: black;
+				color: white;
+				opacity: 0;
+				/*filter: alpha(opacity=0);*/
+				font-size: 60px;
+				cursor: pointer;
+				position: absolute;
+			}
+			#photo_big .big strong.sl{
+				top: 210px;
+				left: 20px;
+			}
+			#photo_big .big strong.sr{
+				top: 210px;
+				right: 20px;
+			}
+			#photo_big .big span{
+				display: block;
+				width: 300px;
+				height: 450px;
+				background-color: black;
+				position: absolute;
+				cursor: pointer;
+				opacity: 0;
+			}
+			#photo_big .big span.left{
+				top: 50px;
+				left: 10px;
+			} 
+			#photo_big .big span.right{
+				top: 50px;
+				right: 10px;
+			}
+			#photo_big .big em{
+				position: absolute;
+				top: 480px;
+				right: 20px;
+				color: white;				
+			}
+			
+			/*遮罩*/
+			#screen{
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				z-index: 500;
+				top: 0px;
+				left: 0px;
+				background-color: black;
+				opacity: 0;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<!--空白区-->
+		<div id="content" style="width: 1170px; height: 1100px;margin: 0px auto;background-color: yellow;"></div>
+		
+		<!--图片延时加载（图片占位符/展位图片）-->
+		<div id="photo">
+			<!--(dl>dt>img[xsrc="images/p$.jpg" bigsrc="images/p$big.jpg"
+			src="images/wait_load.jpg" class="wait_load"]^+dd{延时加载图片})*12-->
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p1.jpg" bigsrc="images/p1big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p2.jpg" bigsrc="images/p2big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p3.jpg" bigsrc="images/p3big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p4.jpg" bigsrc="images/p4big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p5.jpg" bigsrc="images/p5big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p6.jpg" bigsrc="images/p6big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p7.jpg" bigsrc="images/p7big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p8.jpg" bigsrc="images/p8big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p9.jpg" bigsrc="images/p9big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p10.jpg" bigsrc="images/p10big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p11.jpg" bigsrc="images/p11big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+			<dl>
+				<dt><img src="images/wait_load.jpg" alt="" xsrc="images/p12.jpg" bigsrc="images/p12big.jpg" class="wait_load" /></dt>
+				<dd>延时加载图片</dd>
+			</dl>
+		</div>
+		<div style="clear: both;"></div>
+		
+		<!--点击图片弹出弹出框-->
+		<!--图片预加载大图-->
+		<div id="photo_big">
+			<h2><img src="images/close.png" alt="关闭图片" class="close"/>图片预加载</h2>
+			<div class="big">
+				<img src="images/loading.gif" alt="" />
+				<strong class="sl">&lt;</strong>
+				<strong class="sr">&gt;</strong>
+				<span class="left"></span>
+				<span class="right"></span>
+				<em class="index">6/12</em>
+			</div>
+		</div>
+		
+		<!--遮罩层-->
+		<div id="screen"></div>
+	</body>
+</html>
+<script type="text/javascript">
+	$(function(){
+		//图片延时加载
+		$(".wait_load").css("opacity","0");
+		//当document滑动到当前位置时才显示
+		function waitLoad(){
+			setTimeout(function(){
+				$(".wait_load").each(function(index){
+					if ($(window).height() + $(document).scrollTop() >= $(this).offset().top) {
+						$(this).attr("src",$(this).attr("xsrc")).animate({
+							"opacity":1
+						},10000);
+					}
+				});
+			},500);
+		}
+		waitLoad();
+		
+		//滚动或者window改变，都调用waitLoad()方法
+		$(document).on("scroll",waitLoad);
+		$(window).on("resize",waitLoad);
+		
+		//遮罩层(永远都是100%)
+		function getScreenWH(){
+			var width = $(document).width();
+			var height = $(document).height();
+			$("#screen").width(width).height(height);
+		}
+		getScreenWH();
+		//弹出层永远在正中间
+		function center(){
+			var top = ($(window).height() - $("#photo_big").height())/2 + $(document).scrollTop();
+			var left = ($(window).width() - $("#photo_big").width())/2 + $(document).scrollLeft();
+			$("#photo_big").css({
+				"top":top,
+				"left":left
+			});
+		}
+		center();
+		
+		//当滚动的时候或者window大小改变的时候
+		$(document).on("scroll",center);
+		$(document).on("scroll",getScreenWH());
+		$(window).on("resize",center);
+		$(window).on("resize",getScreenWH());
+		
+		//当点击一张图片
+		$(".wait_load").click(function(){
+			$("#screen").css("display","block").animate({
+				opacity:0.65
+			},500);
+			$("#photo_big").css("display","block");
+			//禁止用户滚动
+			document.body.style.overflow = "hidden";
+			//加载图片(预加载)
+			//创建一个Image对象，然后将大图的地址给它。当它加载完毕之后，再将它替换掉loading的图片。并调整它位置
+			var temp_img = new Image();
+			temp_img.src = $(this).attr("bigsrc");
+			$(temp_img).on("load",function(){
+				$("#photo_big .big img").attr("src",temp_img.src).animate({
+					opacity:1
+				}).css({
+					"width":600,
+					"height":450,
+					"top":0
+				});
+			});
+			//当前dl的集合
+			var children = $(this).parent().parent();
+			previousLoadImage(children);
+		});
+		
+		//点击close图标
+		$(".close").click(function(){
+			$("#screen").animate({
+				opacity:0
+			},500,function(){
+				//动画结束之后，让其消失
+				$(this).css("display","none");
+			});
+			$("#photo_big").css("display","none");
+			//滚动条滚动
+			document.body.style.overflow = "auto";
+			//把当前大图还换位占位符(loading.gif)
+			$("#photo_big .big img").attr("src","images/loading.gif").css({
+				width:"32px",
+				height:"32px",
+				top:"190px"
+			});
+		});
+		
+		//上一张/下一张显示
+		$("#photo_big .big .left").hover(function(){
+			$("#photo_big .big .sl").stop().animate({
+				opacity:0.5
+			},"fast");
+		},function(){
+			$("#photo_big .big .sl").stop().animate({
+				opacity:0
+			},"fast");
+		});
+		$("#photo_big .big .right").hover(function(){
+			$("#photo_big .big .sr").stop().animate({
+				opacity:0.5
+			},"fast");
+		},function(){
+			$("#photo_big .big .sr").stop().animate({
+				opacity:0
+			},"fast");
+		});
+		
+		//上一张/下一张点击事件
+		$("#photo_big .big .left").click(function(){
+			//先加载占位图片loading
+			$("#photo_big .big img").attr("src","images/loading.gif").css({
+				width:"32px",
+				height:"32px",
+				top:"190px"
+			});
+			
+			//预加载当前应该显示的图片
+			var current_img = new Image();
+			current_img.src = $(this).attr("src");
+			$(current_img).on("load",function(){
+				//预加载完毕后，显示在中间的img上
+				$("#photo_big .big img").attr("src",current_img.src).animate({
+					opacity:1
+				},"fast").css({
+					width:"600px",
+					height:"450px",
+					top:"0px"
+				});
+			});
+			
+			//找到相邻的上一张和下一张
+			var current_index = $("#photo_big .big img").attr("index") == 0 ? $("#photo .wait_load").length-1 : parseInt($("#photo_big .big img").attr("index"))-1;
+			//当前dl的集合
+			var children = $("#photo dl").eq(current_index);
+			previousLoadImage(children);
+		});
+		
+		$("#photo_big .big .right").click(function(){
+			//先加载占位图片loading
+			$("#photo_big .big img").attr("src","images/loading.gif").css({
+				width:"32px",
+				height:"32px",
+				top:"190px"
+			});
+			
+			//预加载当前应该显示的图片
+			var current_img = new Image();
+			current_img.src = $(this).attr("src");
+			$(current_img).on("load",function(){
+				//预加载完毕后，显示在中间的img上
+				$("#photo_big .big img").attr("src",current_img.src).animate({
+					opacity:1
+				},"fast").css({
+					width:"600px",
+					height:"450px",
+					top:"0px"
+				});
+			});
+			
+			//找到相邻的上一张和下一张
+			var current_index = $("#photo_big .big img").attr("index") == $("#photo .wait_load").length-1 ? 0 : parseInt($("#photo_big .big img").attr("index"))+1;
+			console.log(current_index);
+			//当前dl的集合
+			var children = $("#photo dl").eq(current_index);
+			previousLoadImage(children);
+		});
+		
+		//封装预加载上一张和下一张的方法
+		function previousLoadImage(children){
+			//相邻的上一个dl索引
+			var prev = children.prev().index();
+			//因为prev()向下找，找不到最后一个了。此时prev = -1。我们在这加一个过滤条件
+			if (prev == -1) {
+				prev = $(".wait_load").length - 1;
+			}
+			//相邻的下一个dl索引
+			var next = children.next().index();
+			//因为next()向下找，找不到第一个了。此时next = -1。我们在这加一个过滤条件
+			if (next == -1) {
+				next = 0;
+			}
+			//预加载上/下一个，
+			var prev_Img = new Image();
+			prev_Img.src = $(".wait_load").eq(prev).attr("bigsrc");
+			var next_Img = new Image();
+			next_Img.src = $(".wait_load").eq(next).attr("bigsrc");
+			//上一张图片给class为left的span
+			$("#photo_big .big .left").attr("src",prev_Img.src);
+			//下一张图片给class为right的span
+			$("#photo_big .big .right").attr("src",next_Img.src);
+			//给photo_big 中的big img自定义一个index属性，保存的是自己当前显示图片的索引
+			$("#photo_big .big img").attr("index",children.index());
+			$("#photo_big .big .index").html(parseInt(children.index())+1+"/"+$(".wait_load").length);
+		}
+		
+		
+		
+		
+		
+		//以下内容已讲过，参考课件14天
+		//如何让我们的小弹窗能移动
+		$("#photo_big h2").mousedown(function(ev){
+			//算鼠标按下是，鼠标距离h2上边和左边的距离
+			var distanceX = ev.offsetX;
+			var distanceY = ev.offsetY;
+			//console.log(distanceX + '  ' + distanceY);
+			$(document).mousemove(function(ev){
+				var left = ev.clientX + $(document).scrollLeft() - distanceX;
+				//两个值一样
+				//console.log("1=" + (ev.clientX + $(document).scrollLeft()));
+				//console.log("2=" + (ev.pageX));
+				var top = ev.clientY + $(document).scrollTop() - distanceY;
+				//console.log("left:" + left + "top:"+top);
+				//判断有没有越界
+				if (left <= $(document).scrollLeft()) {
+					left = $(document).scrollLeft();
+				}
+				if(left > ($(window).width() + $(document).scrollLeft() - $("#photo_big").innerWidth())) {
+					left = $(window).width() + $(document).scrollLeft() - $("#photo_big").innerWidth();
+				}
+				if(top <= $(document).scrollTop()){
+					top = $(document).scrollTop();
+				}
+				if(top > ($(window).height() + $(document).scrollTop() - $("#photo_big").innerHeight())){
+					top = ($(window).height() + $(document).scrollTop() - $("#photo_big").innerHeight());
+				}
+				$("#photo_big").css({
+					left:left,
+					top:top
+				});
+			});
+		});
+		//取消绑定的mousemove事件
+		$(document).mouseup(function(){
+			$(document).unbind("mousemove");
+		});
+	});
+	
+
+// 可以参照 fancybox 插件（做对比）
+</script>
