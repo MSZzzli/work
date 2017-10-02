@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>学生列表</title>
+		<style type="text/css">
+			table{
+				border: 1px solid black;
+				/*border-collapse: collapse;*/
+			}
+			th,tr,td{
+				border: 1px solid black;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<table>
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>年龄</th>
+					<th>班级</th>
+					<th>教室</th>
+					<th>老师</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{ each data as stu index }}
+					<tr>
+						<td>{{index+1}}</td>
+						<td>{{stu.name}}</td>
+						<td>{{stu.age}}</td>
+						<td>{{stu.classInfo.subject}}-{{stu.classInfo.session}}</td>
+						<td>{{stu.classInfo.classroom}}</td>
+						<td>{{stu.classInfo.teacher}}</td>
+					</tr>
+				{{ /each }}
+			</tbody>
+		</table>
+	</body>
+</html>
