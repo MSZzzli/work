@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>内置Set对象</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script type="text/javascript">
+	// Set：集合。Set对象是值的集合，你可以按照插入的顺序迭代它 
+	// 的元素。Set中的元素只会出现一次，即 Set 中的元素是唯一的。
+	// 和数组的不同之处：1.集合中不能出现重复的元素  2.集合中元素是无序的
+	
+	// 传递一个可迭代对象
+	// var setObj = new Set(["a","b","a",1,"1"]);
+	// console.log(setObj); // "a" "b" 1 "1"
+	
+	// 传递一个普通参数（都是只能传递一个）
+	var setObj = new Set("a","b","a",1,"1");
+	console.log(setObj); // "a"
+	
+	// add() 方法用来向一个 Set 对象的末尾添加一个指定的值
+	setObj.add("b");
+	setObj.add("a");
+	setObj.add(1);
+	setObj.add("1");
+	console.log(setObj);
+	
+	// delete() 方法可以从一个 Set 对象中删除指定的元素。
+	setObj.delete(1);
+	setObj.delete("a");
+	console.log(setObj);
+	
+	// clear() 方法用来清空一个 Set 对象中的所有元素。
+	// setObj.clear();
+	// console.log(setObj);
+	
+	// forEach 方法根据集合中元素的顺序，对每个元素都执行提供的 callback 函数一次。
+	// callback 有三个参数: 元素的值  元素的索引  将要遍历的集合对象
+	setObj.forEach(function(value,index,obj){
+		console.log(value);
+		console.log(index);
+		console.log(obj);
+	})
+	
+	// Size属性将会返回Set对象中元素的个数。
+	console.log(setObj.size);
+	
+	// has() 方法返回一个布尔值来指示对应的值value是否存在Set对象中
+	console.log(setObj.has("b"));
+	console.log(setObj.has("c"));
+</script>
+
+<!-- 作业：
+	1.今天课件练会
+	2.预习：前端模板引擎 art-template
+-->

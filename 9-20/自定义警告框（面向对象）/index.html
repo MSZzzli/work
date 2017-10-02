@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="alert.css"/>
+		<script src="alert.js"></script>
+	</head>
+	<body>
+		<button type="button">弹出自定义警告框</button>
+	</body>
+	<script type="text/javascript">
+		document.getElementsByTagName('button')[0].onclick = function(){
+			var customAlert = new Alert('留言成功',function(){
+				alert('警告框将要消失，你还有什么事要做的吗？');
+			},function(){
+				alert('警告框已经消失，你还有什么事要做的吗？');
+			});
+			customAlert.show();	
+		}
+	</script>
+</html>

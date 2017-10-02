@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>面向对象编程的思路</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		// 把大象放进冰箱里，需要几步：
+		
+		// 面向过程的编程思路：
+		/*
+		// false：门关闭状态  true：门开启状态
+		var door = false;
+		// false：冰箱无物    true：冰箱有物
+		var box = false;
+		// 第一步：打开冰箱门
+		function openDoor(){
+			door = true;
+		}
+		openDoor();
+		// 第二步：把大象放进去
+		function putElephant(){
+			if (door) {
+				box = true;
+			}
+		}
+		putElephant(); 
+		// 第三步：把门关上
+		function closeDoor(){
+			if (door) {
+				door = false;
+			}
+		}
+		closeDoor();
+		*/
+		
+		
+		// 面向对象的编程思路：
+		// 声明构造函数(类)
+		function Box(door,box){
+			this.door = door;
+			this.box = box;
+		}
+		Box.prototype.openDoor = function(){
+			this.door = true;
+			return this;
+		}
+		Box.prototype.putElephant = function(){
+			if (this.door) {
+				this.box = true;
+			}
+			return this;
+		}
+		Box.prototype.closeDoor = function(){
+			if (this.door) {
+				this.door = false;
+			}
+			return this;
+		}
+		// 调用
+		var box = new Box(false,false);
+		// box.openDoor();
+		// box.putElephant();
+		// box.closeDoor();
+		// 链式调用
+		box.openDoor().putElephant().closeDoor();
+		
+	</script>
+</html>

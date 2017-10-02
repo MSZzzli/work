@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>artTemplate基本语法</title>
+		<script src="template.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		
+	</body>
+</html>
+<!-- 创建一个模板 -->
+<!-- 1.注意 script 的 type 要设置为 text/html -->
+<!-- 2.注意 script 要设置 id，否则无法使用 -->
+<!-- {{}} 表示引用变量。引用模板数据对象或者 template 内置的语法关键字 -->
+<script id="temp" type="text/html">
+	<h2>{{title}}</h2>
+	<ul>
+		{{each list as value index}}
+			<li>
+				第{{index+1}}本：《{{value.name}}》，
+				原价：<del style="color: red;">{{value.price}}</del>元，
+				现价：{{value.currentPrice}}元。
+			</li>	
+		{{/each}}
+	</ul>
+</script>
+
+<!-- 渲染模版 -->
+<script type="text/javascript">
+	// 假设这里的 data 是通过发送 XHR/Ajax 请求获得的数据
+	var data = {
+		title: "编程类书籍",
+		list: [
+			{name:"HTML新手指南",price:"38.8",currentPrice:"38"},
+			{name:"CSS教程",price:"40.9",currentPrice:"35"},
+			{name:"Javascript高级编程",price:"99.9",currentPrice:"90"}
+		]
+	}
+	
+	// 使用模板
+	//找到模板
+	// 1. 填写使用模板的 id
+	// 2. 填写渲染模板的数据 data
+	var htmlStr = template("temp",data);
+	console.log(htmlStr);
+	document.body.innerHTML = htmlStr;
+</script>

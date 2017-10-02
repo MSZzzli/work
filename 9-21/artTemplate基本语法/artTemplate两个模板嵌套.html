@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>artTemplate两个模板嵌套</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script src="template.js" type="text/javascript" charset="utf-8"></script>
+<!-- 模板一 -->
+<script type="text/html" id="temp1">
+	<h2>{{title}}</h2>
+	{{if list.length > 0}}
+		<ul>
+			{{each list as v i}}
+				<!-- 如何在一个模板中套用另一个模板，用关键字 include。 
+					如果这个模板是一个固定模板，只写模板的 id 即可。比如：{{include "temp2"}}。
+					如果这个模板是一个需要数据的模板，那么就需要在后面加上需要传递的参数即可。
+				-->
+				{{include "temp2" v}}
+			{{/each}}
+		</ul>
+	{{else}}
+		<p>今天没有打折的书籍</p>
+	{{/if}}
+</script>
+
+<!-- 模板二 -->
+<script type="text/html" id="temp2">
+	<li>
+		第{{index+1}}本《{{name}}》，
+		原价：<s style="color: red;">{{price}}</s>元，
+		现价：
+		{{if currentPrice == 0}}
+			免费
+		{{else}}
+			{{currentPrice}}元。
+		{{/if}}。
+	</li>
+</script>
+
+<script type="text/javascript">
+	// 假设这里的 data 是通过发送 XHR/Ajax 请求获得的数据
+	var data = {
+		title: "编程类书籍",
+		list: [
+			{index:0,name:"HTML新手指南",price:"38.8",currentPrice:"0"},
+			{index:1,name:"CSS教程",price:"40.9",currentPrice:"35"},
+			{index:2,name:"Javascript高级编程",price:"99.9",currentPrice:"90"}
+		]
+	}
+	
+	var htmlStr = template("temp1",data);
+	document.body.innerHTML = htmlStr;
+	
+</script>
+
+<!-- 
+	明天：
+	后台模板引擎（art-template）
+	请求处理管线
+	问答项目：使用后台模板引擎
+-->

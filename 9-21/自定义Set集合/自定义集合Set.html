@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>自定义集合Set</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script src="set.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	// 自定义集合去重测试
+	console.log("*".repeat(10) + " 自定义集合去重测试 " + "*".repeat(10));
+	var setObj1 = new Set(["a","b","a",1,2,"1"]);
+	var setObj2 = new Set("b","a","a",1,2,"1");
+	console.log(setObj1);
+	console.log(setObj2);
+	
+	// 自定义集合相等测试
+	console.log("*".repeat(10) + " 自定义集合相等测试 " + "*".repeat(10));
+	var result = setObj1.equalTo(setObj2);
+	console.log(result);
+	
+	// 自定义集合并集测试
+	var setObj3 = new Set("b","c",1,10);
+	console.log("*".repeat(10) + " 自定义集合并集测试 " + "*".repeat(10));
+	console.log(setObj1.unite(setObj3));
+	
+	// 自定义集合交集测试
+	console.log("*".repeat(10) + " 自定义集合交集测试 " + "*".repeat(10));
+	console.log(setObj1.intersection(setObj3));
+	
+	// 自定义集合差集测试
+	console.log("*".repeat(10) + " 自定义集合差集测试 " + "*".repeat(10));
+	console.log(setObj1.difference(setObj3));
+	console.log(setObj3.difference(setObj1));
+	
+</script>

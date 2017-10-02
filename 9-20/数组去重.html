@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+	</body>
+	<script>
+		// 创建一个大数组
+		var arr1 = [];
+		for (var i=0;i<200000;i++) {
+			arr1.push(Math.floor(Math.random()*10)+1);
+		};
+		console.log(arr1);
+//***********************第一种方法**********************************************
+		var way1 = function() {
+			//开始时间
+			console.time("方法1");
+			//创建一个数组，把需要去重的数组的第一个数先放在里面,
+			var arr = [arr1[0]];
+			for (var i=1;i<arr1.length;i++) {
+				//判断当前位置的数字首次出现的位置是不是当前位置
+				if (arr1.indexOf(arr1[i])==i) {
+					arr.push(arr1[i]);
+				}
+			}
+			console.timeEnd("方法1");
+			return arr;
+			
+		}
+		console.log(way1());
+//******************第二种方法****************************************************
+		var way2 = function() {
+			//开始时间
+			console.time("方法2");
+			//创建一个数组
+			var arr = [];
+			//遍历当前要去重的数组
+			for (var i=0;i<arr1.length;i++) {
+				//如果遍历到的数字不在新创建的那个数组里，就加进去
+				if(arr.indexOf(arr1[i])==-1) {
+					arr.push(arr1[i]);
+				}
+			}
+			console.timeEnd("方法2");
+			return arr;
+		}
+		console.log(way2());
+//************************第三种方法********************************
+		var way3 = function() {
+			//开始时间
+			console.time("方法3");
+			//创建一个空数组
+			var arr = [];
+			//创建一个空对象
+			var obj = {};
+			//遍历要去重的数组
+			for (var i=0;i<arr1.length;i++) {
+				if (!obj[arr1[i]]) {
+					arr.push(arr1[i]);
+					obj[arr1[i]] = 1;
+				}
+			}
+			console.timeEnd("方法3");
+			console.log(obj);
+			return arr;
+		};
+		console.log(way3());
+
+	</script>
+</html>

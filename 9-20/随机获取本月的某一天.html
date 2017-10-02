@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>随机获取本月的某一天</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		//判断闰年条件：
+		//①非整百年数除以4，无余为闰，有余为平；
+		//②整百年数除以400，无余为闰有余平。
+		
+		//随机获取当月的某一天
+		function randomDayOfMonth(){
+			//获取当前月份
+			var nowDate = new Date();
+			var month = nowDate.getMonth()+1;
+			//记录当前月份有几天
+			var days = 0;
+			switch (month){
+				case 1:case 3:
+				case 5:case 7:
+				case 8:case 10:
+				case 12:
+					days = 31;
+					break;
+				case 2:
+					var year = nowDate.getFullYear();
+					if (year % 100 == 0) {
+						//整百年
+						if (year % 400 == 0) {
+							//润
+							days = 29;
+						} else{
+							//平
+							days = 28;
+						}
+					} else{
+						//非整百年
+						if (year % 4 == 0) {
+							//润
+							days = 29;
+						} else{
+							//平
+							days = 28;
+						}
+					}
+					break;
+				case 4:case 6:
+				case 9:case 11:
+					days = 30;
+					break;	
+				default:
+					break;
+			}
+			return Math.ceil(Math.random()*days);
+		}
+		
+		var day = randomDayOfMonth();
+		alert(day);
+	</script>
+</html>
+
