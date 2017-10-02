@@ -1,0 +1,47 @@
+ 获取两点间距离
+ dx = 跟踪座标x - 原点座标x;
+ dy = 跟踪座标y - 原点座标y;
+ 线距 = Math.sqrt(dx * dx + dy * dy);
+
+计算基本三角函数：
+ 正弦 = 对边/斜边
+ 余弦 = 邻边/斜边
+ 正切 = 对边/邻边
+  
+角度/弧度转换
+ 角度 = 弧度 * 180 / Math.PI
+ 弧度 = 角度 * Math.PI / 180
+  
+旋转角度指向目标方位（鼠标）
+ dx = 跟踪座标x - 原点座标x;
+ dy = 跟踪座标y - 原点座标y;
+ 对象._rotation = Math.atan2(dy,dx) * 180 / Math.PI;
+  
+创建弦波
+ onEnterFrame = function(){
+  
+对象.属性 = 中心原点 + Math.sin(弧度) * 变化量
+  
+弧度 += 递增量;
+ }
+  
+创建圆
+ onEnterFrame = function(){
+  
+对象.x座标 = 中心原点 + Math.cos(弧度) * 变化量
+  
+对象.y座标 = 中心原点 + Math.sin(弧度) * 变化量
+  
+弧度 += 递增量;
+ }
+  
+创建椭圆
+ onEnterFrame = function(){
+  
+对象.x座标 = 中心原点 + Math.cos(弧度) * 变化量1
+  
+对象.y座标 = 中心原点 + Math.sin(弧度) * 变化量2
+  
+弧度 += 递增量;
+ }
+  

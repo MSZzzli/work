@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="潇潇"/>
+		<title>星空物语</title>
+		<script src="jquery/jquery-3.1.0.js"></script>
+		<style type="text/css">
+		html,body{
+			height: 100%;
+			width: 100%;
+			margin: 10px;
+		}
+		body{
+			color: white;
+			font-family: arial;
+			background-image: url(img/005.gif);
+			background-color:blue;
+			background-blend-mode: screen;
+		}
+		#theme{
+			width: 300px;
+			border: 2px solid lavender;
+			padding: 5px;
+			margin: 0 auto;
+		}
+		#theme input{
+			margin: 5px;
+		}
+		#container{
+			width: 800px;
+			height: 700px;
+			overflow: hidden;
+			margin: 30px auto;
+			padding: 5px;
+			border: 10px solid rgba(129, 233,200,0.8);
+			box-sizing: border-box;
+			border-radius: 20px;
+		}
+		#butterfly{
+			float: right;
+			width: 250px;	
+		}
+		.comments{
+			color: greenyellow;
+			font-size: 14px;
+			font-style: normal;
+			margin-left: 5px;
+		}
+		#code{
+			width: 600px;
+			line-height: 33px;
+			padding: 10px 0;
+			margin: 70px 50px 0;
+			
+		}
+		#code center{
+			font-size: 24px;
+			color: aliceblue;
+		}
+		#aside{
+			margin-top: 230px;
+		}
+		</style>
+	</head>
+	<body>
+		<div id="theme"><span>theme</span>
+			<label><input type="radio" name="color" value="blue" checked autocomplete="off"/>blue</label>
+			<label><input type="radio" name="color" value="magenta" autocomplete="off"/>magenta</label>
+			<label><input type="radio" name="color" value="black" autocomplete="off"/>black</label>
+		</div>
+		<div id="container">
+			<section class="star" style="float: left;margin: 5px;">
+				☆ ☆ ☆ ☆ ☆ ☆<br />☆ ☆ ☆  ☆<br />☆ ☆ <br />☆ 
+			</section>
+			<img id="butterfly" src="img/butterfly.gif" alt="" />
+			<div id="code">
+				<center>Take me to your heart</center>
+				<em>
+			        hiding from the rain and snow 
+			        <span class="comments">藏身于雨雪之中 </span><br />
+			        trying to forget but I won't let go 
+			        <span class="comments">努力忘记,但我怎能就这样离去 </span><br />
+			        looking at a crowded street
+			        <span class="comments">看着熙熙攘攘的街道 </span><br />
+			        listening to my own heart beat 
+			        <span class="comments">却只能听见自己的心跳 </span><br />
+			        so many people all around the world 
+			        <span class="comments">人间的大地 无数的生灵</span><br />
+			        tell me where do I find someone like you girl
+			        <span class="comments">请告诉我在哪里可以找到像你一样的女孩 </span><br />
+			        take me to your heart take me to your soul 
+			        <span class="comments">将我留存心间与你的灵魂相伴 </span><br />
+			        give me your hand before I'm old 
+			        <span class="comments">莫待铅华褪尽 容颜老去</span><br />
+			        show me what love is haven't got a clue 
+			        <span class="comments">问情为何物在我们彼此离开前 </span><br />
+			        show me that wonders can be true 
+			        <span class="comments">你说奇迹成真我会相信</span><br />
+			        they say nothing lasts forever
+			        <span class="comments"> 他们说没有什么可以天长地久 </span><br />
+			        we're only here today 
+			        <span class="comments">我们也能此时相守 </span><br />
+			        love is now or never 
+			        <span class="comments">现在或者永不回头 </span><br />
+			        bring me far away 
+			        <span class="comments">请带我一起远走 </span><br />
+			        <span class="comments">---2016-8-29</span>
+	    		</em>		
+			</div>
+			<div id="aside" style="display: none;">
+				<center>
+				<h1>oh~oh~oh!!!恭喜你发现彩蛋！！！o_o哈奥</h1>
+					<h2>Live for nothing ,or die for something.</h2>
+					<h3>baby,What’s your choice?</h3>
+				</center>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+
+	//切换主题
+	$('#theme input').click(function(){
+		//alert($('input:checked').val());
+		$('body').css('background-color',$('input:checked').val());
+	});
+	
+	//自定义jQuery方法	
+	$.fn.showContent = function(){
+		$(this).each(function(){
+			var ele = $(this);
+			var str = ele.html();
+			var progress = 0;
+			ele.empty();
+			//开启定时器
+			var timer = setInterval(function(){
+				//substr(start,length) 
+				var current = str.substr(progress,1);
+				if(current == "<"){
+					//从索引为progress的位置开始向后查找">".返回此字符在str中的出现的第一个位置
+					progress = str.indexOf(">",progress) + 1;
+				}else{
+					progress++;
+				}
+				ele.html(str.substr(0,progress) + (progress & 1 ? '_':''));
+				if (progress >= str.length){
+					clearInterval(timer);
+					//ele.innerHTML = ele.html().substring(0,ele.html().length-2);
+				}
+			},50);
+		});
+	};
+	
+	//调用自定义函数
+	$('#code').showContent();
+	
+	//边框闪动
+	var color = new Array();
+	setInterval(function(){
+		for(var i = 0; i < 3; i++){
+			color[i] = Math.ceil(Math.random()*220);
+		}
+		$('#container').css('border','10px solid ' + 'rgba(' + color[0] +',' + color[1] + ',' + color[2]  + ',' + 0.8 + ')');
+		//console.log($('#container').css('border-color'));
+	},500);
+	
+	
+	$('#butterfly').click(function(){
+		$('#code').css('display','none');
+		$('#aside').toggle(2000);
+		
+	});
+	
+	$('.star').mousedown(function(){
+		location.reload();
+	});
+
+</script>

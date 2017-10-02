@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>产品展示局部放大</title>
+		<script src="jQ/jquery-3.1.0.js"></script>
+		<style type="text/css">
+			html,body{margin: 0;}
+			*{box-sizing: border-box;}
+			#box{
+				width: 800px;
+				height: 460px;
+				margin: 20px auto;
+				border: 1px solid #ccc;
+				padding: 10px;
+				background: linear-gradient(#fff,#999,#fff);
+			}
+			#box>div{
+				position: relative;
+			}
+			#list{
+				width: 15%;
+				height: 100%;
+				float: left;
+			}
+			#list>div{
+				width: 100px;
+				height: 80px;
+				margin-bottom: 10px;
+				padding: 2px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #eee;
+				border: 1px solid #ccc;
+				overflow: hidden;
+			}
+			#list img{
+				width: 100%;
+			}
+			#main{
+				width: 85%;
+				height: 440px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				float: left;
+				position: relative;
+				cursor: crosshair;
+				overflow: hidden;
+			}
+			#main>img{
+				width: 100%;
+			}
+			#small{
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 150px;
+				height: 150px;
+				border: 2px solid #eee;
+				overflow: hidden;
+				background-color: white;
+				z-index: 1000;
+			}
+			#small>img{
+				width: 1200px;
+				position: absolute;
+				left: -300px;
+				top: -300px;
+			}
+			#cover{
+				position: absolute;
+				opacity: 0.3;
+				background-color: blue;
+				width: 100px;
+				height: 100px;
+				z-index: 10;
+				left: 0;
+				top: 0;
+				border: 1px solid white;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div>
+				<!--图片列表-->
+				<div id="list">
+					<div><img src="images/1.jpg" alt="图1" /></div>
+					<div><img src="images/2.jpg" alt="图2" /></div>
+					<div><img src="images/3.jpg" alt="图3" /></div>
+					<div><img src="images/4.jpg" alt="图4" /></div>
+					<div><img src="images/5.jpg" alt="图5" /></div>
+				</div>
+				<!--主图-->
+				<div id="main">
+					<img src="images/1.jpg" alt="主图" />
+					<div id="cover"></div>
+					<!--放大图-->
+					<div id="small"><img src="images/1.jpg" alt="副图" /></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	//挡板宽度/小窗口宽度=主窗口中图片宽度/小窗口图片宽度=比例(bili)
+	var bili=$("#main img").width()/$("#small img").width();
+	console.log(bili);
+	//挡板宽度(coverWidth)=比例(bili)*小窗口宽度
+	var coverWidth=150*bili;
+	$("#cover").width(coverWidth).height(coverWidth);
+	
+	//鼠标移动事件
+	//鼠标移动前让挡板和小窗口隐藏
+	$("#small").css("display","none");
+	$("#cover").css("display","none");
+	$("#main").mousemove(function(e){
+		//coverLeft: 挡板距离主窗口左边距离 =
+		//鼠标相对总页面左边的位置-(总页面宽度-总体大div宽度)/2-
+		//(主窗口距离总体大div左边距离+挡板宽度的一半)
+		var coverLeft=e.pageX-($(document).width()-$("#box").width())/2-($("#list").width()+coverWidth/2);
+			
+		//coverTop: 挡板距离主窗口上边距离=
+		//鼠标相对总页面上边的距离-挡板高度一半-主窗口(left)距离总体大div上边距离
+		//30: 总体div距离页面上面20px+总体div内边距10px
+		var coverTop=e.pageY-coverWidth/2-30;
+		$("#cover").css({
+			left:coverLeft,
+			top:coverTop,
+			display:"block"
+		});
+		$("#small").css("display","block");
+		//imgTop图片距离主窗口上边的高度
+		var imgTop=($("#main").height()-$("#main img").height())/2
+		$("#small img").css({
+			//挡板相对主窗口左边距离(-coverLeft)/小窗口中img相对小窗口左边的距离(left)=bili
+			left:-coverLeft/bili,
+			//挡板相对主窗口内图片上边距离/小窗口中img相对小窗口上边的距离(top)=bili
+			//挡板相对主窗口内图片上边距离=挡板相对主窗口上边距离-主窗口图片距离主窗口上边的高度
+			top:-(coverTop-imgTop)/bili
+		});
+	});
+	//鼠标移出事件
+	$("#main").mouseout(function(){
+			$("#cover").css("display","none");
+			$("#small").css("display","none");
+	})
+	//图片列表点击事件
+	$("#list img").click(function(){
+		$("#main img").attr("src",$(this).attr("src"));
+		$("#small img").attr("src",$(this).attr("src"));
+	})
+</script>

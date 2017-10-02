@@ -1,0 +1,174 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>3D书页</title>
+        <style>
+        *{
+        	box-sizing: border-box;
+        }
+            html,body{
+                width: 100%;
+                height: 700px;
+                /*overflow: hidden;*/
+                color: white;
+                /*用户不可选择*/
+                -moz-user-select: none;
+            }
+            main{
+                width: 300px;
+                height: 400px;
+                margin: 200px auto;
+                /*5个section相对于main 定位*/
+                position: relative;
+                /*视点*/
+                perspective: 900px;
+                perspective-origin: 90% 50%;
+            }
+            section{
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+               
+                background-color: wheat;
+                position: absolute;
+                transform-origin: 0% 0%;
+                transform-style: preserve-3d;
+                 transition: transform 2s linear;
+                 /*背面不可见*/
+                 /*backface-visibility: hidden;*/
+                 background-image: url(new.png);
+                 background-repeat: no-repeat;
+                background-size: 40% 30%;
+                background-position: 100% 100%;
+            }
+          
+            section div{
+            	width: 100%;
+                height: 100%;
+                /*border-right: 2px solid gray;*/
+                background-color: tan;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-image: url(huawen.jpg);
+                background-size: 100% 100%;             
+                /*opacity: 0.8;*/
+                transform: rotateY(180deg);
+                backface-visibility: hidden;
+            }        
+            section i{
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                font-size: 12px;
+                color: black;
+            }
+            div i{
+                position: absolute;
+                bottom: 10px;
+                left: 10px;
+                font-size: 12px;
+                color: black;
+            }                  
+             p{
+                padding: 10px;
+                text-indent: 2em;
+                font-size: 18px;
+                margin: 0;
+                font-family: '楷体';
+                color: black;
+                line-height: 28px;
+                margin: 50px 10px 15px 10px;
+            }
+           
+            /*书皮*/
+           
+         	.fengpi{
+         		background-image: url(pi.png);
+         		background-size: 100% 100%;
+         		box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.7);
+         	}
+         	main section .fengdi{
+         		background-image: url(di.png);
+         		background-size: 100% 100%;
+         	}
+        </style>
+    </head>
+    <body>
+        <main>
+            <section>
+                <i>7</i>            	
+                <p></p>              
+                <div class="fengdi">	                         
+            	</div>
+            </section>
+            <section>
+            	<i>5</i>            
+            	<p></p>
+                <div>
+	                <i>6</i>
+	            	<p></p>
+                </div>
+            </section>
+            <section>
+            	<i>3</i>            
+             	<p></p>
+                <div>
+                    <i>4</i>
+                    <p></p>              
+            	</div>
+            </section>
+            <section>
+              <i>1</i>               
+              <p></p>
+              <div>
+	              <i>2</i>
+	              <p></p>             
+              </div>
+            </section>
+            <section class="fengpi">               
+          		<div>
+          		</div>
+            </section>
+        </main>
+    </body>
+</html>
+<script type="text/javascript">
+	var section = document.querySelectorAll('section');
+	var p = document.querySelectorAll('p');
+	var pageup = document.querySelectorAll('section>i');
+	var pagedown = document.querySelectorAll('div i')
+    var Arry = [
+                "一年三百六十五天，你在时光河流上漂流，把每个日子刻在舢板上，已经记不清楚那些刀痕为什么如此深，深到一切波浪都无法抹平。青春就是匆匆披挂上阵，末了战死沙场。你为谁冲锋陷阵，谁为你捡拾骸骨，剩下依旧在河流中漂泊的刀痕，沉寂在水面之下，只有自己看得见。",
+                "至于爱情，互相索取讨要平衡你对不起我我对不起你最后还得需要政府发放的红本本来证明的玩意儿，你觉得它伟大？它本身放着光芒，让你觉得世界明亮，其实跟黑暗中看不见东西的道理一样，照耀同样使你看不清四周。它的一切牺牲需要条件，养殖陪护小心呵护，前路后路一一计算",
+                "总有几分钟，其中的每一秒，你都愿意拿一年去换取。总有几颗泪，其中的每一次抽泣，你都愿意拿满手的承诺去代替。总有几段场景，其中的每幅画面，你都愿意拿全部的力量去铭记。总有几句话，其中的每个字眼，你都愿意拿所有的夜晚去复习。",
+                "这些年我发现，无论我做过什么，遇到什么，迷路了，悲伤了，困惑了，痛苦了，其实一切问题都不必纠缠在答案上。我们喜欢计算，又算不清楚，那就不要算了，而有条路一定是对的，那就是努力变好，好好工作，好好生活，好好做自己，然后面对整片海洋的时候，你就可以创造一个完全属于自己的世界",
+                "慈善可以诉诸悲悯，让人因'受苦者皆为我辈'而伸出援助之手;也可以诉诸欢乐，让人因'嘿，这活动挺好玩挺酷'而高兴满足，进而施援。在听惯了慈善的大道理、见惯了总打悲情牌的募捐之外，有这样轻松有趣的方式也挺好，但别搞成强捐。无论包装成什么样，不能忘了内核",
+                "我觉得这个世界美好无比。晴时满树花开，雨天一湖涟漪，阳光席卷城市，微风穿越指间，入夜每个电台播放的情歌，沿途每条山路铺开的影子，全部是你不经意写的一字一句，留我年复一年朗读。这世界是你的遗嘱，而我是唯一的遗物。",
+                "我们要沿着一切风景美丽的道路开过去，带着你最喜欢的人，把那些影子甩在脑后。去看无限平静的湖水，去看白雪皑皑的山峰，去看芳香四溢的花地，去看阳光唱歌的草原。去远方，而漫山遍野都是家乡。"
+            ]
+	for (var i = 0 ;i<section.length;i++) {		
+		//自定义属性
+		section[i].index = i;
+		section[i].onclick = function(){					
+			section[this.index].style.transform = "rotateY(-" +( 180 + this.index * 5 )+ "deg)"	
+			console.log(this.index)
+		}		
+	}
+		//当鼠标放在封皮上的时候
+		section[section.length-1].onmouseover = function(){
+			for (var i = 0 ;i<section.length;i++) {
+				section[i].style.transform = "rotateY(-" +( i * 5 )+ "deg)"
+			}			
+		}
+// 处理页码
+//	for (var i = 0;i<pageup.length;i++) {
+//		pagedown[i].innerHTML = 2*i+1;
+//	}
+//	for (var i = 0;i<pagedown.length;i++) {
+//		pageup[i].innerHTML = 2*i+2;
+//	}
+    for (var i = 0 ;i<Arry.length;i++) {
+    	p[i].innerHTML = Arry[i];      	
+    }
+</script>

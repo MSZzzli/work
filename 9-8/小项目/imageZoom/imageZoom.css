@@ -1,0 +1,100 @@
+a,img {
+	border: 0;
+}
+body {
+	background-color:#090909 ;
+	font: 12px/180% Arial, Helvetica, sans-serif, "微软雅黑";
+	color: white;
+	min-width: 670px;
+}
+#biankuang {
+	height: 480px;
+	width: 320px;
+	/*margin: 30px auto;*/    	
+}      
+
+#one-left{
+	width: 500px;
+	height: 500px;			    	
+}  			  
+.zoombox {
+	width: 686px;
+	margin: 20px auto 0 auto;
+}			    						    
+.sliderbox {
+	height: 76px;
+	overflow: hidden;
+	margin: 6px 0 0 0 auto;
+	
+}			    
+.sliderbox .arrow-btn {
+	width: 38px;
+	height: 76px;
+	border-radius: 5px;
+	background: url(images/arrow-btn.png) no-repeat;
+	cursor: pointer;
+}	    
+.sliderbox #btn-left {
+	float: left;
+	position: relative;
+	z-index: 333;
+	background-position: 0 0;
+}	    
+.sliderbox #btn-left.dasabled {
+	background-position: 0 -76px;
+}		    
+.sliderbox #btn-right {
+	float: right;
+	position: relative;
+	left: 0px;
+	z-index: 333;
+	background-position: -38px 0;
+}		    
+.sliderbox #btn-right.dasabled {
+	background-position: -38px -76px;
+}			    
+.sliderbox .slider {
+	float: left;
+	height: 76px;
+	width: 605px;
+	position: relative;
+	overflow: hidden;
+	margin: 0 0 0 3px;
+	display: inline;
+	
+}			    
+.sliderbox .slider ul {
+	position: absolute;
+	left: 0;
+	width: 999em;
+}			    
+.sliderbox .slider li {
+	float: left;
+	width: 121px;
+	height: 76px;
+	text-align: center;		
+	 	
+}		    
+.sliderbox .slider li img {
+	border: solid 1px #090909;
+	width:115px;
+	height:74;  
+}	
+.sliderbox .slider img{
+	opacity: 0.1; 
+}		    
+.sliderbox .slider li.current img {
+	border: solid 1px #090909;
+}
+ input {
+	background-color: #5BB85D;
+	width: 80px;
+	height: 35px;
+	border: none;
+	border-radius: 5px;      	
+}			      
+ input:hover {
+	cursor: pointer;
+	background-color: green;
+}
+

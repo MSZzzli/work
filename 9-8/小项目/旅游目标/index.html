@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>banner动画</title>
+		<style>
+			.containerPic {
+				width: 1000px;
+				height: 325px;
+				margin: 0 auto;
+				overflow: hidden;
+				background: url(images/1.jpg) no-repeat;
+				/*firefox私有，元素和子元素的文本将不可选.
+				 * 子元素可以通过text重设回可选。*/
+				-moz-user-select: none;
+			}
+			.content {
+				width: 200px;
+				height: 325px;
+				float: left;
+				position: relative;
+				overflow: hidden;
+			}
+			.txt {
+				width: 176px;
+				height: 100px;
+				background: rgba(18, 21, 44, 0.5);
+				position: absolute;
+				left: 0px;
+				bottom: 0px;
+				padding: 0 12px;
+				border-top: 2px solid #FFE000;
+				font-size: 12px;
+				/*光标显示指针样式*/
+				cursor: default;
+			}
+			.txt h3 {
+				color: #FFC200;
+				font-size: 24px;
+				font-weight: 100;
+				margin: 10px 0 6px;
+			}
+			.containerPic h4 {
+				color: #fff;
+				font-size: 12px;
+				font-weight: 100;
+				height: 40px;
+			}
+			.txt p {
+				color: #fff;
+				margin-top: 15px;
+				padding-top: 5px;
+				border-top: 1px solid #FFC200;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="containerPic">
+			<div class="content" data-number="1">
+				<div class="txt">
+					<h3>新疆</h3>
+					<h4>草场丰腴、林木葱郁，有着“塞外江南”的美称</h4>
+					<p>
+						发团日期：7-10月<br> 参考价格：5280元
+						<br> 摄影器材: 单反 广角 中长焦 三脚架等
+					</p>
+				</div>
+			</div>
+			<div class="content" data-number="2">
+				<div class="txt">
+					<h3>云南</h3>
+					<h4>东川红土地的炫彩、高原明珠——抚仙湖的柔美</h4>
+					<p>
+						发团日期：7-11月<br> 参考价格：2780元
+						<br> 摄影器材: 单反 广角 中长焦 三脚架等
+					</p>
+				</div>
+			</div>
+			<div class="content" data-number="3">
+				<div class="txt">
+					<h3>贵州</h3>
+					<h4>西江千户苗寨 以美丽回答一切</h4>
+					<p>
+						发团日期：7-12月<br> 参考价格：2680元
+						<br> 摄影器材: 单反 广角 中长焦 三脚架等
+					</p>
+				</div>
+			</div>
+			<div class="content" data-number="4">
+				<div class="txt">
+					<h3>色达</h3>
+					<h4>地球上最后的一片净土，心灵净化之旅</h4>
+					<p>
+						发团日期：7-10月<br> 参考价格：3900元
+						<br> 摄影器材: 单反 广角 中长焦 三脚架等
+					</p>
+				</div>
+			</div>
+			<div class="content" data-number="5">
+				<div class="txt">
+					<h3>斯里兰卡</h3>
+					<h4>印度洋上的一滴眼泪！</h4>
+					<p>
+						发团日期：6-12月<br> 参考价格：1250美金
+						<br> 摄影器材: 单反 广角 中长焦 三脚架等
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="jquery.js"></script>
+	<script src="index.js"></script>
+</html>

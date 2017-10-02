@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!--zh-CN：中文简体(语言类型)-->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!--Bootstrap不支持IE古老的兼容模式 让IE浏览器运行最新的渲染模式-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--视口：移动设置的设置-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>滚动监听</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+    		body{
+    			position: relative;
+    		}
+    		.container ul.nav-pills {
+			top: 200px;
+			position: fixed;
+		}
+    		.container div.floor{
+    			width: 100%;
+    			height: 500px;
+    			background-color: red;
+    			margin: 20px 0px;
+    		}
+    		
+    </style>
+</head>
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="200">
+     <div class="container">
+	    <div class="row">
+	      <nav class="col-sm-3" id="myScrollspy">
+	        <ul class="nav nav-pills nav-stacked">
+	          <li><a href="#floor1">F1</a></li>
+	          <li><a href="#floor2">F2</a></li>
+	          <li><a href="#floor3">F3</a></li>
+	          <li><a href="#floor4">F4</a></li>
+	          <li><a href="#floor5">F5</a></li>
+	          <li><a href="#floor6">F6</a></li>
+	        </ul>
+	      </nav>
+	      <div class="col-sm-9">
+	        <div id="floor1" class="floor"> 
+	          <h1>F1</h1>
+	          <div id="content1">
+	          	内容一
+	          </div>
+	        </div> 	 
+	        <div id="floor2" class="floor"> 
+	          <h1>F2</h1>
+	          <div id="content2">
+	          	内容二
+	          </div>
+	        </div> 
+	        <div id="floor3" class="floor"> 
+	          <h1>F3</h1>
+	          <div id="content3">
+	          	内容三
+	          </div>
+	        </div> 
+	        <div id="floor4" class="floor"> 
+	          <h1>F4</h1>
+	          <div id="content4">
+	          	内容四
+	          </div>
+	        </div> 
+	        <div id="floor5" class="floor"> 
+	          <h1>F5</h1>
+	          <div id="content5">
+	          	内容五
+	          </div>
+	        </div> 
+	        <div id="floor6" class="floor"> 
+	          <h1>F6</h1>
+	          <div id="content6">
+	          	内容六
+	          </div>
+	        </div> 
+	      </div>
+	    </div>
+  	</div>
+    
+    <!--注意：一定要先引入jQuery.js，后引入bootstrap.min.js-->
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    <script src="js/jquery.js"></script>
+    <!-- 包括所有已编译的插件 -->
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+	$(function(){
+		$('div.floor').each(function(index,ele){
+			var randW = Math.random()*600 + 400;
+			var randC = 'rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+')';
+			$(ele).css({
+				height: randW,
+				backgroundColor: randC,
+			});	
+		});
+		
+		$(window).scroll(function(){
+			console.log('body滚动了');
+		});
+		
+		$('#myScrollspy').on('activate.bs.scrollspy', function () {
+			$('ul li',this).each(function(){
+			  if ($(this).hasClass('active')) {
+			  	$('body').attr('data-offset',200+($(this).index()*42));
+			  	console.log($(this).index());
+			  }
+			});
+		  //alert('触发新的楼层了');
+		});
+		$("#myScrollspy").scrollspy();
+	});
+</script>

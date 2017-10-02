@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="jQuery-3.1.0/jquery-3.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<title>滚动监听</title>
+		<style type="text/css">
+			html,body,div,ul,h1{
+				margin: 0px;
+				padding: 0px;
+			}
+			ul,li{
+				list-style: none;
+			}
+			a{
+				text-decoration: none;
+			}
+			.container {
+				margin: 0px 10px;
+			}
+			
+			#myScrollspy{
+				position: fixed;
+				top: 200px;
+				left: 50px;
+			}
+			#myScrollspy ul li{
+				border-radius: 5px;
+				margin: 5px 0px;
+				text-align: center;
+				overflow: hidden;
+			}
+			#myScrollspy ul li a{
+				display: inline-block;
+				width: 50px;
+				height: 40px;
+				line-height: 40px;
+				color: #337AB7;
+			}
+			#myScrollspy ul li a.active{
+				background-color: #337AB7;
+				color: white;
+			}
+			
+			.container .floors{
+				position: relative;
+				margin: 20px 20px 20px 150px;
+				border: 1px solid black;
+			}
+			
+			/*控制nav显示与否*/
+			@media only screen and (max-width: 800px) {
+				#myScrollspy{
+					display: none;
+				}
+				.container .floors{
+					margin: 20px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<body>
+	     <div class="container">
+		    <div class="row">
+		      <nav id="myScrollspy">
+		        <ul class="nav">
+		          <li><a href="#floor1" class="active">F1</a></li>
+		          <li><a href="#floor2">F2</a></li>
+		          <li><a href="#floor3">F3</a></li>
+		          <li><a href="#floor4">F4</a></li>
+		          <li><a href="#floor5">F5</a></li>
+		          <li><a href="#floor6">F6</a></li>
+		        </ul>
+		      </nav>
+		      <div class="floors">
+		        <div id="floor1" class="floor"> 
+		          <h1>F1</h1>
+		          <div id="content1">
+		          	内容一
+		          </div>
+		        </div> 	 
+		        <div id="floor2" class="floor"> 
+		          <h1>F2</h1>
+		          <div id="content2">
+		          	内容二
+		          </div>
+		        </div> 
+		        <div id="floor3" class="floor"> 
+		          <h1>F3</h1>
+		          <div id="content3">
+		          	内容三
+		          </div>
+		        </div> 
+		        <div id="floor4" class="floor"> 
+		          <h1>F4</h1>
+		          <div id="content4">
+		          	内容四
+		          </div>
+		        </div> 
+		        <div id="floor5" class="floor"> 
+		          <h1>F5</h1>
+		          <div id="content5">
+		          	内容五
+		          </div>
+		        </div> 
+		        <div id="floor6" class="floor"> 
+		          <h1>F6</h1>
+		          <div id="content6">
+		          	内容六
+		          </div>
+		        </div> 
+		      </div>
+		    </div>
+	  	</div>
+	</body>
+</html>
+<script type="text/javascript">
+	$(function(){
+		$('div.floor').each(function(index,ele){
+			var randW = Math.random()*600 + 400;
+			var randC = 'rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+')';
+			$(ele).css({
+				height: randW,
+				backgroundColor: randC,
+			});	
+		});
+		$(window).scroll(function(){
+			var current = 0;
+			$('.floor').each(function(i,ele){
+				console.log(i + ':' + ($(ele).offset().top-$(window).scrollTop()-200));				
+				if (($(ele).offset().top-$(window).scrollTop()-(205+i*45)) <= 0) {
+					current = $(ele).index();
+				}				
+			});
+			console.log(current);
+			$('#myScrollspy ul li a').each(function(){
+				$(this).removeClass('active');
+			}).eq(current).addClass('active');
+		});
+	});
+</script>

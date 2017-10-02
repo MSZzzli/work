@@ -1,0 +1,85 @@
+body,html
+{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+body
+{
+    margin: 0;
+    background-color: lightgrey;
+}
+section
+{
+    width: 300px;
+    height: 300px;
+    margin: 0px auto;
+    position: relative;
+    top: -100px;
+    transform-style: preserve-3d;
+    animation: rotate 20s linear infinite;
+}
+p
+{
+	width: 280px;
+	height: 150px;
+	background-color: red;
+	margin: 150px auto 20px;
+    border: 3px solid white;
+}
+p img
+{
+	width: 100%;
+	height: 100%;
+}
+div
+{
+    width: 200px;
+    height: 100px;
+    position: absolute;
+    top: 100px;
+    left: 50px;
+    background-color: #99CCCC;
+    border: 3px solid white;
+}
+div img
+{
+    width: 100%;
+    height: 100%;
+}
+
+#a
+{
+    transform: rotateY(0deg) translateZ(-220px);
+}
+#b
+{
+    transform:  rotateY(60deg) translateZ(220px);
+}
+#c
+{
+    transform: rotateY(60deg) translateZ(-220px);
+}
+#d
+{
+    transform: rotateY(120deg) translateZ(220px);
+}
+#e
+{
+    transform:  rotateY(120deg) translateZ(-220px);
+}
+#f
+{
+    transform: rotateY(0deg) translateZ(220px);
+}
+@keyframes rotate
+{
+    from
+    {
+        transform: rotate3d(0,1,0,0);
+    }
+    to
+    {
+        transform: rotate3d(0,1,0,360deg);
+    }
+}

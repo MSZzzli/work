@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>string内置函数</title>
+		<script src="jquery/jquery-3.1.0.js"></script>
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<div id="#content">
+
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	var str = "问：你为什么长的这么黑？<br>答：我黑着玩呢，不像你丑的那么认真!!!";
+	//indexOf(word,index)
+	//word:你要查找的字符串   
+	//para2：从索引位置为index的位置向后查找字符串，如果省略此参数，将从0开始查找
+	var result = str.indexOf("你",0);
+	console.log(result);
+	$("div").html(str);
+	
+
+	/*&和&&的异同点：
+	  & 和 && 都是逻辑运算符
+	*/
+	var num = 1;
+	if(num == 2 & num++ == 2){} //num==2为false,但num++==2还会继续比较，所以i++被执行
+	//console.log("&运算:" + num);  //num打印出来为2
+	var j = 1;
+	if(j == 2 && j++ == 2){}   //j==2为false,但j++==2不会继续比较，所以j++不被执行
+	//console.log("&&运算:" + j);  //j打印出来为1
+	/*
+	总结：
+	&　不管前面的条件是否正确，后面都执行
+	&&　前面条件正确时，才执行后面，不正确时，就不执行，就效率而言，这个更好
+	*/
+	
+	//&还可以用作位运算符，当&操作符两边的表达式不是boolean类型时，&表示按位与操作
+	//比如a&b;表示把a和b进行二进制的按位与运算
+	//比如8&10，其中8的二进制是0000 1000，而10的二进制是0000 1010，因此
+
+//  document.write(1 & 1);
+//  document.write(2 & 1);
+//  document.write(3 & 1);
+//  document.write(4 & 1);
+//  document.write(5 & 1);
+//  document.write(6 & 1);
+//  document.write(7 & 1);
+//  document.write(8 & 1);
+</script>

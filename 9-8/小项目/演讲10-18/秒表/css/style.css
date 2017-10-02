@@ -1,0 +1,41 @@
+﻿
+.box {
+    margin: 10px auto;
+    width: 400px; 
+    }
+nav{
+    text-align: center;
+}
+#showtime { 
+    margin: 20px; margin-bottom: 20px; 
+    text-align: center; 
+    }
+span { 
+    font-size: 60px; 
+    }
+button { 
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50px; 
+    border: 0; 
+    outline: none; 
+    margin: 0 48px; 
+    font-size: 24px; 
+    }
+#record { 
+    margin-top: 20px; 
+    }
+#record div { 
+    width: 400px; 
+    height: 30px; 
+    border-bottom: 1px dotted #666; 
+    }
+#record span { 
+    font-size: 20px; 
+    }
+.left { 
+    float: left; 
+    }
+.right { 
+    float: right; 
+    }

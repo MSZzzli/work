@@ -1,0 +1,75 @@
+	body{
+		margin: 0;
+		padding: 0;
+		background-color: lightyellow;
+
+	}
+	*{
+		margin: 0;
+		padding: 0;
+		color: #333;
+	}
+	main {
+		width: 450px;
+		height: 450px;
+		border: 1px solid slategray;
+		box-shadow: 1px 1px 5px black;
+		position: relative;
+		background-color: #ededed;
+	}
+	div{
+		width: 450px;
+		margin: 0 auto;
+	}
+	h2{
+		text-align: center;
+	}
+	
+	#jian img {
+		position: absolute;
+		width: 150px;
+		/*height: 150px;*/
+		left: 0;
+		bottom: 0;
+		
+		transform: rotatex(85deg);
+		z-index: 2;
+	}
+	
+	#ba img {
+		/*width: 100px;*/
+		height: 100px;
+		border-radius: 50%;
+		transform: rotateY(70deg);
+		position: absolute;
+		right: -50px;
+		top: 0;
+	}
+	button{
+		width: 100px;
+		background-color: cadetblue;
+		color: white;
+		height: 30px;
+
+		margin:10px 20px 10px 0;
+		
+	}
+	h3{
+		margin-top: 20px;
+	}
+	p{
+		margin-left: 85px;
+		font: arial;
+		font-size: 14px;
+	}
+	span{
+		font-size: 20px;
+		
+	}
+	select{
+		float: right;
+		height: 30px;
+		margin:10px 0px 10px 0;
+
+		
+	}

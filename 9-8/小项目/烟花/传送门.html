@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>传送门</title>
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            background-color: black;
+            -moz-user-select: none;
+        }
+        #main{
+        	width: 300px;
+        	height: 300px;
+        	margin: 100px auto;
+        	background-color: black;
+        	/*overflow: hidden;*/
+        	position: relative;
+        }
+        section{
+            width: 300px;
+            height: 60px;
+            position: absolute;
+           	overflow: hidden;
+            top: 0px;left: 0px;
+            transform-origin: 150px 150px;
+        }
+       	section>div>div{
+       		width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            box-shadow: 1px 1px 20px white;
+       	}
+       	section>div{
+       		height: 100%;
+            overflow: hidden;
+       	}
+        #cs>div{
+            width: 50px;
+            animation: divbig 4s cubic-bezier(0,.72,1,.49) infinite alternate both;
+        }
+        #cs>div>div{
+            border: 10px solid cyan;
+            opacity: 0.8;
+        }
+        #main section:nth-of-type(1){
+        	animation: ii 6s linear infinite;
+        }
+        
+        #main section:nth-of-type(2){
+        	animation: ii1 6s linear infinite 2s;
+        }
+        
+        #cs0>div{
+            width: 120px;  
+        }
+        #cs0>div>div{
+            border: 10px solid  blue;
+            opacity: 0.4;
+        }
+        
+        
+        #main section:nth-of-type(3){
+        	animation: ii1 4s linear infinite;
+        }
+        #cs1>div{
+            width: 60px;  
+        }
+        #cs1>div>div{
+            border: 10px solid lightgoldenrodyellow;
+            opacity: 0.8;
+        }
+        
+        #main section:nth-of-type(4){
+        	animation: ii1 3s linear infinite;
+        }
+        
+        #cs2>div>div{
+            border: 10px solid  ivory;
+            opacity: 0.4;
+        }
+        #cs2>div{
+            width: 50px;
+            animation: divbig 4s cubic-bezier(0,.72,1,.49) infinite alternate both;
+        }
+        
+        
+        .ocs3,.ocs4,.ocs5,.ocs6{
+        	width: 240px;
+        	margin-left:30px;
+        	margin-top: 30px;
+        	transform-origin: 120px 120px;
+        }
+        #main section:nth-of-type(5){
+        	animation: ii1 3s ease infinite;
+        }
+        .ocs3>div{
+        	width: 80px;
+        	
+        }
+        .ocs3>div>div{
+        	width: 240px;
+        	height: 240px;
+        	opacity: 0.6;
+        	border: 8px solid orange;
+        	box-shadow: 1px 1px 20px purple;
+        }
+        #main section:nth-of-type(6){
+        	animation: ii 3s linear infinite;
+        }
+        .ocs4>div{
+        	width: 50px;
+        	
+        }
+        .ocs4>div>div{
+        	width: 240px;
+        	height: 240px;
+        	opacity: 0.8;
+        	border: 8px solid white;
+        	box-shadow: 1px 1px 20px purple;
+        }
+        .ocs4>div{
+            width: 50px;
+            animation: divbig 2s cubic-bezier(0,.72,1,.49) infinite alternate both;
+        }
+        #main section:nth-of-type(7){
+        	animation: ii1 3s linear infinite;
+        }
+        .ocs5>div{
+        	width: 140px;
+        	
+        }
+        .ocs5>div>div{
+        	width: 240px;
+        	height: 240px;
+        	opacity: 0.8;
+        	border: 8px solid red;
+        	box-shadow: 1px 1px 20px purple;
+        }
+        #main section:nth-of-type(8){
+        	animation: ii1 3s linear infinite 1s;
+        }
+        .ocs6>div{
+        	width: 100px;
+        	
+        }
+        .ocs6>div>div{
+        	width: 240px;
+        	height: 240px;
+        	opacity: 0.8;
+        	border: 8px solid purple;
+        	box-shadow: 1px 1px 20px blue;
+        }
+        @keyframes ii{
+            form{
+                transform: rotate(0deg);
+            }to{
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes divbig{
+            form{
+                width: 50px;
+            }to{
+                width: 200px;
+            }
+        }
+        @keyframes ii1{
+            form{
+                transform: rotate(0deg);
+            }to{
+                transform: rotate(-360deg);
+            }
+        }
+       
+       footer{
+       	width: 150px;
+       	height: 150px;
+       	/*background-color: red;*/
+       	position: absolute;
+       	left: 75px;top: 75px;
+       	background-image: url('jy.jpg');
+       	background-size: 100% 100%;
+       	/*background-position: 80% 20%;*/
+       	border-radius: 50%;
+       	box-shadow: 1px 1px 40px 10px white;
+       }
+       footer:hover{
+       	box-shadow: 1px 1px 50px 20px white;
+       }
+       footer a{
+       	display: block;
+         width: 100%;
+         height: 100%;	
+       }
+       
+       p{
+        color: white;
+        text-align: center;
+        font-size: 32px;
+        opacity: 0;
+       }
+       p>a{
+       	color: sandybrown;
+       	text-decoration: none;
+       	border: 2px solid #ccc;
+       	border-radius: 5px;
+       	padding: 5px;
+       }
+       p>a:hover{
+       	color: red;
+       } 
+    </style>
+</head>
+<body>
+	<div id="main">
+		<section id="cs">
+			<div>
+				<div></div>
+			</div>
+	        
+	        
+	    </section>
+	    <section id="cs0">
+			<div>
+				<div></div>
+			</div>
+	        
+	        
+	    </section>
+	    <section id="cs1">
+	        <div>
+	        	<div></div>
+	        </div>     
+	    </section>
+	    <section id="cs2">
+	        <div>
+	        	<div></div>
+	        </div>     
+	    </section>
+	    
+	    <section class="ocs3">
+	        <div>
+	        	<div></div>
+	        </div>     
+	    </section>
+	    
+	    <section class="ocs4">
+	        <div>
+	        	<div></div>
+	        </div>     
+	    </section>
+	    
+	    <section class="ocs5">
+	        <div>
+	        	<div></div>
+	        </div>     
+	    </section>
+	    <section class="ocs6">
+	        <div>
+	        	<div></div>
+	        </div>     
+	    </section>
+	    <footer>
+	    	<a href="烟花.html"></a>
+	    </footer>
+	</div>
+	
+	<p id="op">  <span>看累了吧，去娜娜家后花园放烟花吧？</span>
+	    <a href="烟花.html">好的</a>
+	    <a href="烟花.html">不不</a>
+    </p>
+</body>
+</html>
+<script src="jquery-3.1.0.js"></script>
+<script type="text/javascript">
+	setTimeout(function() {
+			$('#op').animate({
+			opacity:'1'
+		},3000);
+	},30000)
+	
+</script>

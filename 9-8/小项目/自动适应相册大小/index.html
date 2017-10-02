@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>自动适应相册大小</title>
+		<script src="jQuery/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{
+				padding: 0px;
+				margin: 0px;
+			}
+			body{
+				background-color: #cccccc;
+			}
+			.container{
+				width: 100%;
+				height: 100%;
+				margin-top: 3%;
+			}
+			.content{
+				width: 220px;
+				height: 100px;
+				background: #ffffff;
+				margin: 0px auto;
+				border: 15px solid #ffffff;
+				position: relative;
+			}
+			.content li{
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				list-style: none;
+				display: none;
+			}
+			.content span{
+				position: absolute;
+				top: 47%;
+				left: 45%;
+			}
+			.content .left,.content .right{
+				position: absolute;
+				top: 0px;
+				z-index: 11;
+			}
+			.content .left{
+				cursor:url(images/cur-left.ico),auto;
+				left: 0px;
+			}
+			.content .right{
+				cursor:url(images/cur-right.ico),auto;
+				right: 0px;
+			}
+			.bottom{
+				height: 0px;
+				line-height: 50px;
+				background: #ffffff;
+				margin: 0px auto;
+				padding: 0px 15px;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<ul class="content">
+		    	<span><img src="images/img_0.gif" width="32" height="32" /></span>
+		        <div class="left"></div>
+		        <div class="right"></div>
+		    	<li style="background:url(images/img_1.jpg); width:356px; height:201px;"></li>
+		        <li style="background:url(images/img_2.jpg); width:404px; height:323px;"></li>
+		        <li style="background:url(images/img_3.jpg); width:316px; height:178px;"></li>
+		        <li style="background:url(images/img_4.jpg); width:360px; height:203px;"></li>
+		        <li style="background:url(images/img_5.jpg); width:460px; height:259px;"></li>
+		        <li style="background:url(images/img_6.jpg); width:410px; height:308px;"></li>
+		        <li style="background:url(images/img_7.jpg); width:460px; height:259px;"></li>
+		    </ul>
+		    <div class="bottom">
+		    	共<span id="imgdata">x</span>页/第<span id="xz">x</span>页
+		    </div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	$(function (){
+		var x=0,width,height,ul=$(".content"),bottom=$(".bottom")
+		function img_block(){
+			// 停止动画
+			bottom.stop();
+			ul.stop();
+			$(".content li").css("display","none");
+			bottom.css({"height":"0px"});
+			//刷新页脚显示第一页
+			$("#xz").text(x+1);
+			//parseInt() 函数可解析一个字符串，并返回一个整数。 
+	        width=parseInt($(".content li:eq("+x+")").css("width"));
+			height=parseInt($(".content li:eq("+x+")").css("height"));
+			ul.animate({
+				"width":width+"px",
+				"height":height+"px"
+			},500,function (){
+				$(".content li:eq("+x+")").css("display","block");
+				bottom.css("width",width+"px");
+				bottom.animate({"height":"50px"});
+				$(".left,.right").css({
+					"width":width/2+"px",
+					"height":height+"px"
+				})
+			});
+		};
+		//向右自动轮播
+		function rights(){
+			if(x==$(".content li").length-1){
+				x=0;
+			}
+			else{
+				x++
+			};
+			img_block();
+		};
+		//加载完毕执行这个代码
+		$(document).ready(function() {
+			//显示出共几张图片
+			$("#imgdata").text($(".content li").length);
+			img_block();
+			//每隔两秒自动播放
+			t=setInterval(rights,2000);
+	    });
+		$(".right").click(function (){
+			rights()
+		});
+		$(".left").click(function (){
+			if(x==0){
+			    x=$(".content li").length-1;
+			}
+			else{
+			    x--
+			}
+			img_block();
+		});
+		$(".right,.left").hover(function (){
+			clearTimeout(t)
+		},function (){
+			t=setInterval(rights,2000);
+		});
+	});
+
+</script>

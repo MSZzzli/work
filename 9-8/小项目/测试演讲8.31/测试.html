@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>测试</title>
+		<script src="jq/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		
+		<style type="text/css">
+			html,body,h3{
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+			}
+			#checkbox{
+				width: 500px;
+				height: 230px;
+				
+				background:radial-gradient(#73B402,#63A100);
+				color: black;
+				font-weight: bold;
+				border: 1px solid orange;
+				padding: 15px;
+				z-index:999;
+				position: absolute;
+				top: 30px;
+				left:calc(50% - 250px);
+				
+			}
+			
+			.progress #progress-tip {
+			    background: #fff;
+				height: 15px;
+				width: 500px;
+				border: 1px solid red;
+			}
+			.progress  span {
+				background: red;
+				
+				display:inline-block ;
+				float: left;
+				height: 15px;
+			}
+			input{
+				cursor: pointer;
+			}
+			#result p {
+				margin: 8px;
+				padding: 8px;
+				line-height: 25px;
+				background: #FFF;
+				width: 465px;
+				border: 1px dotted black;
+			}
+			.hidden{
+				display: none;
+			}
+			.but{
+				margin: 10px;
+				width: 100px;
+				height: 30px;
+				background-color: cyan;
+				border: none;
+				color: red;
+			}
+			a{
+				text-decoration: none;
+			}
+			#q{
+				position: absolute;
+				left: 0;
+				top: 0；
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="q"></canvas>
+		<div id="checkbox">
+			
+			<!--进度部分-->
+			<div class="progress">
+				<p><b>测试进度：</b>选择答案按下一步进入到下一题 </p>
+				<section id="progress-tip"> <span></span></section>
+			</div>
+			<!--答题部分-->
+			<div id="text">
+				<div id="problem1">
+					<h3>1.问题：当你遇到你心中的男神或者女神你会大胆去表白吗？</h3>
+					<form action=""method="post">
+						<input type="radio" name="select" id="select" value="a" /> A 会 
+						<input type="radio" name="select" id="select" value="b" />B 不会
+						<input type="radio" name="select" id="select" value="c" /> C 考虑一下再决定
+					</form>
+					 <input type="button"  class="but"  value="下一步" />
+				</div>
+		
+				<div id="problem2" class="hidden" >
+					<h3>2.问题：当你妈妈跟你的爱人同时掉进水里（开玩笑）你会首先选择救谁？</h3>
+					<form action=""method="post">
+						<input type="radio" name="select" id="select" value="a" /> A  先救妈妈
+						<input type="radio" name="select" id="select" value="b" /> B 先救爱人
+						<input type="radio" name="select" id="select" value="c" /> C 考虑一下再决定
+					</form>
+					<input type="button"  class="but"  value="下一步" />
+				</div>
+				<div id="result" class="hidden">
+					<!--结果部分-->
+					<h3>测试结果</h3>
+					<p></p>
+					<a href=""><input type="button"  class="but"  value="重新测试" onclick=""/></a> 
+				</div>
+			</div>
+		</div>
+		
+	</body>
+</html>
+<script src="nb.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+  var result={
+  	  "aa": "你是一个懂得感恩的人",  
+	  "ab": "你竟然为了女人不救妈妈，你是一个不孝顺的人",
+	  "ac":"你是一个懂得珍惜的人",
+	  "ba": "你是一个能够事业家庭兼顾的好男人，我在想你的后半生怎么过，哈哈",
+	  "bb": "你是一个有勇气的人",
+	  "bc":"你是一个怕死人",
+	  "ca":"你是一个多虑的人",
+	  "cb": "你是一个自私人",
+	  "cc": "每天都在犹豫，你是一个容易错失美好的人"
+ }
+document.getElementById('problem1').index = 0;
+  $('#problem1 .but').click(function(){
+  	      
+			var choose=$("#problem1").find("input[type='radio']:checked");
+		   document.getElementById('problem1').index = choose.val();
+		 if(choose.length ==1 ){
+		  	    
+				$("#problem1").hide()
+				$("#problem2").css("display","block")
+				$(".progress span").css({
+					width:250
+				})
+			}else{ 
+				alert("请先填写第一题哦，亲！");
+			}
+		});
+ document.getElementById('problem2').index = 0;
+  $('#problem2 .but').click(function (){
+//	       var n = $("#probrolem2").$('input').val() 
+			var choose=$("#problem2").find("input[type='radio']:checked");
+			 document.getElementById('problem2').index =choose.val();
+		  if(choose.length ==1  ){
+				$("#problem1").hide()
+				$("#problem2").hide()
+				$("#result").css("display","block")
+				$(".progress span").css({
+					width:500
+				})
+			}else{
+				alert("不要急，先填写第二题，马上就有结果");
+				
+			}  
+			var m1 = document.getElementById('problem1').index;
+			var n1 = document.getElementById('problem2').index;
+            
+			console.log(m1+n1);
+			var O = m1+n1;
+			$("#result p ").html(result[O])
+			
+		});
+
+</script>

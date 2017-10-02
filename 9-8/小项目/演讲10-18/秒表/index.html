@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>秒表计时器</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="mkeBody">
+    <nav>
+        <h1>秒表计时器</h1>
+    </nav>
+        <div class="box">
+        <!--显示时间-->
+        <div id="showtime">
+        	<span>00</span> <span>:</span> <span>00</span> <span>:</span> <span>00</span> 
+        </div>
+        <div class="bnt">
+            <button>复位</button>
+            <button>开始</button>
+        </div>
+        <!--记录显示的次数-->
+        <div id="record"> </div>
+        </div>
+    <script src="js/jquery.min.js"></script> 
+    <script>
+        $(function(){
+            var min=0;
+            var sec=0;
+            var ms=0;
+            var timer=null;
+            var count=0;
+            //点击第一个按钮（复位）
+            $('.bnt button:eq(0)').on('click',function(){
+                if($(this).html()=='记录'){               
+                        count++;
+                        //console.log(count)
+                        var right1="<span class='right'>"+$('#showtime').text()+"</span>";
+                        //console.log(right1)
+                        var insertStr = "<div><span class='left'>记录"+count+"</span>" +right1+"</div>";
+                        //console.log(insertStr)
+                        //向每个匹配的元素内部前置内容。把最后的记录显示在展示区最上边
+                        $("#record").prepend($(insertStr));                  
+                }else{
+                    min=0;
+                    sec=0;
+                    ms=0;
+                    count=0;
+                    $('#showtime span:eq(0)').html('00');
+                    $('#showtime span:eq(2)').html('00');
+                    $('#showtime span:eq(4)').html('00');
+                    $('#record').html('');
+                }                
+            });
+            //点击开始按钮
+            $('.bnt button:eq(1)').on('click',function(){
+                if($(this).html()=='开始'){
+                    // 点击启动按钮第一个按钮变成记录，第二个按钮变成停止
+                    $(this).html('停止');
+                    $('.bnt button:eq(0)').html('记录');
+                    clearInterval(timer);
+                    //因为1000ms=1s，秒表中毫秒显示是100进1，所以这里写每隔10毫秒执行一次
+                    timer=setInterval(show,10)
+                }else{
+                    // 点击停止按钮第一个按钮变成复位，第二个按钮变成开始
+                    $(this).html('开始');
+                    $('.bnt button:eq(0)').html('复位');
+                    clearInterval(timer);
+                }
+            });
+        //生成时间
+        function show(){
+            //毫秒++
+            ms++;           
+            if(ms==100){
+                sec++;ms=0;
+            }
+            if(sec==60){
+                min++;sec=0;
+            }
+            ms1=ms<10? "0"+ms:ms
+            sec1=sec<10? "0"+sec:sec
+            min1=min<10? "0"+min:min
+            $('#showtime span:eq(0)').html(min1);
+            $('#showtime span:eq(2)').html(sec1);
+            $('#showtime span:eq(4)').html(ms1);
+        }
+        })
+    </script>
+</body>

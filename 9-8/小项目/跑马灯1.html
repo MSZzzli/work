@@ -1,0 +1,103 @@
+<!DOCTYPE>
+<html >
+<head>
+    <meta  charset="utf-8" />
+    <title>跑马灯</title>
+    <style>
+        body,div{
+        	margin:0;
+        	padding:0;
+        	}
+        body{
+        	color:red;
+        	}
+        #container{
+        	width: 800px;
+        	background:#1a1a1a;
+        	margin: 20px auto;
+        	padding: 5px;
+        }
+        #wenzi{
+        	width: 800px;
+        	text-align: center;
+        	font-size: 50px;
+        	margin-bottom: 30px;
+        }
+	     
+	    marquee{
+	    	font-size: 50px;
+	    	padding: 5px 0 10px 0;
+	    }
+        #clock{
+        	width:800px;
+        	text-align:left;
+        	}
+        #clock span{
+        	color: red;              	       	        	
+            margin: 5px;
+        	}
+    </style>
+    <script>
+        window.onload = function (){  
+     	var info = "河南人民欢迎你！河南人民欢迎你！";  
+         function left() {  
+             var id = document.getElementById("wenzi"); 
+              //对info进行截取
+             id.innerHTML = info.substring(0, info.length);
+             
+              //截取info的第一位拼接到info后
+             info = info + info.substring(0, 1); 
+             console.log(info);
+             //从第二位开始对其进行截取，后再赋值给info
+             info = info.substring(1, info.length);
+             console.log(info);
+         }                  
+         left();
+         setInterval(left,1000);   
+	        //简易时钟	       	
+            var oClock = document.getElementById("clock");
+            var aSpan = oClock.getElementsByTagName("span");
+            setInterval(getTimes, 1000);
+            getTimes();
+            function getTimes (){
+                var oDate = new Date();
+                var aDate = [
+                             oDate.getHours(),
+                             oDate.getMinutes(), 
+                             oDate.getSeconds(),
+                             oDate.getFullYear(),
+                             oDate.getMonth()+1,
+                             oDate.getDate()
+                             ];
+                for (var i in aDate) 
+                aSpan[i].innerHTML = format(aDate[i]);
+            }
+            function format(a){
+                return a.toString().replace(/^(\d)$/, "0$1")
+            }
+        }
+    </script>
+</head>
+<body>
+	<div id="container">
+		<!--第一种-->	
+		 <!--<marquee> 河南人民欢迎你！！！</marquee>  -->
+         <!--<marquee direction="right"> 河南人民欢迎你！！！</marquee>-->  
+		 <!--滚动方向direction表示滚动的方向，值可以是left，right，up，down，默认为left-->
+         <!--滚动方式 behavior表示滚动的方式，值可以是scroll（连续滚动）slide（滑动一次）alternate（往返滚动）-->
+         <!--<marquee behavior="alternate">河南人民欢迎你！！！</marquee>-->
+         <!--loop表示循环的次数，值是正整数，默认为无限循环-->
+         <!--<marquee loop="3"> 河南人民欢迎你！！！</marquee>-->
+         <!--scrollamount表示运动速度，值是正整数，默认为6-->
+         <!--<marquee scrollamount="15"> 河南人民欢迎你！！！</marquee>-->
+         <!--scrolldelay表示停顿时间，值是正整数，默认为0，单位是毫秒 -->
+         <!--<marquee scrolldelay="1000"> 河南人民欢迎你！！！</marquee>-->
+       <!--第二种-->
+         <div id="wenzi"></div>
+	   <div id="clock">
+	      <span></span>点<span></span>分<span></span>秒<br>
+	      <span></span>年<span></span>月<span></span>日
+	  </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>关键字搜索</title>
+	<script src="jQuery/jquery-3.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<style>
+		html,body{
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+			background-color: darkblue;
+		}
+		a{
+			color: white;
+			text-decoration: none;
+		}
+		a:hover{
+			text-decoration:underline;
+		}
+		#content{
+			margin: 100px auto;
+			width: 650px;
+			height: 100%;
+		}
+		#content .left-block{
+			width: 65%;
+			height: 100%;
+			float: left;
+			color: white;
+		}
+		#content .left-block h1{
+			margin: 0;
+			margin-bottom: 10px;
+			font-weight: normal;
+		}
+		#content .right-block{
+			width: 35%;
+			height: 100%;
+			float: right;
+		}
+		#content .left-block .app{
+			width: 45%;
+			height: 40px;
+			padding: 10px;
+			border: 1px solid darkblue;
+			cursor: pointer;
+		}
+		#content .left-block .app:hover{
+			border: 1px solid white;
+		}
+		#content .left-block .app img{
+			height: 100%;
+			float: left;
+		}
+		#content .left-block .app dl{
+			float: right;
+			margin: 0;
+			width: 65%;
+			margin-left: 10px;
+		}
+		#content .left-block .app dl dd{
+			margin-left: 0;
+			font-size: 12px;
+			line-height: 27px;
+			color: gray;
+		}
+		#content .right-block input{
+			border:1px solid darkblue;
+			height: 23px;
+			text-indent: 5px;
+			background-image: url("imgs/search.png");
+			background-repeat: no-repeat;
+			background-position: 96% center;
+			padding:5px;
+			padding-right: 30px;
+			border-radius: 3px;
+		}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<div class="left-block">
+			<h1>应用</h1>
+			<div id="app-container">
+			</div>
+		</div>
+		<div class="right-block">
+			<input id="keywords"></input>
+		</div>
+	</div>
+	<script>
+		var apps = [{ico:"imgs/1.png",name:"电脑管家",desc:"时刻保证您的电脑安全"},
+					{ico:"imgs/2.png",name:"QQ音乐",desc:"想听什么就听什么"},
+					{ico:"imgs/10.png",name:"视频",desc:"想看什么就看什么"},
+					{ico:"imgs/9.png",name:"录音",desc:"随时记录美妙声音"},
+					{ico:"imgs/5.png",name:"百度地图",desc:"想去哪里就去哪里"},
+					{ico:"imgs/11.png",name:"云端储存",desc:"2T超大存储空间"},
+					{ico:"imgs/7.png",name:"云笔记",desc:"记录你的生活点滴"}]
+		//封装一个方法 
+		function addApps(apps){
+			var html = ""; 
+			var app;
+			//遍历数组，每次生成一段HTML代码，并且追加到html这个变量中
+			$.each(apps,function(i){
+				app = apps[i];
+				html += '<div class="app">'+
+					'<img src="'+app.ico+'">'+
+					'<dl>'+
+						'<dt><a href="#">'+app.name+'</a></dt>'+
+						'<dd>'+app.desc+'</dd>'+
+					'</dl>'+
+				'</div>';
+			});
+			//改变app-container里面的html代码内容
+			$("#app-container").html(html);
+		}
+		addApps(apps);
+		$("#keywords").keyup(function(){
+			//获得文本框关键字的值
+			var newApps = []; 
+			var keywords = this.value;
+			$.each(apps,function(i){
+				if(apps[i].name.indexOf(keywords)!=-1){
+				newApps.push(apps[i]);
+				}
+			});
+			addApps(newApps);
+		});
+
+
+
+
+		// $("#keywords").keyup(function(){
+		// 	var keywords = this.value;
+		// 	var newApps = apps.filter(function(e){
+		// 		if(e.name.indexOf(keywords)!=-1){
+		// 			return e;
+		// 		}
+		// 	});
+		// 	addApps(newApps);
+		// });
+	</script>
+</body>
+</html>
+<!--indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+如果没有找到匹配的字符串则返回 -1。-->
+<!--filter筛选元素集合中匹配表达式 或 通过传递函数测试的 那些元素集合。-->
+
+
+
+
+
+
+
+
+
+		

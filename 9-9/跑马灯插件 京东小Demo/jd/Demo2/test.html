@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>测试Demo</title>
+		<script src="libs/jquery-3.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			ul,li{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			.box{
+				width: 1200px;
+				height: 282px;
+				margin: 50px auto;
+				background-color: red;
+				overflow: hidden;
+			}
+			
+			.box>div{
+				float: left;
+			}
+			
+			.box .timer{
+				width: 200px;
+				height: 282px;
+				background-color: gray;
+				line-height: 282px;
+				text-align: center;
+			}
+			
+			.box .slide{
+				position: relative;
+				width: 1000px;
+				height: 282px;
+				overflow: hidden;
+			}
+			
+			.box .slide .item{
+				width: 100%;
+				position: absolute;
+				left: 1000px;
+			}
+			.box .slide .item ul{
+				width: 100%;
+				overflow: hidden;
+			}
+			.box .slide .item ul li{
+				font-size: 0;
+				float: left;
+			}
+			
+			.box .slide .indicator span{
+				font-size: 50px;
+				background-color: gray;
+				line-height: 50px;
+				padding: 0px 10px;
+				position: absolute;
+				top: 105px;
+			}
+			.box .slide .indicator .prev{
+				left: 10px;
+			}
+			.box .slide .indicator .next{
+				right: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="timer">这里写时钟</div>
+			<div class="slide">
+				<div class="item" style="left: 0px;">
+					<ul>
+						<li><img src="sm/1.jpg"/></li>
+						<li><img src="sm/2.jpg"/></li>
+						<div style="clear: both;"></div>
+					</ul>
+				</div>
+				<div class="item">
+					<ul>
+						<li><img src="sm/3.jpg"/></li>
+						<li><img src="sm/4.jpg"/></li>
+						<div style="clear: both;"></div>
+					</ul>
+				</div>
+				<div class="item">
+					<ul>
+						<li><img src="sm/5.jpg"/></li>
+						<li><img src="sm/6.jpg"/></li>
+						<div style="clear: both;"></div>
+					</ul>
+				</div>
+				<div class="item">
+					<ul>
+						<li><img src="sm/7.jpg"/></li>
+						<li><img src="sm/8.jpg"/></li>
+						<div style="clear: both;"></div>
+					</ul>
+				</div>
+				<div class="indicator">
+					<span class="prev">&lt;</span>
+					<span class="next">&gt;</span>
+				</div>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	//初始变量
+	var prev = $('.box .item').length-1, current = 0, next = 1;
+	
+	//点击下一张
+	$('.indicator .next').click(function(){
+		//记录下当前的实参
+		var arg = arguments;
+		var $this = $(this);
+		//解绑方法
+		$($this).unbind('click');
+		
+		$('.box .item').eq(next).css({
+		left: 1000
+		}).finish().animate({
+			left: 0
+		},1000);
+		
+		$('.box .item').eq(current).css({
+			left: 0
+		}).finish().animate({
+			left: -1000
+		},1000,function(){
+			$(this).css({
+				left: 1000
+			});
+			//重新绑定方法
+			$($this).bind('click',arg.callee);
+		});
+		
+		current = next;
+		next = next >= $('.box .item').length-1 ? 0 : next+1;
+		prev = prev >= $('.box .item').length-1 ? 0 : prev+1;
+	});
+	
+	//点击上一张
+	$('.indicator .prev').click(function(){
+		//记录下当前的实参
+		var arg = arguments;
+		var $this = $(this);
+		//解绑方法
+		$($this).unbind('click');
+		
+		$('.box .item').eq(prev).css({
+		left: -1000
+		}).finish().animate({
+			left: 0
+		},1000);
+		
+		$('.box .item').eq(current).css({
+		left: 0
+		}).finish().animate({
+			left: 1000
+		},1000,function(){
+			$(this).css({
+				left: -1000
+			});
+			//重新绑定方法
+			$($this).bind('click',arg.callee);
+		});
+		
+		current = prev;
+		next = next <= 0 ? $('.box .item').length-1 : next-1;
+		prev = prev <= 0 ? $('.box .item').length-1 : prev-1;
+	});
+</script>

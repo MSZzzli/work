@@ -1,0 +1,19 @@
+{
+  "name": "choose",
+  "version": "1.0.0",
+  "description": "电影选座",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "魏帅",
+  "license": "ISC",
+  "dependencies": {
+    "art-template": "^3.0.3",
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "fs": "0.0.1-security",
+    "multer": "^1.2.0"
+  }
+}

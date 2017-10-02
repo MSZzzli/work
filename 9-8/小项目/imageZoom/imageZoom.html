@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图片缩放-列图切换</title>
+		<link rel="stylesheet" type="text/css" href="imageZoom.css"/>		
+	</head>
+	<body>
+		<div id="one-left"><div class="zoombox menu">	
+			<div id="biankuang" class="zoompic"><img name="myImage" src="images/9981.jpg"  alt="壁纸" /></div>  
+		</div></div>
+		<br /><br /><br /><br /><br />
+		<div id="one-right" >
+			<div class="sliderbox"><div class="slider" id="thumbnail">
+			    <div id="btn-left" class="arrow-btn dasabled"></div>
+			        <ul>
+			            <li class="current"><a href="javascript:;" ><img src="images/9981.jpg"/></a></li>
+			            <li><a href="javascript:;"><img src="images/9984.jpg" alt="壁纸03" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9983.jpg"  alt="壁纸04" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9982.jpg"  alt="壁纸05" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9978.jpg"  alt="壁纸06" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9980.jpg"  alt="壁纸01" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9979.jpg"  alt="壁纸01" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9978.jpg" alt="壁纸06" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9977.jpg"  alt="壁纸01" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9976.jpg"  alt="壁纸01" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9980.jpg"  alt="壁纸01" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9979.jpg"  alt="壁纸01" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9978.jpg" alt="壁纸06" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9977.jpg"  alt="壁纸01" /></a></li>
+			            <li><a href="javascript:;"><img src="images/9976.jpg"  alt="壁纸01" /></a></li>		
+			        </ul><div id="btn-right" class="arrow-btn"></div>
+			    </div>			    
+	        </div>
+		</div>	
+		<p>
+		 	<input type="button" value="放大图片" >
+			<input type="button" value="缩小图片" >
+			<input type="button" value="重置图片" >
+		    <span id="zoomsize"></span> <span id="imgsize"></span>
+	    </p>
+	</body>
+	<script src="js3.1/jquery-3.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="imageZoom.js" type="text/javascript" charset="utf-8"></script>
+</html>

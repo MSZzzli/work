@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>验证码</title>
+		<style>
+			body {
+				background-image: url(img/1.jpg);
+				margin: 0px;
+				padding: 0px;				
+			}
+			
+			h2 {
+				color: white;
+				text-align: center;
+			}
+			
+			form {
+				z-index: 2;
+				padding: 40px 20px;
+				margin: 50px auto;
+				width: 500px;
+				height: 100px;
+				border: 1px solid blue;
+				box-shadow: 1px 1px 10px black;
+				border-radius: 15px;
+				background-color: white;
+			}
+			
+			.checkcode {
+				float: left;
+				margin-top: 10px;
+				width: 200px;
+				line-height: 50px;
+				border: 1px solid #008cff;
+				border-radius: 3px;
+				background: #fff;
+				position: relative;
+			}
+			
+			.checkcode input {
+				float: left;
+				text-align: center;
+				width: 90px;
+				height: 36px;
+				padding: 3px;
+				font-size: 20px;
+				color: #000;
+			}
+			
+			#create {
+				position: absolute;
+				right: 0px;
+				width: 80px;
+				padding-left: 20px;
+				height: 42px;
+				/*形变*/
+				transform: skew(5deg,10deg)
+			}
+			
+			.login,
+			.btn {
+				margin-top: 10px;
+				display: block;
+				float: left;
+				width: 95px;
+				height: 42px;
+				margin-left: 30px;
+				background: #008cff;
+				color: #fff;
+				border-radius: 3px;
+				background: none;
+				border: 1px solid #008cff;
+				border-radius: 3px;
+				color: #008cff;
+			}					
+			.no {
+				border: none;				
+			}
+			.login {
+				color: white;
+				background-color:  #008cff;			
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2>验证码</h2>
+		<form>
+			<div class="checkcode ">
+				<input type="text" placeholder="验证码" maxlength="4" class="no" />
+				<!--h5新增的标签-->
+				<canvas id="create"></canvas>
+			</div>
+			<input type="button" value="换一张" class="btn btn-no" />
+			<input type="button" value="登录" class="login" />
+		</form>
+		<script src="jquery.js"></script>
+		<script type="text/javascript">
+			//显示验证码图片
+			function showCheck(a) {
+			//创建context对象内建的html5对象（拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法。）
+			//fillRect(x,y,width,height) 方法定义了矩形当前的填充方式。
+				var cxt = document.getElementById('create').getContext('2d')
+				console.log(cxt)
+				//清空一个区域（给定矩形内的指定像素。）
+				cxt.clearRect(0, 0, 500, 500)
+				cxt.font = '80px Arial'
+				cxt.fillStyle="rgb(100,102,193)"
+				//fillText(text,x,y) - 在 canvas 上绘制实心的文本
+				cxt.fillText(a, 0, 100)
+				
+			}
+			//在全局定义一个验证码
+			var code
+			function createCode() {
+				code = ''
+				//验证码的长度 
+				var codeLength = 4
+				var selects = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
+				//随机选择一个验证码
+				for(var i = 0; i < codeLength; i++) {
+					var index = Math.floor(Math.random() * 61)
+					code += selects[index]
+				}
+				//按照验证码的长度进行筛选
+				if(code.length != codeLength) {
+					createCode()
+				}
+				//展示验证码
+				showCheck(code)
+			}
+			$(function() {
+				createCode();
+			})
+			$('.btn').click(function() {
+				createCode()
+			})
+
+			$('.login').click(function() {
+				//因为填写验证时不需要区分大小写，把获取的字母都装换为大写
+				var inputCode = $('.no').val().toUpperCase()
+				console.log(inputCode)
+               //把随机生成的验证码转化为大写
+               var codeUp =code.toUpperCase()
+               console.log(codeUp)
+               if(inputCode.length <=0){
+               	$('.no').attr('placeholder','验证码')
+               	alert('请输入验证码')
+               	createCode()
+               	return false
+               }
+               else if(inputCode != codeUp){
+               	$('.no').val('')
+               	//修改属性值。
+               	$('.no').val('').attr('placeholder','请重新输入')
+               	alert('验证码填写错误')
+               	createCode()
+               	return false
+               }
+               else{
+               	$('.no').val('')
+               	alert('登录成功')
+               	return true
+               }
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,50 @@
+html{
+	width: 100%;height: 100%;
+}
+body{
+	background: url(../images/bac.jpg) no-repeat center center;background-size: 100% 100%;/*width: 100%;height: 100%;*/
+	/*height: 1500px;*//*overflow: hidden;*/
+}
+#box {
+	position: relative;
+	width: 400px;
+	height: 50px;
+	border: 1px solid black;
+	margin: 200px auto 0;
+}
+
+#bg {
+	height: 10px;
+	margin-top: 19px;
+	border: 1px solid black;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+#bgcolor {
+	background: red;
+	width: 0;
+	height: 10px;
+	border-radius: 5px;
+}
+
+#bt {
+	width: 34px;
+	height: 34px;
+	background: url(../images/icon.png) no-repeat center center;
+	border-radius: 17px;
+	overflow: hidden;
+	position: absolute;
+	left: 0px;
+	margin-left: -17px;
+	top: 8px;
+	cursor: pointer;
+	background-size: 100% 100%;
+}
+
+#text {
+	width: 400px;
+	margin: 0 auto;
+	font-size: 16px;
+	line-height: 2em;
+}

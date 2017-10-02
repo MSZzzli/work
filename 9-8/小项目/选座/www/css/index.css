@@ -1,0 +1,35 @@
+ *{
+     box-sizing: border-box;
+ }
+ body{
+     margin: 0px;
+ }
+ main{
+     cursor: pointer;
+     
+     width: 970px;
+     padding: 5px;
+     margin: 0px auto;
+     text-align: center;
+     background-color: #ececec;
+ }
+ p{
+     text-align: center;
+     font-size: 20px;
+     line-height: 30px;
+ }
+ span{
+     display: inline-block;
+     width: 50px;
+     height: 50px;
+     margin: 5px;
+     font-size: 10px;
+     font-weight: normal;
+     color: black;
+     line-height: 50px;
+     text-align: center;
+     background-color: pink;
+ }
+ button{
+     margin-top: 20px;
+ }

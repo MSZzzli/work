@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>注册账号</title>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			#wrap {
+				width: 500px;
+				height: 330px;
+				background: lightblue;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -250px;
+				margin-top: -165px;
+				font-size: 14px;
+				color: royalblue;
+			}
+			
+			.content input {
+				height: 30px;
+				width: 240px;
+				/*margin-left: -100px;*/
+			}
+			
+			#register {
+				margin-top: 40px;
+				width: 220px;
+				height: 40px;
+				background: #90CEF7;
+				border: none;
+				color: white;
+				font-size: 18px;
+				margin-left: 100px;
+				
+			}
+			
+			.content {
+				margin-top: 40px;
+				margin-left: 30px;
+			}
+			
+			h2 {
+				margin-top: 20px;
+				text-align: center;
+			}
+			
+			span {
+				font-size: 10px;
+				color: red;
+			}
+		</style>
+	<script src="jquery-3.1.0.js"></script>
+		
+	</head>
+
+	<body>
+		<!-- 添加数据的地方 发送一个add请求 -->
+		<form action="/add" method="post">
+			<div id="wrap">
+			<h2>注册账户</h2>
+			<div class="content">
+				<input type="text" id="name" name="name" placeholder="请输入账号" autocomplete="on" />
+				<span id="user">
+			</span>
+			</div>
+			<div class="content">
+				<input type="password" id="psw" name="psw" placeholder="请输入密码" autocomplete="on" />
+				<span id="pass">
+			 </span>
+			</div>
+			<input type="submit" id="register" value="注册"/>
+		</div>
+		
+		</form>
+		
+	</body>
+
+</html>
+<script type="text/javascript">
+
+</script>
+
+<script src="register.js"></script>

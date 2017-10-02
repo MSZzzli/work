@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>手风琴</title>
+		<script src="jQuery-3.1.0/jquery-3.1.0.js" type="text/javascript"></script>
+		<style type="text/css">
+		    *{
+		    	margin: 0;
+				padding: 0;
+		    }
+			html,body{
+				width: 100%;
+				height: 100%;
+				background-image: url(2.jpg);
+				background-repeat: no-repeat;
+				background-color: #2C133A;
+			}
+			.container{
+				width: 1200px;
+				height: 700px;
+				margin: 100px auto;
+			}
+			.container ul li{
+				list-style-type: none;
+				width: 50px;
+				height: 460px;
+				background-color: #FF00FF;
+				float: left;
+				margin: 5px;
+				text-align: center;
+				border-radius: 30px;
+				cursor: pointer;
+				color: #ccc;
+				position: relative;
+			}
+			.container ul li h3{
+				margin-top: 20px;
+			}
+			.container ul li img{
+				border-radius: 30px;
+				position: absolute;
+				top: 25px;
+				left: 15px;
+				width: 90%;
+				height: 90%;
+				display: none;
+			}
+			/*.container ul li img.block{
+				display: block;
+			}*/
+		</style>
+	</head>
+	<body>
+		<div class="container">
+				<ul>
+					<li >
+						<h3><em>one</em></h3>
+						<img src="1.PNG"/>
+					</li>
+					<li >
+						<h3><em>two</em></h3>
+						<img src="2.PNG"/>
+					</li>
+					<li >
+						<h3><em>three</em></h3>
+						<img src="3.PNG"/>
+					</li>
+					<li >
+						<h3><em>four</em></h3>
+						<img src="4.PNG"/>
+					</li>
+					<li >	
+						<h3><em>five</em></h3>
+						<img src="5.PNG"/>
+					</li>
+				</ul>
+			</div>
+	</body>
+</html>
+<script type="text/javascript">
+
+	$(".container ul li").each(function(){
+		$(this).hover(function(){
+			$(this).css("background-color","#44253C");
+		},function(){
+			$(this).css("background-color","#FF00FF");
+		});
+	});
+	$(".container ul li").click(function(){
+		$(this).animate({width:"320px"},500);
+		$index = $(this).index()
+		//console.log($index);
+//		$(".container ul li img").eq($index).addClass("block");	
+       $(".container ul li img").each(function(){
+         	//fadeIn()逐渐改变被选元素的不透明度，从隐藏到可见（褪色效果）
+            $(".container ul li img").eq($index).fadeIn();	
+		});	
+	});
+	$(".container ul li").mouseleave(function(){
+		$(this).animate({width:"50px"},500);
+		
+		$(".container ul li img").each(function(){
+//			$(this).removeClass( "block" );
+            //fadeOut()从可见到隐藏
+            $(this).fadeOut();	
+		});
+	});
+
+</script>

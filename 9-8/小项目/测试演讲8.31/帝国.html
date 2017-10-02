@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>HTML5模仿骇客帝国文字矩阵效果</title>
+</head>
+<body>
+
+<canvas id="q"></canvas>
+<script type="text/javascript" >
+var s = window.screen;
+var width = q.width = s.width;
+var height = q.height = s.height;
+var letters = Array(256).join(1).split('');
+var draw = function () {
+  q.getContext('2d').fillStyle='rgba(0,0,0,0.02)';
+  q.getContext('2d').fillRect(0,0,width,height);
+  q.getContext('2d').fillStyle='#0F0';
+  letters.map(function(y_pos, index){
+    text = Math.floor(Math.random()*(1+1));
+    x_pos = index * 10;
+    q.getContext('2d').fillText(text, x_pos, y_pos);
+    letters[index] = (y_pos > 758 + Math.random() * 1e4) ? 0 : y_pos + 10;
+  });
+};
+setInterval(draw, 30);
+</script>
+
+</body>
+</html>

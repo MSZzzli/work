@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> new document </title>
+        <meta charset="utf-8"/> 
+    </head>
+ 	<body >
+   <script>
+		var bd=document.getElementsByTagName('body')[0];
+		var canvas=document.createElement('canvas');
+		bd.appendChild(canvas);
+		var context=canvas.getContext('2d');
+		canvas.width=window.innerWidth;
+		canvas.height=window.innerHeight;
+		//定义彩球的构造器
+		function circle(){
+			this.x=Math.random()*canvas.width;
+			this.y=canvas.height;
+			this.r1=Math.random()*10+1;
+			this.r2=parseInt(Math.random()*256);
+			this.g=parseInt(Math.random()*256);
+			this.b=parseInt(Math.random()*256);
+			this.paint=function(){
+			if(this.y<canvas.height/2-50){ 
+			context.strokeStyle='#69b6b1';
+			context.lineWidth=.2;
+			context.beginPath();
+			context.arc(this.x,this.y,this.r1,0,Math.PI*2);
+			context.stroke()
+			}
+			else if(this.y<canvas.height/2){
+			context.fillStyle='#69b6b1';
+			context.lineWidth=.2;
+			context.beginPath();
+			context.arc(this.x,this.y,this.r1,0,Math.PI*2);
+			context.fill()
+			}
+			else{
+			context.fillStyle='rgb('+this.r2+','+this.g+','+this.b+')';
+			context.beginPath();
+			context.arc(this.x,this.y,this.r1,0,Math.PI*2);
+			context.fill()}
+			};
+
+			this.step=function(){
+			
+			this.y--; 
+			
+			}
+		}
+		var circles=[];
+		var time=0;//控制数量;
+		//定义所有彩球的绘制方法和移动
+		function createCircles(){
+			time++;
+			if(time%10==0){
+			circles.push(new circle())
+			}
+			for(var i=0,l=circles.length;i<l;i++){
+			circles[i].paint();
+			circles[i].step();
+			}
+		}
+		//优化性能删除画布外面的圈圈
+		function deleteCircles(){
+			for(var i=0,l=circles.length;i<l;i++){
+				if(this.y<0){
+				circles.splice(i,1)
+				}
+			}
+		}
+		//核心定时器
+		var img=new Image();
+		img.src='1.jpg'
+		var timer=setInterval(function(){
+			context.drawImage(img,0,0,canvas.width,canvas.height)
+			createCircles()
+			deleteCircles() 
+		},10)
+    </script>
+ 	</body>	
+</html>

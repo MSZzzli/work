@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>作业</title>
+    <style>
+        #home{
+            padding: 0px;
+            margin: 0px;
+            text-align: center;
+        }
+        #A{
+            width: 800px;
+            height:300px;
+            text-align: center;
+            margin: 0px auto;
+            
+            padding: 1vw 1vw 1vw 0px; 
+            border: 2px solid #CCCCCC;
+            background-color:white;
+            position: relative;
+            
+        }
+        #ull{
+            width: 200px;
+            height: 100px;
+            margin: 50px 0px;
+            
+            left: 50px;
+            padding-left: 0px;
+            
+            /*background-color: red;*/
+        }
+        #ull li{
+        	
+            background-color: #EEEEEE;
+            font-size: 18px;
+           padding-left: 40px;
+            list-style: none;
+            text-align: left;
+            border-top: #fff 1px solid;
+		    float: left;
+		    width: 250px;
+		    height: 30px;
+        }
+        #ull li a{
+            text-decoration: none;
+            color: purple;
+            letter-spacing:2px;
+        }
+         #ull li.first{
+             border-top: 0px; 
+         }
+         #ull li:hover{
+             background-color: rgb(249,249,249);
+         }
+         #pic{
+			  width:400px;
+			  height:188px;
+			  overflow:hidden;
+			  float:right;
+			  right: 60px;
+			  top: 6vw;
+			  position: absolute;
+			  box-shadow: 0px 3px 0px black;
+		  }
+    </style>
+</head>
+<script>
+
+window.onload=function(){
+  var ele=document.getElementById("pic");
+  var w=ele.clientWidth;
+  var n=20,t=20;
+  var timers=new Array(n);
+  var oLi=document.getElementById("ull").getElementsByTagName("li");
+  for(var i=0;i<oLi.length;i++){
+    oLi[i].index=i;
+    oLi[i].onmouseover=doAlide;
+  }
+  oLi=null;
+  function doAlide(){
+    var x=ele.scrollLeft;
+    //w=ele.clientWidth;
+    var d=this.index*w-x;
+    for(var i=0;i<n;i++){
+      if(timers[i])
+        clearTimeout(timers[i]);
+      var j=i;
+      timers[i]=setTimeout(function(){
+      	//Math.round四舍五入
+        ele.scrollLeft=x+Math.round(d*Math.sin(Math.PI*(j+2)/(2*n)));
+      },(i+1)*t);
+    };
+  }
+}
+</script>
+<body id="home">
+	<marquee direction="left" behavior=alternate loop=infinite scrollamount=5 scrolldelay=10 bgcolor=white height=50 width=50% ><P align=center>这是一个实现滑动门的效果</P></marquee>
+    <div id="A">
+        <ul id="ull">
+            <li class="first"><a href="javascript:" >我怀念的</a></li>
+            <li><a href="javascript:">人来人往</a></li>
+            <li><a href="javascript:">出发看世界</a></li>
+            <li><a href="javascript:">黑白世界</a></li>
+            <li><a href="javascript:">大把好时光</a></li>
+            <li><a href="javascript:">梦想天空分外蓝</a></li>
+        </ul>
+        <div id="pic">
+        	<img src="8.jpg"/>
+        </div>
+    </div>
+   
+    
+</body>
+</html>
