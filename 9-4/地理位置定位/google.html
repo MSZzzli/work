@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+      div#google_geo{
+      	position: fixed;
+      	top: 0;
+      	right: 0;
+      	margin: 20px;
+      	width: 300px;
+      	height: 40px;
+      }
+    </style>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true&v=3.15"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="map_canvas" style="width:100%; height:100%"></div>
+    <div id="google_geo">您的位置为：<strong></strong></div>
+  </body>
+      <script type="text/javascript">
+		//成功的回调函数
+		function successFunc(successInfo){
+			var jing=successInfo.coords.longitude;//获取经度
+			var wei=successInfo.coords.latitude;//获取纬度
+			
+			//alert(wei+'--------'+jing);
+			var mapOptions = {
+				center: new google.maps.LatLng(wei, jing),
+				zoom: 15,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			var map = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptions);
+            
+            // http://www.cnblogs.com/lijuntao/p/6439596.html
+            var latlon = successInfo.coords.latitude+','+successInfo.coords.longitude;
+            getLocaltionInfo(latlon); 
+		}
+		//错误的回调函数
+		function errorFunc(errorInfo){
+			alert('错误信息:'+errorInfo.message+'\n错误代码:'+errorInfo.code);
+		}
+		//选项设置对象
+		optionObj={
+			enableHighAccuracy:false,
+			timeout:5000,
+			maximumAge:Infinity
+		}
+	  //浏览器支持检测
+	  if(navigator.geolocation){//支持
+		navigator.geolocation.getCurrentPosition(successFunc,errorFunc,optionObj);
+	  }else{//不支持	
+		alert('你的浏览器不支持！');
+	  }
+	  
+	  // 再来看谷歌地图接口交互。同样我们将经纬度信息通过Ajax方式发送给谷歌地图接口，接口会返回相应的省市区街道详细信息。
+	  // 谷歌地图接口返回的也是一串JSON数据，这些JSON数据比百度地图接口返回的要更详细，我们可以根据需求将需要的信息展示给div#google_geo。
+	  function getLocaltionInfo(latlon){
+	  	var url = 'http://maps.google.cn/maps/api/geocode/json?latlng='+latlon+'&language=CN';
+		$.ajax({
+			type: "GET",
+			url: url,
+			beforeSend: function() {
+				$("#google_geo strong").html('正在定位...');
+			},
+			success: function(json) {
+				if(json.status == 'OK') {
+					var results = json.results;
+					$.each(results, function(index, array) {
+						if(index == 0) {
+							$("#google_geo strong").html(array['formatted_address']);
+						}
+					});
+				}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				$("#google_geo strong").html(latlon + "地址位置获取失败");
+			}
+		});
+	}
+    </script>
+</html>

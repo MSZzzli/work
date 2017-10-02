@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<style type="text/css">
+		body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}
+		#l-map{height:100%;width:78%;float:left;border-right:2px solid #bcbcbc;}
+		#r-result{height:100%;width:20%;float:left;}
+		div#baidu_geo{
+			margin: 20px;
+			width: 300px;
+			height: 40px;
+			position: fixed;
+			top: 0;
+			left: 0;
+		}
+		</style>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="allmap"></div>
+		<div id="baidu_geo">您的位置为：<strong></strong></div>
+	</body>
+	<script>
+		//定义成功的回调函数
+		function succssFunc(successInfo){
+			//进行其他操作
+			//successInfo  有两个属性 coords  timestamp
+			//coords属性(对象)
+			//latitude  表示纬度 10进制
+			//longitude 表示经度 10进制
+			//accuracy  表示坐标的精确度  单位是米  
+			alert('纬度:'+successInfo.coords.latitude+'经度:'+successInfo.coords.longitude+'时间:'+successInfo.timestamp);
+			var wei=successInfo.coords.latitude;//获取维度
+			var jing=successInfo.coords.longitude;//获取维度
+			var map = new BMap.Map("allmap");
+			var point = new BMap.Point(jing,wei);//传入经纬度
+			map.centerAndZoom(point, 15);//设置放大比例
+			var marker = new BMap.Marker(point);  // 创建标注
+			map.addOverlay(marker);              // 将标注添加到地图中
+			marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+			
+			var latlon = successInfo.coords.latitude+','+successInfo.coords.longitude;
+			getLocaltionInfo(latlon);
+		};	
+		//定义失败的回调函数
+		function errorFunc(errorInfo){
+			//errorInfo 错误信息对象  message 错误信息  code错误代码
+			alert('地理位置定位失败'+'错误信息:'+errorInfo.message+'错误代码:'+errorInfo.code);
+		}
+		//定义选项设置对象
+		optionObj={
+				enableHighAccuracy:false,
+			    timeout:5000,
+				maximumAge:Infinity
+				
+		}
+		//检测浏览器是否支持地理位置定位功能
+		if(navigator.geolocation){
+			//alert('你的浏览器非常棒，支持地理位置定位');
+			navigator.geolocation.getCurrentPosition(succssFunc,errorFunc,optionObj);
+		}else{
+			alert('你的浏览器不支持！');
+		}
+		
+		
+		// http://www.cnblogs.com/lijuntao/p/6439596.html
+		// 上面我们了解了HTML5的Geolocation可以获取用户的经纬度，那么我们要做的是需要把抽象的经纬度转成可读的有意义的真正的用户地理位置信息。
+		// 幸运的是百度地图和谷歌地图等提供了这方面的接口，我们只需要将HTML5获取到的经纬度信息传给地图接口，则会返回用户所在的地理位置，
+		// 包括省市区信息，甚至有街道、门牌号等详细的地理位置信息。
+		//baidu
+		function getLocaltionInfo(latlon){
+			var url = "http://api.map.baidu.com/geocoder/v2/?ak=C93b5178d7a8ebdb830b9b557abce78b&callback=renderReverse&location="+latlon+"&output=json&pois=0";
+			$.ajax({
+				type: "GET",
+				dataType: "jsonp",
+				url: url,
+				beforeSend: function() {
+					$("#baidu_geo strong").html('正在定位...');
+				},
+				success: function(json) {
+					if(json.status == 0) {
+						$("#baidu_geo strong").html(json.result.formatted_address);
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					$("#baidu_geo strong").html(latlon + "地址位置获取失败");
+				}
+			});
+		}
+	</script>
+</html>
