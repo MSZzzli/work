@@ -1,0 +1,37 @@
+		 Baby对象
+         name				姓名
+         age					年龄
+         isMale				是否为男孩
+         birthDate			出生日期
+         eat(food)				吃：食物（打印出来，如：ChangWei吃了牛奶）
+         sleep(hours)			睡觉：小时数（打印出来，如：ChangWei睡了16个小时）
+
+         Child对象
+         name
+         age
+         isMale
+         birthDate
+         eat(food)
+         sleep(hours)
+         play(game, hours)		玩积木3小时
+
+         Student对象
+         name
+         age
+         isMale
+         birthDate
+         eat(food)
+         sleep(hours)
+         play(game, hours)
+         study(course, hours)	学英语3小时
+
+         Worker对象
+         name
+         age
+         isMale
+         birthDate
+         eat(food)
+         sleep(hours)
+         play(game, hours)
+         study(course, hours)
+         work(task, hours)		写代码8小时

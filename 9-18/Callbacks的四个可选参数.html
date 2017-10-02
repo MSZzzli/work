@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Callbacks的四个可选参数</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script src="jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	// Possible flags:（可用的 flags:）
+	// once: 确保这个回调列表只执行（ .fire() ）一次(像一个递延 Deferred).
+	// memory: 保持以前的值，将添加到这个列表的后面的最新的值立即执行调用任何回调 (像一个递延 Deferred).
+	// unique: 确保一次只能添加一个回调(所以在列表中没有重复的回调).
+	// stopOnFalse: 当一个回调返回false 时中断调用
+	
+	function a(){
+		alert("a");
+	}
+	function b(){
+		alert("b");
+	}
+	
+	// once
+	/*
+	var cbs = $.Callbacks("once");
+	cbs.add(a);
+	cbs.add(b);
+	// 触发回调
+	cbs.fire();
+	setTimeout(function(){
+		cbs.fire();
+	},1000);
+	*/
+	
+	
+	// memory
+	/*
+	var cbs = $.Callbacks("memory");
+	cbs.add(a);
+	cbs.fire();
+	// 此时在添加回调函数 b，不用调用 fire，那么 b 会立即回调
+	setTimeout(function(){
+		cbs.add(b);
+	},2000);
+	*/
+	
+	
+	// unique
+	/*
+	var cbs = $.Callbacks("unique");
+	cbs.add(a);
+	cbs.add(b);
+	cbs.add(a);
+	cbs.fire();
+	*/
+	
+	// stopOnFalse
+	var cbs = $.Callbacks("unique stopOnFalse");
+	cbs.add(a);
+	cbs.add(a);
+	cbs.add(function(){
+		alert("c");
+		return false;
+	});
+	cbs.add(b);
+	cbs.fire();
+	
+	// 这四个参数可以任意排列组合
+	// "unique stopOnFalse"  "unique stopOnFalse memory" ……
+</script>

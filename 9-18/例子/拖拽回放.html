@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>拖拽回放</title>
+		<style type="text/css">
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
+			html,body,h2,p,strong{
+				margin: 0;
+				padding: 0;
+				-moz-user-select: none;
+			}
+			body{
+				color: white;
+				background-color: black;
+				font-size: 13px;
+			}
+			div#box{
+				width: 300px;
+				height: 150px;
+				border: 2px solid #ddd;
+				position: absolute;
+				background-color: #333;
+				top: calc(50% - 75px);
+				left: calc(50% - 150px);
+			}
+			div#box h2{
+				height: 25px;
+				border-bottom: 2px solid #ddd;
+				cursor: move;
+				background-color: #222;
+				text-align: right;
+				padding: 0 10px;
+			}
+			div#box h2 a{
+				font-size: 13px;
+				text-decoration: none;
+				color: #FFFFFF;
+			}
+			div#box p{
+				padding: 10px 0 0 10px;
+			}
+			div#box span{
+				color: yellow;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<h2><a href="javascript:;">点击回放拖拽轨迹</a></h2>
+			<p><strong>Drag：</strong><span>false</span></p>
+			<p><strong>offsetTop：</strong><span>100</span></p>
+			<p><strong>offsetLeft：</strong><span>100</span></p>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	// 获取标签
+	var oBox = document.getElementById("box");
+	var oH2 = oBox.getElementsByTagName("h2")[0];
+	var oA = oH2.getElementsByTagName("a")[0];
+	var aSpan = oBox.getElementsByTagName("span");
+	// 定义变量
+	var isDrag = false;
+	var aPoint = [{x:oBox.offsetLeft,y:oBox.offsetTop}];
+	
+	// 封装一个更新 span 内容的方法
+	function updateSpan(){
+		aSpan[0].innerText = isDrag;
+		aSpan[1].innerText = oBox.offsetTop;
+		aSpan[2].innerText = oBox.offsetLeft;
+	}
+	updateSpan();
+	
+	// 鼠标按到 h2 上，进行拖拽
+	oH2.onmousedown = function(event){
+		// 该函数在属于当前线程的指定窗口里设置鼠标捕获。一旦窗口捕获了鼠标，所有鼠标输
+		// 入都针对该窗口，无论光标是否在窗口的边界内。同一时刻只能有一个窗口捕获鼠标。
+		this.setCapture();
+		// 摁下来表示即将拖拽（即使你没拖拽也没关系，因为这里并不会显示在界面，没有调用 updateSpan ）
+		isDrag = true;
+		// 记录鼠标点击位置距离 h2 上边和左边的距离
+		var distanceX = event.offsetX;
+		var distanceY = event.offsetY;
+		document.onmousemove = function(e){
+			// 计算出 left 和 top 的值
+			var left = e.clientX - distanceX;
+			var top = e.clientY - distanceY;
+			// 判断边界问题
+			left = left <= 0 ? 0 : left;
+			top = top <= 0 ? 0 : top;
+			var maxLeft = document.documentElement.clientX - oBox.offsetWidth;
+			left = left >= maxLeft ? maxLeft : left;
+			var maxRight = document.documentElement.clientY - oBox.offsetHeight;
+			top = top >= maxRight ? maxRight : top;
+			// 更新 oBox 的坐标
+			oBox.style.left = left + "px";
+			oBox.style.top = top + "px";
+			// 更新 UI
+			updateSpan();
+			// 把坐标信息存储起来
+			aPoint.push({x:left,y:top});
+		}
+	}
+	
+	// 鼠标松开移出移动事件
+	oH2.onmouseup = function(){
+		// 移出事件
+		document.onmousemove = null;
+		// 重置变量的值
+		isDrag = false;
+		// 更新 UI
+		updateSpan();
+		this.releaseCapture();
+	}
+	
+	// 点击回放按钮，进行回放
+	oA.onclick = function(){
+		console.log(1);
+		// 利用定时器获取坐标
+		var timer = setInterval(function(){
+			var point = aPoint.pop();
+			// 判断 point 是否能取到值
+			if (point) {
+				oBox.style.left = point.x + "px";
+				oBox.style.top = point.y + "px";
+				// 更新 UI
+				updateSpan();
+			} else{
+				// 取不到值，关闭 timer
+				clearInterval(timer);
+			}
+		},20);
+	}
+	
+	// 取消 oA 的事件冒泡
+	oA.onmousedown = function(event){
+		console.log(2);
+		// event.stopPropagation();
+		// event.stopImmediatePropagation();
+		// 取消事件冒泡
+		event.cancelBubble = true;
+		// 阻止拖动 a 标签
+		return false;
+	}
+	
+</script>

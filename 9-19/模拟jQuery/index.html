@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="base.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+	<script type="text/javascript">
+
+		$(function(){
+			alert("DOM 加载完毕");
+			
+			console.log(jQuery);
+			console.log($);
+			console.log(jQuery == $);
+			
+			console.log($());
+			console.log($("#box"));
+			console.log($(".box"));
+			console.log($("div"));
+			console.log($("#box span").init().init());
+			
+			$("div").each(function(index,value){
+				console.log(this);
+				// console.log(index);
+				// console.log(value);
+				this.onclick = function(){
+					alert("我点击了第 " + index + " 个标签");
+				}
+			}).init();
+			
+			
+			$.init();
+			$.noConflict();
+			jQuery("#box");
+			jQuery.init();
+			
+			// 给 jQuery 拓展一个 slide 方法
+			jQuery.extend("slide",function(){
+				console.log("slide 方法执行了");
+			});
+			jQuery("#box").slide();
+		});
+		
+	</script>
+	<body>
+		<div id="box">
+			我是 id=box 选择器
+			<span>内容</span>
+		</div>
+		<div class="box">
+			我是 class=box 选择器
+		</div>
+		<div class="box">
+			我是 class=box 选择器
+		</div>
+	</body>
+</html>
+

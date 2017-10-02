@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script src="people.js"></script>
+	<script type="text/javascript">
+		
+		// 假设 p 是 People 类的一个对象
+		var p = new People();
+		
+		// 绑定回调函数
+		function fun1(data){
+			alert("第一个 resolve 的回调函数" + data);
+		}
+		p.on('resolve',fun1);
+		
+		p.on('resolve',function(data){
+			console.log(this);
+			alert("第二个 resolve 的回调函数" + data)
+		})
+		
+		p.on('reject',function(data){
+			alert("第一个 reject 的回调函数" + data)
+		});
+		
+		// 触发回调
+		p.emit('resolve');
+		p.emit('reject');
+		
+		// 移除回调
+		p.off("resolve",fun1);
+		
+		// 再次触发回调
+		p.emit('resolve');
+		p.emit('reject');
+		
+		
+		
+		var peo = new People();
+		peo.on("a",fun1);
+		peo.emit("a");
+	</script>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>深入理解原型</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script type="text/javascript">
+	// 尝试自己实现原型的原理和机制：
+	/*
+	var proto = {
+		family: "犬科",
+		bark: function(){
+			alert(this.name + "：汪汪汪");
+		}
+	}
+	function Dog(name){
+		this.name = name;
+		this.proto = proto;
+	}
+	var dog1 = new Dog("藏獒");
+	var dog2 = new Dog("茶杯");
+	console.log(dog1.proto.family);
+	console.log(dog2.proto.family);
+	dog1.proto.family = "猫科";
+	console.log(dog1.proto.family);
+	console.log(dog2.proto.family);
+	// 产生的问题：
+	// 1.bark 里面 this 的指向问题（this 指向了 proto 这个对象）
+	// 2.不能直接调用共有属性和方法，需要借助 proto 这个中间变量
+	// 可以模拟原生的原型 prototype，但是同时会产生很多问题。
+	*/
+	
+	// 在原型中添加共有属性和方法还可以这样添加
+	function Dog(name){
+		this.name = name;
+	}
+	// 这样写缺失 constructor，我们手动补充上
+	Dog.prototype = {
+		constructor: Dog,
+		family: "犬科",
+		bark: function(){
+			alert(this.name + "：汪汪汪");
+		}
+	}
+	// Dog.prototype.constructor = Dog;
+	
+	// 通过和前面课件的对比：发现这种在原型中存放公共数据确实方便，但是把原来的 prototype
+	// 覆盖掉了，缺失了 constructor 属性。证明 prototype 这个对象中默认有一个属性 constructor
+	var dog1 = new Dog("藏獒");
+	var dog2 = new Dog("茶杯");
+	console.log(dog1);
+	console.log(dog2);
+	/*
+	 * 关于对象调用属性或方法的调用顺序：
+	 * 现在对象自身（构造函数）上寻找，找到直接调用
+	 * 若找不到。去自身的原型中寻找，找到直接调用
+	 * 若找不到。去原型的原型中寻找，找到直接调用
+	 * ……
+	 * 直到找到 Object 的原型，找到直接调用。找不到抛出异常。
+	 */
+	
+
+	// 如何输出一个原型：
+	console.log(Dog.prototype);
+	console.log(dog1.__proto__);
+	console.log(Object.getPrototypeOf(dog2));
+	
+	// 输出一个对象的原型的原型
+	console.log(dog1.__proto__.__proto__);
+	
+	// 判断原型和对象之间的关系
+	// 1.isPrototypeOf()  类的原型和对象原型的关系
+	var obj = new Object();
+	var list = new Array();
+	console.log(Dog.prototype == dog1.__proto__); // true
+	console.log(Dog.prototype.isPrototypeOf(dog1)); // true
+	console.log(Dog.prototype.isPrototypeOf(obj)); // false
+	console.log(Object.prototype.isPrototypeOf(obj)); // true
+	console.log(Array.prototype.isPrototypeOf(obj)); // false
+	
+	// 2. .hasOwnProperty()  对象和属性之间的关系
+	console.log(dog1.hasOwnProperty("age"));  // false
+	console.log(dog1.hasOwnProperty("name"));  // true
+
+	// 任务：
+	// 面向对象编程三大特性：继承  多态  封装
+	// 明天我们要讲：继承（原型链）
+	// 作业：上午讲解的试卷
+	//      下午讲解的原型
+	//      继承（原型链）   
+</script>

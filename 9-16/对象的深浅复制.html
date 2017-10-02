@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>对象的深浅复制</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script type="text/javascript">
+	/*
+	 * 通过 new 构造函数得到的对象，对象之间是独立的，可以看成是一个深复制的过程。
+	 * 那么，对于不是通过 new 构造函数得到的对象，如何完成复制呢？
+	 */
+	
+	// 示例1：
+	var message = {
+		nation: "中国",
+		birthPlaces: ["北京","上海","广州"],
+		friend:{
+			name: "张三",
+			age: 18,
+			favorite: ["篮球","乒乓球"]
+		}
+	}
+	
+	
+	
+	// 这是一个浅复制
+	/*
+	// original：原始的   current：目前的
+	function simpleCopy(original,current){
+		current = current || {};
+		for (var k in original) {
+			// console.log(k);console.log(original[k]);
+			current[k] = original[k];
+		}
+		return current;
+	}
+	
+	var result1 = simpleCopy(message);
+	console.log(result1);
+	
+	var obj2 = {name: "本人"};
+	var result2 = simpleCopy(message,obj2);
+	console.log(result2);
+
+	result1.nation = "美国";
+	console.log(message.nation); // 中国
+	console.log(result2.nation); // 中国 
+	
+	// 问题：
+	result2.birthPlaces.push("太原");
+	console.log(message.birthPlaces); 
+	console.log(result1.birthPlaces); 
+	// 这里只是把 message 里面的 nation 进行深复制，而 birthPlace 和 friend 这两个对象
+	// 依然是浅复制，改变一个，其他两个也会发生变化。
+	// 问题就出在: current[birthPlace] = original[birthPlace]
+	// 解决：应该这样写 current[birthPlace] = []; 遍历 original[birthPlace] 把这个的元素
+	// 一一放到 current[birthPlace] = [] 里面
+	*/
+	
+
+
+	// 这是一个深复制
+	/*
+	function deepCopy(original,current){
+		current = current || {};
+		for (var k in original) {
+			if (typeof original[k] == "object") {
+				// 注意：这里说明碰到对象了。进行深复制
+				if (original[k].constructor == Array) {
+					// 这是一个数组
+					current[k] = [];
+				} else if (original[k].constructor == Object){
+					// 这是一个对象
+					current[k] = {};
+				}
+				// 递归遍历
+				deepCopy(original[k],current[k]);
+			} else{
+				// 直接用等号赋值
+				current[k] = original[k];
+			}
+		}
+		return current;
+	}
+	var obj2 = {name: "本人"};
+	var result2 = deepCopy(message,obj2);
+	console.log(result2);
+	message.birthPlaces.push("太原");
+	message.friend.favorite.push("足球");
+	console.log(result2);
+	*/
+	
+	// 深复制
+	var result = JSON.parse(JSON.stringify(message));
+	message.birthPlaces.push("太原");
+	message.friend.favorite.push("足球");
+	console.log(result);
+	
+	
+	
+	
+	(function () {
+		// var a = 5;b = 5;
+		var a = b = 5;
+		console.log(a); // 5
+		console.log(b); // 5
+	})();
+	// console.log(a); // not defined 报错
+	console.log(b); // 5
+	
+	// 下午：变量的作用域提升问题
+	
+</script>

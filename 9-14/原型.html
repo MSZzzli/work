@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>原型</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script type="text/javascript">
+	// 不使用原型的情况
+	/*
+	function Dog(name){
+		this.name = name;
+		this.family = "犬科";
+		this.bark = function(){
+			alert(this.name + "：汪汪汪");
+		}
+	}
+	var dog1 = new Dog("藏獒");
+	var dog2 = new Dog("茶杯");
+	dog1.family = "大型犬科动物";
+	console.log(dog1);
+	console.log(dog2);
+	dog1.bark();
+	dog2.bark();
+	*/
+	
+	// 通过 new 构造函数能够创建出每个独立的对象。但是每个实例化的对象都要有自己的属性和方法副本。
+	//（有些属性和全部的方法不共享，每个对象都独有一份），如果创建大量对象，势必造成资源浪费。比如：这里
+	// 的 family 类型的属性 和 bark 方法。
+	// 所以说这里需要把这些属性和方法实现共有（共享），独立处理一份，每个对象都使用，怎么办？？？
+	
+	// 上面 bark 方法里面不写 this.name，写 name。下面的代码有问题
+	// var p2 = {name:"李四"};
+	// dog2.bark.call(p2);
+	// dog1.name = "123";
+	// dog1.bark();
+	
+	/*
+	var p1 = {
+		name:"张三",
+		sayHello: function(str1,str2){
+			console.log(this.name+"：对你问好！" +　str1 + str2);
+		}
+	}
+	p1.sayHello();
+	
+	var p2 = {name:"李四"};
+	p1.sayHello.call(p2,"哈哈","嘿嘿");
+	p1.sayHello.apply(p2,["xx","oo"]);
+	*/
+	
+	
+	// 考虑到共享的属性和方法：JS的作者就决定给构造函数色绘制一个能实现属性和方法共享的东西。
+	// 这个东西：原型（prototype）对象
+	function Dog(name){
+		this.name = name;
+	}
+	// 把共享的属性和方法放到原型中去
+	Dog.prototype.family = "犬科";
+	Dog.prototype.bark = function(){
+		alert(this.name + "：汪汪汪");
+	}
+	
+	var dog1 = new Dog("藏獒");
+	var dog2 = new Dog("茶杯");
+	console.log(dog1);
+	console.log(dog2);
+	console.log(dog1.family);
+	console.log(dog2.family);
+	dog1.bark();
+	dog2.bark();
+	
+	// Dog.prototype.family = "哈哈";
+	// 原型是共有的。我改变 dog1的原型的属性，dog2也跟着变了
+	dog1.__proto__.family = "哈哈";
+	console.log(dog1);
+	console.log(dog2);
+	console.log(dog1.family);
+	console.log(dog2.family);
+	
+</script>

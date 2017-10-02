@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+	    <meta charset="UTF-8">
+	    <title>defer对象的理解</title>
+	</head>
+	<body>
+	
+		JS是一种单线程的执行过程，异步和同步的区别在于，异步会在某个条件达到的情况下才会去执行，例如事件响应，5秒后执行，在条件未达到的情况下
+		它并不会阻碍其他下面代码的执行，当条件满足的时候，再跳过去执行回调函数当中的内容,所以，异步是非阻塞的，也是性能最高的一种方案
+		而同步，只会在代码执行完毕之后才会执行下面的代码，性能比较差.我理解的异步相当于goto语句，条件满足后再goto执行语句.
+		
+		$.Deferred在jQuery代码自身四处被使用，分别是promise方法、DOM ready、Ajax模块、动画模块。
+		目前版本的deferred.js代码不过334行，而真正$.Deferred的实现只有300行左右。
+		
+		$.Deferred的实现
+		创建三个$.Callbacks对象，分别表示成功，失败，处理中三种状态
+		创建了一个promise对象，具有state、always、then、promise方法
+		通过扩展promise对象生成最终的Deferred对象，返回该对象
+		
+		$.when的实现
+		接受若干个对象，参数仅一个且非Deferred对象将立即执行回调函数
+		Deferred对象和非Deferred对象混杂时，对于非Deferred对象remaining减1
+		Deferred对象总数 = 内部构建的Deferred对象 + 所传参数中包含的Deferred对象
+		所传参数中所有Deferred对象每当resolve时remaining减1，直到为0时（所有都resolve）执行回调
+		
+		创建了三种状态，并且这三种状态会触发不同的回调函数
+		done/fail/progress 是 callbacks.add，将回调函数存入
+		resolve/reject/notify 是 callbacks.fire，执行回调函数(或队列)
+		
+		deferred.promise()方法返回只能添加回调的对象，这个对象与$.Deferred()返回的对象不同，只能done/fail/progress，不能resolve/reject/notify。即只能调用callbacks.add，没有callbacks.fire。它是正统Deferred对象的阉割版。
+	
+	</body>
+</html>
+<script src="jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	function success(res){
+		console.log(res);
+		alert("success");
+	}
+	function fail(){
+		alert("fail");
+	}
+	function progress(){
+		alert("progress");
+	}
+	
+	// 创建 deferred （延时）对象
+	// var deferred = $.Deferred();
+	// 添加回调函数
+	//                Callbacks           Callbacks       Callbacks 
+	// deferred.done(success).done(success).fail(fail).progress(progress);
+	// 				 resolve（决定）             reject（拒绝）        notify（通知）
+	// 根据不同的状态，来触发（.fire()）不同的回调函数列表对象。并且一次只能触发一种状态
+	
+	// 如果说指定当前状态为：resolve，那么会触发 done 的回调函数列表
+	// deferred.resolve("成功");
+	// 如果说指定当前状态为：reject，那么会触发 fail 的回调函数列表
+	// deferred.reject();
+	// 如果说指定当前状态为：notify，那么会触发 progress 的回调函数列表
+	// 如果先触发 notify 状态，那么接下来 resolve 和 reject 仅会触发其中的一个
+	// deferred.notify();
+	// deferred.resolve("成功");
+	// deferred.reject();
+	
+	// deferred.then() 通过 then 一次添加成功、失败、进度中
+	// var deferred = $.Deferred();
+	// deferred.then(success,fail,progress);
+	// 更改不同状态
+	// deferred.notify();
+	// deferred.resolve();
+	// deferred.reject();
+	
+	
+	// $.when()的用法：提供一种方法来执行零个或者多个 deferred 对象的回调
+	/*
+	function done1(){
+		alert("done1");
+	}
+	function done2(){
+		alert("done2");
+	}
+	function allDone(){
+		alert("allDone");
+	}
+	var deferred1 = $.Deferred();
+	deferred1.done(done1);
+	var deferred2 = $.Deferred();
+	deferred2.done(done2);
+	// 只有两个都成功了，才调用 allDone
+	$.when(deferred1,deferred2).done(allDone);
+	// 2s 后更改 deferred 的状态：当 deferred1 和 deferred1 都 resolve 时，才调用 allDone
+	setTimeout(function(){
+		// 如果这里有任意一个 reject 了，那么 allDone 都不会调用。
+		// when 方法保证了多个异步操作都成功之后才会调用它的 done 方法。
+		deferred1.resolve();
+		deferred2.resolve();
+	},2000);
+	*/
+	
+	
+	// $.when的例子
+	var jqXHR1 = $.ajax({
+		url: "test1.txt",
+		dataType: "text"
+	});
+	var jqXHR2 = $.ajax({
+		url: "test2.txt",
+		dataType: "text"
+		// dataType: "json"
+	});
+	$.when(jqXHR1,jqXHR2).done(function(data1,data2){
+		// console.log(arguments);
+		console.log("获取数据成功");
+		console.log("数据：" +　data1[0] + " 状态：" + data1[1] + " jqXHR: " + data1[2]);
+		console.log("数据：" +　data2[0] + " 状态：" + data2[1] + " jqXHR: " + data2[2]);
+	}).fail(function(){
+		console.log(arguments);
+	});
+	
+</script>

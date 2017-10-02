@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>构造函数的继承</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script type="text/javascript">
+	// 最底层的一个类：Object
+	// console.log(new Object());
+	// console.log({});
+	// Array 这个类是继承于 Object
+	// console.log(new Array());
+	// Date 这个类是继承于 Object
+	// console.log(new Date());
+	
+	// 面向对象编程三大特性：封装、继承、多态
+	// 继承：基类（父类）  ------- 派生类（子类）
+	// 特点：派生类继承于基类。派生类不仅有自己独有的属性和方法，而且还有基类的所有属性和方法。
+	
+	/*
+	// 继承方法一：
+	// 比如说这里有两个构造函数，第二个构造函数要继承于第一个构造函数
+	function Animal(family){
+		this.family = family;
+		// console.log(this);
+	}
+	Animal.prototype.leg = 4;
+	Animal.prototype.run = function(){
+		alert("所有动物都会跑");
+	}
+	console.log(new Animal("未知科室"));
+	
+	function Dog(name,color){
+		// 在这里用 this （表示正在初始化的对象）调用下 Animal 这个构造函数即可。
+		Animal.call(this,"犬科");
+		this.name = name;
+		this.color = color;
+	}
+	Dog.prototype.skill = function(){
+		alert("看门");
+	}
+	// 怎让让这个 Dog 继承于 Animal 呢？
+	var dog = new Dog("京巴","黄色");
+	console.log(dog);
+	console.log(dog.family);
+	console.log(dog.leg);
+	console.log(dog.run());
+	// Animal.call(this,"犬科"); 解决了构造函数中属性继承，但是存在原型中的静态属性和方法不能继承
+	// Animal 里面的 leg 和 run 在派生类 dog 对象中却不拥有。不符合继承原理。
+	*/
+	
+	/*
+	// 继承方法二：
+	function Animal(family){
+		this.family = family;
+		// console.log(this);
+	}
+	Animal.prototype.leg = 4;
+	Animal.prototype.run = function(){
+		alert("所有动物都会跑");
+	}
+	console.log(new Animal("未知科室"));
+	
+	function Dog(name,color){
+		this.name = name;
+		this.color = color;
+	}
+	// 把基类的一个实例对象赋值给派生类的原型
+	var animal = new Animal("犬科");
+	Dog.prototype = animal;
+	// Dog.prototype = new Animal("犬科");
+	Dog.prototype.constructor = Dog;
+	Dog.prototype.skill = function(){
+		alert("看门");
+	}
+	var dog = new Dog("京巴","黄色");
+	console.log(dog);
+	console.log(dog.family);
+	console.log(dog.leg);
+	dog.run();
+	dog.skill();
+	// animal.skill(); 因为 Dog 的 prototype 等于 animal，意味着在 Dog 的原型中添加属性和方法，
+	// 基类的对象 animal 竟然也可以用。不符合继承原理。
+	// Dog.prototype = animal; 造成结果是 Animal 的所有属性都跑到原型。
+	*/
+	
+	
+	// 继承方法三：
+	// 构造函数要继承于基类的构造函数，原型也要继承于基类的原型
+	function Animal(family){
+		this.family = family;
+		// console.log(this);
+	}
+	Animal.prototype.leg = 4;
+	Animal.prototype.run = function(){
+		alert("所有动物都会跑");
+	}
+	
+	function Dog(name,color){
+		// 在这里用 this （表示正在初始化的对象）调用下 Animal 这个构造函数即可。
+		// 第一步：构造函数继承，让 Dog 拥有 Animal 所有的属性
+		Animal.call(this,"犬科");
+		this.name = name;
+		this.color = color;
+	}
+	// 第二步：原型继承(让 Dog 的原型等于基类 Animal 的原型的一个空对象)
+	Dog.prototype = Object.create(Animal.prototype);
+	Dog.prototype.constructor = Dog;
+	Dog.prototype.skill = function(){
+		alert("看门");
+	}
+	
+	var dog = new Dog("京巴","黄色");
+	console.log(dog);
+	
+	// 原型链：详见图片 《原型链.jpg》 
+	// Dog.prototype = Object.create(Animal.prototype);
+	// 等价于下面这几行代码
+	// var obj = new Object();
+	// obj.prototype = Animal.prototype;
+	// Dog.prototype = obj;
+</script>

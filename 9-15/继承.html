@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>继承</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script type="text/javascript">
+	// 基类
+	function People(name,age){
+		this.name = name;
+		this.age = age;
+	}
+	// 方法和静态变量都放到原型中去
+	People.prototype.leg = 2;
+	People.prototype.say = function(){
+		document.body.style.backgroundColor = "red";
+		alert(this.name + " say hello to you!");
+	}
+	
+	// 派生类
+	function Man(name,age,beard){
+		// 继承基类属性
+		People.call(this,name,age);
+		// 扩充自己的独有的属性
+		this.beard = beard;
+	}
+	// 继承基类的原型
+	Man.prototype = Object.create(People.prototype);
+	Man.prototype.constructor = Man;
+	// 扩充自己都有的静态变量和方法
+	Man.prototype.gender = "男";
+	Man.prototype.smoke = function(){
+		alert(this.name + " is smoking ……");
+	}
+	
+	var man1 = new Man("张三",18,"八字胡");
+	console.log(man1);
+	console.dir(man1);
+	console.log(man1.gender);
+	// man1.say();
+	// man1.smoke();
+	
+	var p = new People("李四",38);
+	// p.say();
+	// p.smoke(); 不能调用
+	
+	// 增加点东西，加深对继承和原型的认识
+	People.prototype.speak = function(){
+		alert(this.name + " 正在演讲……");
+	}
+	// p.speak();
+	// man1.speak();
+	
+	
+	// 重写基类的方法：
+	Man.prototype.say = function(){
+		// 调用基类的功能代码
+		People.prototype.say.call(this);
+		// 添加自己实现的功能
+		document.body.style.border = "2px solid black";
+		alert("重写了基类的 say 方法");
+	}
+	
+	man1.say();
+	p.say();
+</script>

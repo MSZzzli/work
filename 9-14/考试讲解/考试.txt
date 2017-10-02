@@ -1,0 +1,18 @@
+jQuery:基础   $.fn.hide() $.fn.show() $.fn.toggle()
+	  :滑动   $.fn.slideUp() $.fn.slideDown() $.fn.slideToggle() 
+	  :渐变   $.fn.fadeOut() $.fn.fadeIn() $.fn.fadeToggle()
+	  :自定义动画    $.fn.animate();
+
+
+<!-- 元素content + padding:.clientWidth/Height -->
+<!-- 元素content + padding + border: .offsetWidth/Height -->
+<!-- 元素相对于父元素的偏移量  .offsetLeft/Top -->
+<!-- 元素 content + padding + 滚动条的高宽  .scrollWidth/Height -->
+	
+
+临时存储，浏览器关闭后数据丢失
+sessionStorage.setItem("name","zhangsan");
+长期存储数据，浏览器关闭后不会丢失
+localStorage.setItem("name","zhangsan");
+
+

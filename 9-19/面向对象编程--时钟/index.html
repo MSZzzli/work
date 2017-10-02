@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>面向对象编程--时钟</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script src="js/control.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/dot.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var test = new Dot();
+	// 屏幕大小发生变化
+	window.onresize = function(){
+		Control.resizeWindow();
+		test.layout()
+	}
+</script>

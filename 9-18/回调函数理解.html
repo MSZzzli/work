@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>回调函数理解</title>
+	</head>
+	<body>
+		<button>按钮</button>
+	</body>
+</html>
+<script src="jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="回调函数理解.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	/*
+	 * 回调函数的具体定义：函数 A 作为参数传递到另一个函数 B 中，并在一定的时机在函数 B 中触发（调用）
+	 * 函数 A，我们就称函数 A 叫做回调函数。如果函数 A 还没有函数名，那么 A 叫做匿名回调函数。
+	 * 
+	 * 回调函数 callback 不一定都用于异步，有时候用于同步（阻塞线程）。
+	 */
+	
+	// 回调函数例子
+	function a(){
+		alert("this is a");
+	}
+	
+	// a 是一个有名回调函数
+	// b(a);
+	
+	// a 是一个匿名回调函数
+	b("大米",function(data){
+		console.log(data);
+		alert("匿名回调函数");
+		return "好的，货已收到";
+	});
+	
+	
+	/*
+	 * 回调函数用在异步的情况：
+	 * 1.资源加载完毕的时候，加载 JS 文件后执行的回调函数，加载 iFrame 完成后的回调函数
+	 * 	，Ajax 操作后的回调函数，图片加载完成后的回调函数。
+	 * 2.DOM 事件和 NodeJS 事件
+	 * 3.setTimeout 和 setInterval 等回调函数
+	 */
+	/*
+	$.ajax("回调函数理解.js").done(function(data){
+		console.log(data);
+		alert("请求数据成功");
+	}).fail(function(){
+		alert("请求数据失败");
+	});
+	
+	setTimeout(function(){
+		console.log("延时2s执行");
+	},2000);
+	
+	console.log("我先继续执行");
+	*/
+	
+	
+	// jQuery 核心 --> 回调对象
+	// jQuery.Callbacks( flags ): 一个多用途的回调列表对象，提供了强大的的方式来管理回调函数列表。
+	// 这个 Callbacks 利用的就是函数的 push 将回调函数按顺序存放在一起，然后在一定时机循环回调。
+	// 缺点：只能按顺序执行，并且功能有限。
+	/*
+	// 在相同作用域下的使用
+	// 先定义一个回调函数列表对象
+	var callbacks = $.Callbacks();
+	function fun1(data){
+		console.log(data);
+		alert("fun1 回调了");
+	}
+	function fun2(data){
+		console.log(data);
+		alert("fun2 回调了");
+	}
+	// 向回调函数列表对象里面添加要回调的函数
+	callbacks.add(fun1);
+	callbacks.add(fun2);
+	
+	// 当达到触发事件的时候就可以来回调用函数了
+	$("button").click(function(){
+		// 假设这里经过了复杂又冗长计算
+		var result = {code:1,msg:"获取到了数据"};
+		// 触发函调函数列表对象：.fire()（fire 方法是可以传递参数的）
+		callbacks.fire(result);
+	});
+	*/
+	
+	// 在不同作用域下的使用
+	var callbacks = $.Callbacks();
+	function fun1(data){
+		console.log(data);
+		alert("fun1 回调了");
+	}
+	callbacks.add(fun1);
+	(function () {
+		function fun2(data){
+			console.log(data);
+			alert("fun2 回调了");
+		}
+		callbacks.add(fun2);
+	})()
+	$("button").click(function(){
+		// 假设这里经过了复杂又冗长计算
+		var result = {code:1,msg:"获取到了数据"};
+		// 触发函调函数列表对象：.fire()（fire 方法是可以传递参数的）
+		callbacks.fire(result);
+		// 经过 2s 之后再次 fire（是能多次 fire）
+		setTimeout(function(){
+			// 移除一个回调函数列表中的一个回调函数
+			callbacks.remove(fun1);
+			callbacks.fire(200);
+		},2000)
+	});
+	
+</script>

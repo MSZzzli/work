@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>面试题</title>
+	</head>
+	<body>
+	</body>
+	<script src="Compose.js"></script>
+	<script type="text/javascript">
+		function addOne(num) {
+			return num + 1;
+		}
+	
+		function multiTwo(num) {
+			return num * 2;
+		}
+	
+		function divThree(num) {
+			return num / 3;
+		}
+	
+		function toString(num) {
+			return num + '';
+		}
+	
+		// 测试
+		
+		// 方法一
+		var method1 = new Method(666);
+		var result = method1.compose(addOne,multiTwo,divThree,toString);
+		console.log(result);
+		
+		// 方法二
+		var cb = compose(addOne,multiTwo,divThree,toString);
+		result = cb(666);
+		console.log(result);
+	</script>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>变量和函数作用域的提升</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script type="text/javascript">
+	// 在 JavaScript 里面，作用域只存在在函数内或者函数外。
+	function boxWai(){
+		function boxNei(){
+			a = 30;
+			console.log(a);
+		}
+		boxNei();
+		console.log(a);
+	}
+	boxWai();
+	console.log(a);
+	
+	
+	/*
+	 * 总结结论：
+	 * 
+	 * 1.如果在一个函数内使用一个变量，那么会优先在当前函数作用域内寻找该变量。如果找到，
+	 * 	直接使用。如果找不到，去上层作用域寻找，直到找到全局作用域，还是找不到就抛出错误：not defined
+	 * 
+	 * 2.如果直接给一个变量赋值，比如：a = 30;那么它首先会在当前函数作用内寻找该变量的定义。
+	 *  如果找到，那么直接赋值。如果找不到，去上层作用域寻找，直到找到全局作用域。如果到
+	 *  全局域里面还是找不到该变量的定义。那么它会在全局域里面自动生成该变量的定义，使其成为全局变量
+	 * 
+	 * 3.声明变量加 var 和不添加 var 的区别：
+	 *  var 是正规的声明变量的写法，不加 var 表示该变量之前已经声明过或者你要声明成全局变量。
+	 * 
+	 * 4.常见的两种"错误":
+	 * 	undefined：不算错误，也是一个特殊的值类型。表示变量存在，只是变量没有赋初始值而已（不影响代码执行）
+	 *  ReferenceError: a is not defined：你使用了一个没有定义的变量（终止程序的执行）
+	 * 
+	 */
+	
+	
+	function box(){
+		// 变量定义的提升：会把 var count 的定义提升到当前作用域的最上面
+		// 等价于：alert(count); var count = 10;
+		var count;
+		alert(count);
+		count = 10;
+		alert(count);
+	}
+	box();
+	// 总结：在一个作用域内，所有变量的定义都会被 JS 提升到这个作用域的最顶部（包括函数）。
+	
+	
+	// 函数提升：
+	function foo(){
+		alert("global foo");
+	}
+	function bar(){
+		alert("global bar");
+	}
+	
+	function test(){
+		console.log(typeof foo); // function
+		console.log(typeof bar); // function
+		foo();
+		bar();
+		// 局部变量
+		function foo(){
+			alert("local foo");
+		}
+		var bar = function(){
+			alert("local bar");
+		}
+	}
+	test();
+</script>
